@@ -1,0 +1,76 @@
+{% extends "../nav/index.html" %}
+{% load static %}
+
+      {% block link_styles %}
+      <link href="{% static 'publico/css/contacts/contactsstyles.css' %}" rel="stylesheet" />
+      {% endblock %}
+
+      {% block cuerpo %}
+
+
+        <div class="mivi">
+          <h1>Correos</h1>
+          <div id="cards">
+
+              <div class="card">
+                  <div class="galeria">
+                    <p >
+                      <a class="redS"href="mailto:contacto@abvelectricsupply.com"><i class="fa-regular fa-envelope"></i>&nbsp;contacto@abvelectricsupply.com</a>
+                    </p>
+                    <p >
+                      <a class="redS"href="mailto:gluav@abvelectricsupply.com"><i class="fa-regular fa-envelope"></i>&nbsp;gluav@abvelectricsupply.com</a>
+                    </p>
+                    <p >
+                      <a class="redS"href="mailto:abv@abvelectricsupply.com"><i class="fa-regular fa-envelope"></i>&nbsp;abv@abvelectricsupply.com</a>
+                    </p>
+                  </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="mivi">
+          <h1>Telefonos</h1>
+          <div id="cards">
+
+              <div class="card">
+                  <div class="galeria">
+                    
+                    <p >
+                      <a class="redS" href="tel:+5214433182650">
+                        <i class="fa-solid fa-phone"></i>&nbsp;443 318 2650
+                      </a>
+                    </p>
+                    <p >
+                      <a class="redS" href="tel:+5214433042341">
+                        <i class="fa-solid fa-phone"></i>&nbsp;443 304 2341
+                      </a>
+                    </p>
+                    <p >
+                      <a class="redS" href="tel:+5214434803837">
+                        <i class="fa-solid fa-phone"></i>&nbsp;443 480 3837
+                      </a>
+                    </p>
+                  </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="mivi">
+          <h1>Redes sosciales</h1>
+          <div id="cards">
+
+              <div class="card">
+                  <div class="galeria">
+                    <p><a  class="redS"href="https://www.facebook.com/profile.php?id=61576031400012#" target="_blank"> <i class="fab fa-facebook"></i>&nbsp;ABV Electric</a>
+                    </p>
+                    <p><a  class="redS"href="https://www.instagram.com/abv_electric/" target="_blank"> <i  class="fab fa-instagram"></i>&nbsp;@abv_electric</a>
+                    </p>
+                    <p><a  class="redS" href="https://www.linkedin.com/company/abv-electric-supply" target="_blank"><i class="fab fa-linkedin"></i>&nbsp;ABV Electric Supply</a>
+                    </p>  
+                  </div>
+              </div>
+          </div>
+        </div>
+
+          <script src="{% static 'publico/js/home/home_scripts.js' %}"></script>
+      {% endblock %}

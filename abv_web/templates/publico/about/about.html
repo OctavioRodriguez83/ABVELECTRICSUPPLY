@@ -1,0 +1,100 @@
+{% extends "../nav/index.html" %}
+{% load static %}
+
+      {% block link_styles %}
+      <link href="{% static 'publico/css/about/aboutstyles.css' %}" rel="stylesheet" />
+      {% endblock %}
+
+      {% block cuerpo %}
+        <div id="heder-cuerpo">
+          <div class="mivi">
+            <h1>Acerca de Nosostros</h1>
+            <div id="cards">
+                <div class="card">
+                    <div class="imagencont">
+                      <video controls autoplay muted loop playsinline class="video-responsive">
+                        <source src="/media-files/publico/abv.mp4" type="video/mp4">
+                          Tu navegador no soporta la etiqueta de video.
+                      </video>
+                    </div>
+                    <div class="textcardcont">
+                      <img id="aboutimg" src="/media-files/publico/Logo.png" class="imgcards" alt="...">
+                        <h3 id="aboutT" class="card-title">ABV Electric Supply</h3>
+                      <div class="card-body">
+
+                        <p class="card-text">Con sede en Morelia, Michoacán, ABV Electric Supply es un proveedor de confianza en material y equipo eléctrico, con especialidad en la distribución de productos ABB. Nuestra misión es brindar un servicio especializado que abarca desde la asesoría hasta la solución integral de sus necesidades de iluminación y suministro eléctrico, asegurando eficiencia y sostenibilidad. Nuestra visión se enfoca en impulsar la adopción de energías renovables a través de tecnología y materiales innovadores, buscando mejorar la calidad de vida de nuestros clientes con soluciones energéticas de vanguardia para un futuro más eficiente y responsable.</p>
+                      </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="mivi">
+            <div id="cards">
+
+                <div class="card">
+                    <div class="imagencont">
+                      <img src="/media-files/publico/mision.png" class="imgcards" alt="...">
+                    </div>
+                    <div class="textcardcont">
+                      <div class="card-body">
+                        <h5 class="card-title">MISION</h5>
+                        <p class="card-text">Brindar tanto el material como el equipo eléctrico, además de todo lo necesario para la iluminación de un establecimiento ofreciendo un servicio especializado que cubra las necesidades de manera óptima, garantizando que se quedará con una solución eficiente y amigable con el ambiente.</p>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="card">
+
+                    <div class="textcardcont">
+                      <div class="card-body">
+                        <h5 class="card-title">VISION</h5>
+                        <p class="card-text">Contribuir de forma eficiente al uso de equipos con energía renovable usando nuevas tecnologías, equipos y materiales innovadores y así mejorar la calidad de vida de nuestros clientes.</p>
+                      </div>
+                    </div>
+                    <div class="imagencont">
+                      <img src="/media-files/publico/vision.png" class="imgcards" alt="...">
+                    </div>
+                </div>
+            </div>
+          </div>
+
+          <div class="mivi">
+            <h1 class="proyectos-title">Proyectos Destacados</h1>
+            <div class="galeria">
+              {% for destacado in destacados %}
+              <div class="proyecto-card">
+                <img src="/media-files/{{ destacado.proyecto.proyecto_imagen.name }}"
+                     alt="{{ destacado.proyecto.proyecto_nombre }}"
+                     class="proyecto-img">
+                <div class="proyecto-body">
+                  <h2 class="proyecto-titulo">{{ destacado.proyecto.proyecto_nombre }}</h2>
+                  <p class="proyecto-descripcion">{{ destacado.proyecto.proyecto_descripcion_corta }}</p>
+                  <a href="{% url 'project' destacado.proyecto.id %}" class="proyecto-boton">Leer más →</a>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            <!--
+            <div class="proyectos-ver-todos">
+              <a href="#" class="ver-todos-boton">Ver todos los proyectos</a>
+            </div>
+          </div>
+          -->
+
+
+
+          <div class="mivi">
+            <h1>Socios Comerciales</h1>
+            <div id="cards">
+                <div class="card">
+                    <div class="galeria">
+                      {% for marca in marcas %}
+                      <img src="/media-files/{{ marca.marca_url_img.name }}" alt="1">
+                      {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+      {% endblock %}

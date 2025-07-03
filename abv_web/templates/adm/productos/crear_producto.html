@@ -1,0 +1,100 @@
+{% extends "../nav/index.html" %}
+{% load static %}
+
+{% block title %}Crear Producto - SB Admin{% endblock %}
+
+{% block link_styles %}
+  {{ block.super }}
+{% endblock %}
+
+{% block cuerpo %}
+<div class="container-fluid py-4">
+  <div class="card shadow-sm border-0">
+    <div class="card-header bg-light">
+      <h3 class="mb-0 text-center">Agregar Producto</h3>
+    </div>
+    <div class="card-body bg-white">
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            {{ form.producto_extendido.label_tag }}
+            {{ form.producto_extendido }}
+          </div>
+          <div class="col-md-6 mb-3">
+            {{ form.producto_sku.label_tag }}
+            {{ form.producto_sku }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            {{ form.producto_skunetsuite.label_tag }}
+            {{ form.producto_skunetsuite }}
+          </div>
+          <div class="col-md-6 mb-3">
+            {{ form.producto_ean.label_tag }}
+            {{ form.producto_ean }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mb-3">
+            {{ form.producto_nombre.label_tag }}
+            {{ form.producto_nombre }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mb-3">
+            {{ form.producto_descripcion.label_tag }}
+            {{ form.producto_descripcion }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            {{ form.producto_modelo.label_tag }}
+            {{ form.producto_modelo }}
+          </div>
+          <div class="col-md-6 mb-3">
+            {{ form.marca.label_tag }}
+            {{ form.marca }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            {{ form.categoria.label_tag }}
+            {{ form.categoria }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            {{ form.producto_precio_base.label_tag }}
+            {{ form.producto_precio_base }}
+          </div>
+          <div class="col-md-3 mb-3">
+            {{ form.producto_precio_amazon.label_tag }}
+            {{ form.producto_precio_amazon }}
+          </div>
+          <div class="col-md-3 mb-3">
+            {{ form.producto_precio_mercadolibre.label_tag }}
+            {{ form.producto_precio_mercadolibre }}
+          </div>
+          <div class="col-md-3 mb-3">
+            {{ form.producto_precio_ebay.label_tag }}
+            {{ form.producto_precio_ebay }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mb-3">
+            {{ form.producto_url_img.label_tag }}
+            {{ form.producto_url_img }}
+          </div>
+        </div>
+        <div class="text-end">
+          <button type="submit" class="btn btn-success">
+            <i class="fas fa-plus me-1"></i> Agregar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

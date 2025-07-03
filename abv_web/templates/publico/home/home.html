@@ -1,0 +1,219 @@
+{% extends "../nav/index.html" %}
+{% load static %}
+
+      {% block link_styles %}
+      <link href="{% static 'publico/css/home/homestyles.css' %}" rel="stylesheet" />
+      {% endblock %}
+
+      {% block cuerpo %}
+         <div id="heder-cuerpo">
+          <div id="elemcarrusel">
+            <div id="carrprincipal">
+                <div id="carouselExampleCaptions1" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        {% for i in indicators_range_carrusel1 %}
+                            <button type="button" 
+                                data-bs-target="#carouselExampleCaptions1" 
+                                data-bs-slide-to="{{ i }}" 
+                                class="{% if forloop.first %}active{% endif %}" {# <-- forloop.first asegura que el primer indicador (i=0) sea activo #}
+                                aria-label="Slide {{ forloop.counter }}"> {# Usar forloop.counter para el label, ya que empieza en 1 #}
+                            </button>
+                        {% endfor %}
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" data-bs-interval="3000">
+                            <img class="carousel-imgc1-2" src="/media-files/publico/banner principal.webp" class="d-block w-100" alt="...">
+                            <div class="carousel-caption d-none d-md-block caption-left"> {# <-- AGREGADO: caption-left #}
+                                <img class="imgpost" src="/media-files/publico/Logo.png">
+                                <h1 class="h1post">ABV ELECTRIC SUPPLY</h1>
+                                <p class="ppost">DISTRIBUIDORES ABB <br>"illuminating innovation"</p>
+                            </div>
+                        </div>
+
+                        {% for post in posts %}
+                        <div class="carousel-item" data-bs-interval="3000">
+                            <img class="carousel-imgc1-2" src="/media-files/{{ post.carrouselBanner_url_img }}" class="d-block w-100" alt="...">
+                            <div class="carousel-caption caption-left"> {# <-- AGREGADO: caption-left para todos los posts #}
+                                <img class="imgpost" src="/media-files/publico/Logo.png">
+                                <h1 class="h1post">{{ post.carrouselBanner_name }}</h1>
+                                <p class="ppost">{{ post.carrouselBanner_descripcion }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        {% for cate in categorias %}
+                        <div class="carousel-item" data-bs-interval="3000">
+                            <img class="carousel-imgc1" src="/media-files/{{ cate.categoria_url_img }}" class="d-block w-100" alt="...">
+                            <div class="carousel-caption caption-right"> {# <-- AGREGADO: caption-right para todas las categorías #}
+                                <h1 class="h1catego">{{ cate.categoria_name }}</h1>
+                                <p class="pcatego">{{ cate.carrouselBanner_descripcion }}</p>
+                                <a href="{% url 'products' %}categoria/{{ cate.categoria_name }}" class="btn btn-dark">
+                                        Ver productos
+                                    </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions1" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions1" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="carrsecun">
+                <div id="carruS"> {# Carrusel Superior Secundario #}
+                    <div id="carouselExampleCaptions2" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            {% for i in indicators_range_carrusel2 %}
+                                <button type="button" 
+                                        data-bs-target="#carouselExampleCaptions2" 
+                                        data-bs-slide-to="{{ i }}" 
+                                        class="{% if forloop.first %}active{% endif %}" {# <-- forloop.first asegura que el primer indicador (i=0) sea activo #}
+                                        aria-label="Slide {{ forloop.counter }}"> {# Usar forloop.counter para el label, ya que empieza en 1 #}
+                                </button>
+                            {% endfor %}
+                        </div>
+                        <div class="carousel-inner">
+                            
+
+                            {% for destacado in destacados %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}" data-bs-interval="3000">
+                                <img class="carousel-imgc2" src="/media-files/{{ destacado.producto.producto_url_img }}" class="d-block w-100" alt="...">
+                                <div class="carousel-caption caption-left"> {# <-- AGREGADO: caption-left para todos los destacados #}
+                                    <h1>{{ destacado.producto.producto_nombre }}</h1>
+                                    <a href="{% url 'product' destacado.producto.producto_sku %}" class="btn btn-dark">Ver detalle</a>
+                                    <!-- <p>{{ destacado.producto.producto_descripcion }}</p> -->
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="carruI"> {# Carrusel Inferior Secundario #}
+                    <div id="carouselExampleCaptions3" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            {% for i in indicators_range_carrusel3 %}
+                                <button type="button" 
+                                        data-bs-target="#carouselExampleCaptions3" 
+                                        data-bs-slide-to="{{ i }}" 
+                                        class="{% if forloop.first %}active{% endif %}" {# <-- forloop.first asegura que el primer indicador (i=0) sea activo #}
+                                        aria-label="Slide {{ forloop.counter }}"> {# Usar forloop.counter para el label, ya que empieza en 1 #}
+                                </button>
+                            {% endfor %}
+                        </div>
+                        <div class="carousel-inner">
+                            
+
+                            {% for marca in marcas %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}" data-bs-interval="3000">
+                                <img class="carousel-imgc2" src="/media-files/{{ marca.marca_url_img }}" class="d-block w-100" alt="...">
+                                <div class="carousel-caption caption-right"> {# <-- AGREGADO: caption-right para todas las marcas #}
+                                    <h1>{{ marca.marca_name }}</h1>
+                                    <p>{{ marca.marca_descripcion|default:"Descripción no disponible" }}</p>
+                                    <a href="{% url 'products' %}marca/{{ marca.marca_name }}" class="btn btn-dark">
+                                        Ver productos
+                                    </a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions3" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions3" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mivi">
+            <h1>Acerca de Nosostros</h1>
+            <div id="cards">
+
+                <div class="card">
+                    <div class="imagencont">
+                      <video controls autoplay muted loop playsinline class="video-responsive">
+                        <source src="/media-files/publico/abv.mp4" type="video/mp4">
+                          Tu navegador no soporta la etiqueta de video.
+                      </video>
+                    </div>
+                    <div class="textcardcont">
+                      <img id="aboutimg" src="/media-files/publico/Logo.png" class="imgcards" alt="...">
+                        <h3 id="aboutT" class="card-title">ABV Electric Supply</h3>
+                      <div class="card-body">
+
+                        <p class="card-text">Con sede en Morelia, Michoacán, ABV Electric Supply es un proveedor de confianza en material y equipo eléctrico, con especialidad en la distribución de productos ABB. Nuestra misión es brindar un servicio especializado que abarca desde la asesoría hasta la solución integral de sus necesidades de iluminación y suministro eléctrico, asegurando eficiencia y sostenibilidad. Nuestra visión se enfoca en impulsar la adopción de energías renovables a través de tecnología y materiales innovadores, buscando mejorar la calidad de vida de nuestros clientes con soluciones energéticas de vanguardia para un futuro más eficiente y responsable.</p>
+                      </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+
+
+        <div class="mivi">
+          <h1>Socios Comerciales</h1>
+          <div id="cards">
+
+              <div class="card">
+                  <div class="galeria">
+                    {% for marca in marcas %}
+                    <img src="/media-files/{{ marca.marca_url_img.name }}" alt="1">
+                    {% endfor %}
+                  </div>
+              </div>
+          </div>
+        </div>
+
+          <div class="mivi">
+            <h1>Nuestros Servicios</h1>
+            <div id="cards">
+              {% for servicio in servicios %}
+                <div class="card">
+                  {% if forloop.counter0|divisibleby:"2" %}
+                    <div class="imagencont">
+                      {% if servicio.servicio_imagen %}
+                        <img src="{{ servicio.servicio_imagen.url }}" class="imgcards" alt="Imagen de {{ servicio.servicio_nombre }}">
+                      {% endif %}
+                    </div>
+                    <div class="textcardcont">
+                      <h3>{{ servicio.servicio_nombre }}</h3>
+                      <p>{{ servicio.servicio_descripcion|truncatewords:30 }}</p>
+                    </div>
+                  {% else %}
+                    <div class="textcardcont">
+                      <h3>{{ servicio.servicio_nombre }}</h3>
+                      <p>{{ servicio.servicio_descripcion|truncatewords:30 }}</p>
+                    </div>
+                    <div class="imagencont">
+                      {% if servicio.servicio_imagen %}
+                        <img src="{{ servicio.servicio_imagen.url }}" class="imgcards" alt="Imagen de {{ servicio.servicio_nombre }}">
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+
+        
+
+          <script src="{% static 'publico/js/home/home_scripts.js' %}"></script>
+      {% endblock %}
