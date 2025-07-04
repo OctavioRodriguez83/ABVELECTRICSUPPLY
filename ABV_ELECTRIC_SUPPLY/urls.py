@@ -87,7 +87,7 @@ urlpatterns = [
     path('proyectos/', views.proyectos, name='proyectos'),
     path('proyectos/editar/<int:proyecto_id>/', views.editar_proyecto, name='editar_proyecto'),
     path('proyectos/eliminar/<int:proyecto_id>/', views.eliminar_proyecto, name='eliminar_proyecto'),
-    
+
     # URLs para Proyectos Destacados
     path('proyectos_destacados/', views.proyectos_destacados, name='proyectos_destacados'),
     path('proyectos_destacados/agregar/', views.agregar_proyecto_destacado, name='agregar_proyecto_destacado'),
@@ -122,4 +122,9 @@ urlpatterns = [
     #path('store/', views.products, name='store'),
     path('search/', views.search_products, name='navbar_search'),
 
-    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    ]
+
+if settings.DEBUG:
+ urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
