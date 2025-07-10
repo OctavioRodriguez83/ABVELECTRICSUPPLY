@@ -1,9 +1,9 @@
 .whatsapp-float {
     position: fixed;
-    width: 100px;
-    height: 100px;
-    bottom: 40px; /* Distancia desde abajo */
-    right: 40px; /* Distancia desde la derecha */
+    width: 80px;
+    height: 80px;
+    bottom: 20px; /* Distancia desde abajo */
+    right: 20px; /* Distancia desde la derecha */
     background-color: #25d366; /* Color de fondo de WhatsApp */
     color: #FFF;
     border-radius: 50px; /* Hace el botón circular */
@@ -20,7 +20,30 @@
     width: 55px; /* Tamaño de la imagen dentro del botón */
     height: 55px;
 }
+@media (max-width: 400px) {
+  .whatsapp-float {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    bottom: 20px; /* Distancia desde abajo */
+    right: 20px; /* Distancia desde la derecha */
+    background-color: #25d366; /* Color de fondo de WhatsApp */
+    color: #FFF;
+    border-radius: 50px; /* Hace el botón circular */
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 100; /* Asegura que esté por encima de otros elementos */
+    display: flex; /* Para centrar la imagen */
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical */
+}
 
+.whatsapp-float img {
+    width: 30px; /* Tamaño de la imagen dentro del botón */
+    height: 30px;
+}
+}
 
 html {
   scroll-padding-top: 4rem; /* Ajusta al alto de la navbar */

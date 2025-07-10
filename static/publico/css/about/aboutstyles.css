@@ -210,3 +210,44 @@
   .ver-todos-boton:hover {
     background-color: #333;
   }
+  @media (max-width: 900px) {
+    .card {
+        margin-top: 1%;
+        margin-bottom: 1%;
+        padding: 3%;
+        display: flex;
+        height: auto;
+        flex-direction: column; /* Las tarjetas se muestran en fila */
+        justify-content: center;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra para las tarjetas */
+        border-radius: 16px;
+        background-color: #fff;
+    }
+    .imagencont video,
+    .imagencont iframe {
+        width: 100%;
+        height: auto;
+        display: block;
+        border: none;
+        padding-bottom: 2%;
+    }
+    .imagencont {
+        display: flex;
+        width: 100%;
+        height: auto;
+        justify-content: center;
+        align-items: center;
+        padding-right: 1.5%;
+        overflow: hidden;
+    }
+    .textcardcont {
+        display: flex;
+        width: 100%;
+        height: auto;
+        justify-content: center;
+        align-items: center;
+        text-align: justify;
+        flex-direction: column;
+    }
+
+}

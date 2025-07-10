@@ -2,12 +2,12 @@
    SECCIÓN TIENDAS
    —————————————————————————————————————— */
 .tiendas-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); /* 240px → 15rem */
-  gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
   width: 100%;
   margin-bottom: 2rem;
-  justify-items: center;
 }
 
 .tienda-card {
@@ -15,7 +15,7 @@
   border-radius: 0.75rem;
   box-shadow: 0 0.25rem 1rem rgba(0,0,0,0.1);
   width: 100%;
-  max-width: 24rem;
+  max-width: 20rem;
   padding: 2.5rem 2rem;
   text-align: center;
   text-decoration: none;
