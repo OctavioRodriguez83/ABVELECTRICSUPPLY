@@ -65,8 +65,42 @@
                 </div>
             </div>
 
-            <div id="carrsecun">
-                <div id="carruS"> {# Carrusel Superior Secundario #}
+            
+        </div>
+
+        <div class="mivi">
+            <h1>Productos</h1>
+            <!--<div class="store-container">
+
+               Filtro de categorías debajo del buscador, solo texto 
+              <div class="category-row">
+              {% for categoria in categorias %}
+                <label>
+                  <input type="checkbox" name="categoria" value="{{ categoria.id }}">
+                  <span>{{ categoria.categoria_name }}</span>
+                </label>
+              {% empty %}
+                <span>No hay categorías disponibles</span>
+              {% endfor %}
+            </div>
+
+              <div class="store-layout">
+                <!-- Productos -->
+                <div class="store-products">
+                  {% include "publico/partials/_store_products.html" %}
+                </div>
+              </div>
+
+              <!-- Paginador debajo de productos -->
+              <div id="store-paginator">
+                {% include "publico/partials/_store_paginator.html" %}
+              </div>
+            
+            <!--</div>-->
+          </div>
+          <div class="mivi">
+            <h1>Productos Destacados</h1>
+            <div id="carruS"> {# Carrusel Superior Secundario #}
                     <div id="carouselExampleCaptions2" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-indicators">
                             {% for i in indicators_range_carrusel2 %}
@@ -102,48 +136,7 @@
                         </button>
                     </div>
                 </div>
-
-                <div id="carruI"> {# Carrusel Inferior Secundario #}
-                    <div id="carouselExampleCaptions3" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-indicators">
-                            {% for i in indicators_range_carrusel3 %}
-                                <button type="button" 
-                                        data-bs-target="#carouselExampleCaptions3" 
-                                        data-bs-slide-to="{{ i }}" 
-                                        class="{% if forloop.first %}active{% endif %}" {# <-- forloop.first asegura que el primer indicador (i=0) sea activo #}
-                                        aria-label="Slide {{ forloop.counter }}"> {# Usar forloop.counter para el label, ya que empieza en 1 #}
-                                </button>
-                            {% endfor %}
-                        </div>
-                        <div class="carousel-inner">
-                            
-
-                            {% for marca in marcas %}
-                            <div class="carousel-item {% if forloop.first %}active{% endif %}" data-bs-interval="3000">
-                                <img class="carousel-imgc2" src="/media-files/{{ marca.marca_url_img }}" class="d-block w-100" alt="...">
-                                <div class="carousel-caption caption-right INF"> 
-                                    <!--<h1>{{ marca.marca_name }}</h1>
-                                    <p>{{ marca.marca_descripcion|default:"Descripción no disponible" }}</p></p> -->
-                                    <a href="{% url 'products' %}marca/{{ marca.marca_name }}" class="btn btn-dark">
-                                        Ver productos
-                                    </a>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions3" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions3" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                </div>
             </div>
-        </div>
-
         <div class="mivi">
             <h1>Acerca de Nosostros</h1>
             <div id="cards">
