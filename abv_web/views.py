@@ -15,6 +15,7 @@ from django.contrib.auth.models import User
 from django.core.management import call_command
 from django.urls import reverse
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 from .models import *
 from .forms import *
@@ -920,7 +921,7 @@ def products(request):
 
     search = request.GET.get('search', '').strip()
     if search:
-        qs = qs.filter(producto_nombre__icontains=search)
+        qs = qs.filter(Q(producto_extendido__icontains=search) | Q(producto_sku__icontains=search) | Q(producto_skunetsuite__icontains=search) | Q(producto_ean__icontains=search) | Q(producto_nombre__icontains=search) | Q(producto_descripcion__icontains=search) | Q(producto_modelo__icontains=search))
 
     marcas = request.GET.getlist('marca')
     if marcas:
@@ -1079,7 +1080,7 @@ def contacts(request):
 # Python
 def search_products(request):
     query = request.GET.get('q', '').strip()
-    productos = Producto.objects.filter(producto_nombre__icontains=query) if query else Producto.objects.none()
+    productos = Producto.objects.filter(Q(producto_extendido__icontains=query) | Q(producto_sku__icontains=query) | Q(producto_skunetsuite__icontains=query) | Q(producto_ean__icontains=query) | Q(producto_nombre__icontains=query) | Q(producto_descripcion__icontains=query) | Q(producto_modelo__icontains=query))if query else Producto.objects.none()
     results_html = render_to_string('publico/partials/_navbar_search_results.html', {'productos': productos})
     return JsonResponse({'results_html': results_html})
 
