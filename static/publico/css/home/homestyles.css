@@ -278,8 +278,29 @@
 
 /* --- SECCIÓN: GALERÍA DE SOCIOS COMERCIALES --- */
 
+.cateenlace{
+    text-decoration: none;
+    color: black;
+    font-size: 1.5vw;
+}
+.contcate{
+    width: calc(25% - 16px) ; /* Se ajusta automáticamente al contenido y responsive */
+    height: auto; /* Altura fija relativa al viewport */
+    border-radius: 10px;
+    display: block;
+    text-align: center;
+        
+    font-weight: bold;
+}
+.galeria2 {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 .galeria {
     display: flex;
+    width: 100%;
     flex-wrap: wrap;
     justify-content: center;
     gap: 16px; /* Espacio entre las imágenes de la galería */
@@ -297,12 +318,37 @@
     .galeria img {
         width: calc(33.33% - 16px);
     }
+
+    .cateenlace{
+        text-decoration: none;
+        color: black;
+        font-size: 2.5vw;
+    }
+    .contcate{
+        width: calc(33.33% - 16px) ; /* Se ajusta automáticamente al contenido y responsive */
+        height: auto; /* Altura fija relativa al viewport */
+        border-radius: 10px;
+        display: block;
+        text-align: center;
+    }
 }
 
 /* Responsive para móviles (2 columnas) */
 @media (max-width: 768px) {
     .galeria img {
         width: calc(50% - 16px);
+    }
+    .cateenlace{
+        text-decoration: none;
+        color: black;
+        font-size: 2.5vw;
+    }
+    .contcate{
+        width: calc(50% - 16px) ; /* Se ajusta automáticamente al contenido y responsive */
+        height: auto; /* Altura fija relativa al viewport */
+        border-radius: 10px;
+        display: block;
+        text-align: center;
     }
 }
 
@@ -311,7 +357,21 @@
     .galeria img {
         width: 100%;
     }
+    .cateenlace{
+        text-decoration: none;
+        color: black;
+        font-size: 3.5vw;
+    }
+    .contcate{
+        width: 100% ; /* Se ajusta automáticamente al contenido y responsive */
+        height: auto; /* Altura fija relativa al viewport */
+        border-radius: 10px;
+        display: block;
+        text-align: center;
+    }
 }
+
+
 
 /* --- FIN SECCIÓN: GALERÍA DE SOCIOS COMERCIALES --- */
 
@@ -344,6 +404,7 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra para las tarjetas */
     border-radius: 16px;
     background-color: #fff;
+    width:  100%;
 }
 
 .imagencont {
@@ -380,6 +441,7 @@
     object-fit: cover;
     border-radius: 10px;
 }
+
 
 @media (max-width: 900px) {
     .card {

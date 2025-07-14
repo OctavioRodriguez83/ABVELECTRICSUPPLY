@@ -70,6 +70,22 @@
 
         <div class="mivi">
             <h1>Productos</h1>
+            <div id="cards">
+
+                <div class="card">
+                    <div class="galeria2">
+                        {% for categoria in categorias %}
+                            <div class="contcate">
+                                <a class="cateenlace" href="{% url 'products' %}categoria/{{ categoria.categoria_name }}">
+                                    <span>{{ categoria.categoria_name }}</span>
+                                </a>
+                            </div>        
+                        {% empty %}
+                            <p>No hay categorías disponibles</p>
+                        {% endfor %}
+                    </div>                    
+                </div>
+            </div>
             <!--<div class="store-container">
 
                Filtro de categorías debajo del buscador, solo texto 
