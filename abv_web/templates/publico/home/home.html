@@ -69,7 +69,7 @@
         </div>
 
         <div class="mivi">
-            <h1>Productos</h1>
+            <h1>Categorias</h1>
             <div id="cards">
 
                 <div class="card">
@@ -77,6 +77,9 @@
                         {% for categoria in categorias %}
                             <div class="contcate">
                                 <a class="cateenlace" href="{% url 'products' %}categoria/{{ categoria.categoria_name }}">
+                                    <div class="imgcateg">
+                                        <img class="carousel-imgc1" src="/media-files/{{ categoria.categoria_url_img }}" class="d-block w-100" alt="...">
+                                    </div>
                                     <span>{{ categoria.categoria_name }}</span>
                                 </a>
                             </div>        
@@ -184,7 +187,9 @@
               <div class="card">
                   <div class="galeria">
                     {% for marca in marcas %}
-                    <img src="/media-files/{{ marca.marca_url_img.name }}" alt="1">
+                    <a href="{% url 'products' %}marca/{{ marca.marca_name }}">
+                        <img src="/media-files/{{ marca.marca_url_img.name }}" alt="1">
+                    </a>
                     {% endfor %}
                   </div>
               </div>
