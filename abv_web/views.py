@@ -32,7 +32,7 @@ def dashboard(request):
 
 #------------------------------------------------------------------------------------------------------------------#
 
-#---------------------------------------------CRUD MARCAS----------------------------------------------------------#                                  
+#---------------------------------------------CRUD MARCAS----------------------------------------------------------#
 @login_required
 def marcas(request):
     filtro = request.GET.get('status', 'active')
@@ -47,7 +47,7 @@ def marcas(request):
             formM.save()
             return HttpResponseRedirect(reverse('marcas'))
         else:
-            print(formM.errors)
+            print(formM.errors) # Para depuración: imprime errores del formulario en consola
     else:
         formM = MarcaForm()
 
@@ -56,7 +56,7 @@ def marcas(request):
 @login_required
 def eliminar_marca(request, marca_id):
     marca = get_object_or_404(Marca, id=marca_id)
-    marca.status = False  
+    marca.status = False
     marca.save()
     return HttpResponseRedirect(reverse('marcas'))
 
@@ -66,16 +66,17 @@ def editar_marca(request, marca_id):
     marcas = Marca.objects.filter(status=True)
 
     if request.method == "POST":
-        marca.marca_name = request.POST.get('marca_name')
-        marca.marca_descripcion = request.POST.get('marca_descripcion')
+        # Usar el formulario para manejar la actualización
+        formM = MarcaForm(request.POST, request.FILES, instance=marca)
+        if formM.is_valid():
+            formM.save()
+            return HttpResponseRedirect(reverse('marcas'))
+        else:
+            print(formM.errors) # Para depuración: imprime errores del formulario en consola
+    else:
+        # Inicializar el formulario con los datos existentes de la marca
+        formM = MarcaForm(instance=marca)
 
-        if 'marca_url_img' in request.FILES:
-            marca.marca_url_img = request.FILES['marca_url_img']
-
-        marca.save()
-        return HttpResponseRedirect(reverse('marcas'))
-
-    formM = MarcaForm()
     return render(request, 'adm/marcas/editar_marcas.html', {
         'marca': marca,
         'marcas': marcas,
@@ -97,17 +98,18 @@ def restaurar_marca(request, marca_id):
 def categorias(request):
     filtro = request.GET.get('status', 'active')
     if filtro == 'inactive':
-        categorias = Categoria.objects.filter(statusCategoria=False)
+        # Usar select_related para cargar la marca asociada de forma eficiente
+        categorias = Categoria.objects.filter(statusCategoria=False).select_related('marca')
     else:
-        categorias = Categoria.objects.filter(statusCategoria=True)
+        categorias = Categoria.objects.filter(statusCategoria=True).select_related('marca')
 
     if request.method == "POST":
         formC = CategoriaForm(request.POST, request.FILES)
         if formC.is_valid():
-            formC.save()
+            formC.save() # ModelForm maneja automáticamente el ForeignKey
             return HttpResponseRedirect(reverse('categorias'))
         else:
-            print(formC.errors)
+            print(formC.errors) # Para depuración: imprime errores del formulario en consola
     else:
         formC = CategoriaForm()
 
@@ -117,26 +119,21 @@ def categorias(request):
 @login_required
 def editar_categoria(request, categoria_id):
     categoria = get_object_or_404(Categoria, id=categoria_id)
-    categorias = Categoria.objects.filter(statusCategoria=True)  # Categorías activas
 
     if request.method == "POST":
-        categoria.categoria_name = request.POST.get('categoria_name')
-        categoria.categoria_descripcion = request.POST.get('categoria_descripcion')
+        # Usa el formulario para manejar la actualización, incluyendo el ForeignKey
+        formC = CategoriaForm(request.POST, request.FILES, instance=categoria)
+        if formC.is_valid():
+            formC.save() # ModelForm maneja automáticamente el ForeignKey
+            return HttpResponseRedirect(reverse('categorias'))
+        else:
+            print(formC.errors) # Para depuración: imprime errores del formulario en consola
+    else:
+        # Inicializa el formulario con los datos existentes de la categoría
+        formC = CategoriaForm(instance=categoria)
 
-        if 'categoria_url_img' in request.FILES:
-            categoria.categoria_url_img = request.FILES['categoria_url_img']
-
-        # Actualiza el estado activo/inactivo mediante checkbox
-        status = request.POST.get('statusCategoria')
-        categoria.statusCategoria = True if status == 'on' else False
-
-        categoria.save()
-        return HttpResponseRedirect(reverse('categorias'))
-
-    formC = CategoriaForm()
     return render(request, 'adm/categorias/editar_categorias.html', {
         'categoria': categoria,
-        'categorias': categorias,
         'formC': formC
     })
 
@@ -174,19 +171,20 @@ def carrouselBanner(request):
 
 @login_required
 def editar_carrouselBanner(request, carrouselBanner_id):
-    formp = CarrouselBannerForm()
-    posts = CarrouselBanner.objects.filter(statusBanner=True)
     carrouselBanner = get_object_or_404(CarrouselBanner, id=carrouselBanner_id)
+    posts = CarrouselBanner.objects.filter(statusBanner=True) # Se mantiene si es necesario para la plantilla
 
     if request.method == "POST":
-        carrouselBanner.carrouselBanner_name = request.POST.get('carrouselBanner_name')
-        carrouselBanner.carrouselBanner_descripcion = request.POST.get('carrouselBanner_descripcion')
-
-        if 'carrouselBanner_url_img' in request.FILES:
-            carrouselBanner.carrouselBanner_url_img = request.FILES['carrouselBanner_url_img']
-
-        carrouselBanner.save()
-        return HttpResponseRedirect(reverse('carrouselBanner'))
+        # Usar el formulario para manejar la actualización
+        formp = CarrouselBannerForm(request.POST, request.FILES, instance=carrouselBanner)
+        if formp.is_valid():
+            formp.save()
+            return HttpResponseRedirect(reverse('carrouselBanner'))
+        else:
+            print(formp.errors) # Para depuración
+    else:
+        # Inicializar el formulario con los datos existentes del banner
+        formp = CarrouselBannerForm(instance=carrouselBanner)
 
     return render(request, 'adm/carrouselBanner/editar_carrouselBanner.html', {'posts': posts,'carrouselBanner': carrouselBanner,'formp': formp})
 
@@ -201,20 +199,20 @@ def eliminar_carrouselBanner(request, carrouselBanner_id):
 #-----------------------------------------VISTAS LOGIN-------------------------------------------------------------#
 def login(request):
     if request.method == 'POST':
-        email = request.POST.get('email')  
+        email = request.POST.get('email')
         password = request.POST.get('password')
 
         try:
             user = User.objects.get(email=email)  # Buscar usuario por email
         except User.DoesNotExist:
             user = None
-        
+
         if user is not None:
             user = authenticate(request, username=user.username, password=password)  # Autenticar con username
             if user is not None:
                 auth_login(request, user)
                 return redirect('dashboard')
-        
+
         error_message = 'Correo o contraseña incorrectos'
         return render(request, 'adm/login/login.html', {'error': error_message})
 
@@ -241,6 +239,8 @@ def usuarios(request):
                 user.set_unusable_password()
             user.save()
             return redirect(reverse('usuarios'))
+        else:
+            print(form.errors) # Para depuración
     else:
         form = UsuarioForm()
     return render(request, 'adm/usuarios/usuarios.html', {'usuarios': usuarios, 'form': form})
@@ -250,40 +250,28 @@ def usuarios(request):
 def editar_usuario(request, usuario_id):
     usuario = get_object_or_404(Usuario, id=usuario_id)
     if request.method == 'POST':
-        data = request.POST
+        # Usar el formulario para manejar la actualización
+        form = UsuarioForm(request.POST, instance=usuario)
+        if form.is_valid():
+            user = form.save(commit=False)
+            pwd = form.cleaned_data.get('password')
+            if pwd:
+                user.set_password(pwd)
+            # Si no se proporciona una nueva contraseña, no se modifica
+            user.save()
+            return redirect(reverse('usuarios'))
+        else:
+            print(form.errors) # Para depuración
+    else:
+        # Inicializar el formulario con los datos existentes del usuario
+        form = UsuarioForm(instance=usuario)
 
-        nuevo_username = data.get('username')
-        if nuevo_username:
-            usuario.username = nuevo_username
-
-        nuevo_first_name = data.get('first_name')
-        if nuevo_first_name:
-            usuario.first_name = nuevo_first_name
-
-        nuevo_last_name = data.get('last_name')
-        if nuevo_last_name:
-            usuario.last_name = nuevo_last_name
-
-        nuevo_email = data.get('email')
-        if nuevo_email:
-            usuario.email = nuevo_email
-
-        # Actualiza la contraseña solo si se pasa y cumple con la longitud mínima (8 caracteres)
-        nuevo_password = data.get('password', '')
-        if nuevo_password and len(nuevo_password) >= 8:
-            usuario.set_password(nuevo_password)
-        # Sino no se modifica la contraseña
-
-        usuario.is_superuser = True if data.get('is_superuser') == 'on' else False
-
-        usuario.is_active = True if data.get('is_active') == 'on' else False
-
-        usuario.save()
-        return redirect(reverse('usuarios'))
-
+    # La lista de usuarios se mantiene si la plantilla la necesita
+    usuarios_list = User.objects.all()
     return render(request, 'adm/usuarios/usuarios.html', {
-        'usuarios': usuarios,
+        'usuarios': usuarios_list, # Se usa 'usuarios_list' para evitar conflicto con 'usuario'
         'usuario_actual': usuario,
+        'form': form, # Pasar el formulario inicializado
     })
 
 @login_required
@@ -291,7 +279,7 @@ def eliminar_usuario(request, usuario_id):
     usuario = get_object_or_404(Usuario, id=usuario_id)
     usuario.delete()
     return redirect(reverse('usuarios'))
-    
+
 
 #------------------------------------------------------------------------------------------------------------------#
 
@@ -368,16 +356,21 @@ def empresas(request):
 
 @login_required
 def editar_empresa(request, empresa_id):
-    empresas = Empresa.objects.all()
     empresa = get_object_or_404(Empresa, id=empresa_id)
-    formE = EmpresaForm()
+    empresas = Empresa.objects.all() # Se mantiene si es necesario para la plantilla
+
     if request.method == "POST":
-        empresa.empresa_nombre = request.POST.get("empresa_nombre")
-        empresa.empresa_descripcion = request.POST.get("empresa_descripcion")
-        if "empresa_logo" in request.FILES:
-            empresa.empresa_logo = request.FILES["empresa_logo"]
-        empresa.save()
-        return redirect(reverse("empresas"))
+        # Usar el formulario para manejar la actualización
+        formE = EmpresaForm(request.POST, request.FILES, instance=empresa)
+        if formE.is_valid():
+            formE.save()
+            return redirect(reverse("empresas"))
+        else:
+            print(formE.errors) # Para depuración
+    else:
+        # Inicializar el formulario con los datos existentes de la empresa
+        formE = EmpresaForm(instance=empresa)
+
     return render(request, "adm/empresas/editar_empresa.html", {"empresas": empresas, "empresa": empresa, "formE": formE})
 
 @login_required
@@ -405,14 +398,17 @@ def almacenes(request):
     return render(request, 'adm/almacenes/almacenes.html', {'almacenes': almacenes_list, 'formA': formA})
 
 def editar_almacen(request, almacen_id):
-    almacenes_list = Almacen.objects.all()
     almacen = get_object_or_404(Almacen, id=almacen_id)
-    empresas_list = Empresa.objects.all()
+    almacenes_list = Almacen.objects.all() # Se mantiene si es necesario para la plantilla
+    empresas_list = Empresa.objects.all() # Se mantiene si es necesario para la plantilla
+
     if request.method == "POST":
         formA = AlmacenForm(request.POST, instance=almacen)
         if formA.is_valid():
             formA.save()
             return redirect(reverse("almacenes"))
+        else:
+            print(formA.errors) # Para depuración
     else:
         formA = AlmacenForm(instance=almacen)
     return render(request, 'adm/almacenes/editar_almacen.html', {
@@ -470,12 +466,12 @@ def crear_producto(request):
         if form.is_valid():
             form.save()
             return redirect(reverse("productos"))
+        else:
+            print(form.errors) # Para depuración
     else:
         form = ProductoForm()
 
-    marcas = Marca.objects.all()
-    categorias = Categoria.objects.all()
-    return render(request, "adm/productos/crear_producto.html", {"form": form, "marcas": marcas, "categorias": categorias})
+    return render(request, "adm/productos/crear_producto.html", {"form": form})
 
 
 @login_required
@@ -557,7 +553,7 @@ def proyectos(request):
 @login_required
 def editar_proyecto(request, proyecto_id):
     proyecto = get_object_or_404(Proyecto, id=proyecto_id)
-    proyectos_list = Proyecto.objects.all()
+    proyectos_list = Proyecto.objects.all() # Se mantiene si es necesario para la plantilla
     if request.method == "POST":
         formProj = ProyectoForm(request.POST, request.FILES, instance=proyecto)
         if formProj.is_valid():
@@ -637,6 +633,8 @@ def agregar_inventario(request, producto_id):
             inventario.fecha_modificacion = None  # Sin modificaciones aún
             inventario.save()
             return redirect(reverse("ver_producto", args=[producto_id]))
+        else:
+            print(form.errors) # Para depuración
     else:
         form = InventarioForm()
 
@@ -661,15 +659,17 @@ def modificar_stock(request, inventario_id):
     producto = inventario.producto
     if request.method == "POST":
         form = InventarioForm(request.POST, instance=inventario)
-        form.fields.pop("almacen", None)  # elimina el campo que no se envía
+        # form.fields.pop("almacen", None) # No es necesario si el campo 'almacen' no se va a actualizar
         if form.is_valid():
             inventario = form.save(commit=False)
             inventario.fecha_modificacion = timezone.now()
             inventario.save()
             return redirect(reverse("ver_producto", args=[producto.id]))
+        else:
+            print(form.errors) # Para depuración
     else:
         form = InventarioForm(instance=inventario)
-        form.fields.pop("almacen", None)
+        # form.fields.pop("almacen", None) # No es necesario si el campo 'almacen' no se va a actualizar
 
     inventarios = Inventario.objects.filter(producto=producto)
     imagenes_secundarias = ImagenSecundariaProducto.objects.filter(producto=producto)
@@ -681,9 +681,9 @@ def modificar_stock(request, inventario_id):
             "producto": producto,
             "inventarios": inventarios,
             "imagenes_secundarias": imagenes_secundarias,
-            "form": InventarioForm(),
-            "form_modificar": form,
-            "inventario_modificar": inventario,
+            "form": InventarioForm(), # Formulario para agregar nuevo inventario
+            "form_modificar": form, # Formulario para modificar el inventario específico
+            "inventario_modificar": inventario, # Instancia del inventario que se está modificando
         }
     )
 
@@ -960,55 +960,15 @@ def products(request):
     return render(request, 'publico/store/store.html', context)
 
 def products2(request, Nmarca):
-    marcase = Marca.objects.filter(marca_name=Nmarca)
-    idm=0
-    for n in marcase:
-        idm=n.id
-        print(idm)
-    marcas_qs = Marca.objects.filter(status=True)
-    categorias_qs = Categoria.objects.filter(statusCategoria=True)
-
-    qs = Producto.objects.filter(marca=idm).order_by('id')
-
-    search = request.GET.get('search', '').strip()
-    if search:
-        qs = qs.filter(producto_nombre__icontains=search)
-
-    marcas = request.GET.getlist('marca')
-    if marcas:
-        qs = qs.filter(marca__id__in=marcas)
-
-    categorias = request.GET.getlist('categoria')
-    if categorias:
-        qs = qs.filter(categoria__id__in=categorias)
-
-    # --- Filtro de precio ---
-    precio_min = request.GET.get('precio_min')
-    precio_max = request.GET.get('precio_max')
-    if precio_min:
-        qs = qs.filter(producto_precio_base__gte=precio_min)
-    if precio_max:
-        qs = qs.filter(producto_precio_base__lte=precio_max)
-
-    paginator = Paginator(qs, 12)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
+    marca=Nmarca
+    categorias_qs = Categoria.objects.filter(statusCategoria=True).filter(marca__marca_name=Nmarca)
     context = {
-        'productos': page_obj,
-        'marcas': marcas_qs,
+        'marca': marca,
         'categorias': categorias_qs,
     }
 
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        html_products = render(request, 'publico/partials/_store_products.html', context).content.decode('utf-8')
-        html_paginator = render(request, 'publico/partials/_store_paginator.html', context).content.decode('utf-8')
-        return JsonResponse({
-            'products_html': html_products,
-            'paginator_html': html_paginator
-        })
 
-    return render(request, 'publico/store/store.html', context)
+    return render(request, 'publico/categorias/categorias.html', context)
 
 def products3(request, Ncate):
     catese = Categoria.objects.filter(categoria_name=Ncate)

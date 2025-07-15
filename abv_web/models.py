@@ -16,6 +16,15 @@ class Categoria(models.Model):
 	categoria_descripcion = models.CharField(max_length=300)
 	categoria_url_img = models.ImageField(upload_to="Imagenes_Categoria", null=True)
 	statusCategoria = models.BooleanField(default=True)
+	# --- CAMBIO IMPORTANTE: ForeignKey para relación Uno-a-Muchos ---
+	# Cada Categoria tendrá UNA Marca. Una Marca puede tener MUCHAS Categorias.
+	marca = models.ForeignKey(
+		Marca,
+		on_delete=models.CASCADE, # Si se elimina una Marca, se eliminan sus Categorias asociadas
+		null=True, # Permite que una Categoría no tenga una Marca asignada (opcional)
+		blank=True, # Permite que el campo sea opcional en formularios
+		related_name='categorias_asociadas' # Nombre inverso para acceder desde Marca a sus Categorias
+	)
 
 	def __str__(self):
 		return self.categoria_name

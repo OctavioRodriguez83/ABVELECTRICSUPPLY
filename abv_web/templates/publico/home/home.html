@@ -69,26 +69,42 @@
         </div>
 
         <div class="mivi">
-            <h1>Categorias</h1>
-            <div id="cards">
-
-                <div class="card">
-                    <div class="galeria2">
-                        {% for categoria in categorias %}
-                            <div class="contcate">
-                                <a class="cateenlace" href="{% url 'products' %}categoria/{{ categoria.categoria_name }}">
-                                    <div class="imgcateg">
-                                        <img class="carousel-imgc1" src="/media-files/{{ categoria.categoria_url_img }}" class="d-block w-100" alt="...">
-                                    </div>
-                                    <span>{{ categoria.categoria_name }}</span>
-                                </a>
-                            </div>        
-                        {% empty %}
-                            <p>No hay categorías disponibles</p>
-                        {% endfor %}
-                    </div>                    
-                </div>
-            </div>
+            {# Iterar sobre marcas y luego sobre las categorías asociadas a CADA marca #}
+             {% for marca_obj in marcas %}
+                 {# Solo renderiza la sección si la marca tiene categorías asociadas #}
+                 {% if marca_obj.categorias_asociadas.all %}
+                     <h1>Categorías de {{ marca_obj.marca_name }}</h1>
+                     <div id="cards">
+                         <div class="card">
+                             <div class="galeria2">
+                                 {# Limitar a 7 categorías por marca #}
+                                 {% for categoria_asociada in marca_obj.categorias_asociadas.all|slice:":7" %}
+                                     <div class="contcate">
+                                         <a class="cateenlace" href="{% url 'products' %}categoria/{{ categoria_asociada.categoria_name }}">
+                                             <div class="imgcateg">
+                                                 <img  src="/media-files/{{ categoria_asociada.categoria_url_img }}" class="d-block w-100">
+                                             </div>
+                                             <span>{{ categoria_asociada.categoria_name }}</span>
+                                         </a>
+                                     </div>
+                                 {% endfor %}
+                                 {# Si hay más de 7 categorías, mostrar un enlace "Ver más" #}
+                                 {% if marca_obj.categorias_asociadas.count > 7 %}
+                                     <div class="contcate">
+                                                     <a class="cateenlace" href="{% url 'products' %}marca/{{ marca_obj.marca_name }}">
+                                                         <div class="imgcateg">
+                                                             <img src="/media-files/publico/mas.png">
+                                                         </div>
+                                                         <span>Ver más categorías de {{ marca_obj.marca_name }}</span>
+                                                     </a>
+                                                 </div>
+                                 {% endif %}
+                             </div>
+                         </div>
+                     </div>
+                     
+                 {% endif %} {# Fin de la condición para mostrar la sección de marca #}
+             {% endfor %}
             <!--<div class="store-container">
 
                Filtro de categorías debajo del buscador, solo texto 

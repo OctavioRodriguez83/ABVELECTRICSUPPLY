@@ -1,8 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from abv_web.models import *
-
+from abv_web.models import * # Asegúrate de que Marca y Categoria estén importadas aquí
 
 #---------------------------------------------CRUD MARCAS----------------------------------------------------------#
 class MarcaForm(forms.ModelForm):
@@ -31,12 +30,21 @@ class MarcaForm(forms.ModelForm):
 #------------------------------------------CRUD CATEGORIAS---------------------------------------------------------#
 
 class CategoriaForm(forms.ModelForm):
+    # --- CAMBIO IMPORTANTE: ModelChoiceField para seleccionar UNA Marca ---
+    marca = forms.ModelChoiceField(
+        queryset=Marca.objects.all().order_by('marca_name'), # Ordena las marcas alfabéticamente
+        widget=forms.Select(attrs={"class": "form-control"}), # Muestra como un dropdown de selección
+        label="Marca Asociada",
+        required=False # Permite que una categoría no tenga una marca asignada
+    )
+
     class Meta:
         model = Categoria
-        fields = ['categoria_name', 'categoria_url_img', 'categoria_descripcion']
+        # Asegúrate de incluir 'marca' (singular) en los campos del formulario
+        fields = ['categoria_name', 'categoria_url_img', 'categoria_descripcion', 'statusCategoria', 'marca'] # Añadido statusCategoria y marca
 
     categoria_name = forms.CharField(
-        label="Nombre de la Marca",
+        label="Nombre de la Categoría",
         widget=forms.TextInput(attrs={"class": "form-control"}),
         max_length=30
     )
@@ -47,11 +55,17 @@ class CategoriaForm(forms.ModelForm):
         help_text='Formato permitido: JPG, PNG. Tamaño máximo: 5MB.'
     )
     categoria_descripcion = forms.CharField(
-        label="descripción de la categoria",
+        label="Descripción de la categoría",
         required=False,
         widget=forms.Textarea(attrs={"class": "form-control", "rows": 3}),
         max_length=300
     )
+    statusCategoria = forms.BooleanField( # Asegúrate de que este campo también esté definido en el form
+        label='Activa',
+        required=False,
+        widget=forms.CheckboxInput(attrs={"class": "form-check-input"})
+    )
+
 
 #------------------------------------------CRUD CARROUSELBANNER-----------------------------------------------------#
 
@@ -61,7 +75,7 @@ class CarrouselBannerForm(forms.ModelForm):
         fields = ['carrouselBanner_name', 'carrouselBanner_url_img', 'carrouselBanner_descripcion']
 
     carrouselBanner_name = forms.CharField(
-        label="Nombre de la Marca",
+        label="Nombre del Banner",
         widget=forms.TextInput(attrs={"class": "form-control"}),
         max_length=30
     )
@@ -72,7 +86,7 @@ class CarrouselBannerForm(forms.ModelForm):
         help_text='Formato permitido: JPG, PNG. Tamaño máximo: 5MB.'
     )
     carrouselBanner_descripcion = forms.CharField(
-        label="descripción de la categoria",
+        label="Descripción del Banner",
         required=False,
         widget=forms.Textarea(attrs={"class": "form-control", "rows": 3}),
         max_length=300

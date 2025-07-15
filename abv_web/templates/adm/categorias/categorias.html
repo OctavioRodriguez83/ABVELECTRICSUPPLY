@@ -46,7 +46,7 @@
   </button>
 </div>
 
-          <!-- Tabla sin columna Imagen -->
+          <!-- Tabla con columna Imagen y Marca -->
           <div class="table-responsive">
             <table
               id="categoriasTable"
@@ -56,6 +56,8 @@
                 <tr>
                   <th>Categoría</th>
                   <th>Descripción</th>
+                  <th>Imagen</th>
+                  <th>Marca Asociada</th> {# Cambiado a singular #}
                   <th class="text-center">Acciones</th>
                 </tr>
               </thead>
@@ -66,12 +68,27 @@
                   style="cursor: pointer"
                   data-name="{{ categoria.categoria_name|escapejs }}"
                   data-desc="{{ categoria.categoria_descripcion|escapejs }}"
-                  data-img-url="/media-files/{{ categoria.categoria_url_img.name }}"
+                  data-img-url="{% if categoria.categoria_url_img %}/media-files/{{ categoria.categoria_url_img.name }}{% else %}{% static 'path/to/default/image.png' %}{% endif %}"
                   data-edit-url="{% url 'editar_categoria' categoria.id %}"
                   data-delete-url="{% url 'eliminar_categoria' categoria.id %}"
+                  data-marca-name="{% if categoria.marca %}{{ categoria.marca.marca_name|escapejs }}{% else %}Ninguna{% endif %}" {# Pasa el nombre de la marca #}
                 >
                   <td>{{ categoria.categoria_name }}</td>
                   <td>{{ categoria.categoria_descripcion }}</td>
+                  <td>
+                    {% if categoria.categoria_url_img %}
+                      <img src="/media-files/{{ categoria.categoria_url_img }}" alt="{{ categoria.categoria_name }}" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
+                    {% else %}
+                      No imagen
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if categoria.marca %} {# Accede directamente a la marca #}
+                      <span class="badge bg-primary me-1">{{ categoria.marca.marca_name }}</span>
+                    {% else %}
+                      Ninguna
+                    {% endif %}
+                  </td>
                   <td class="text-center">
                     {% if filtro == 'inactive' %}
                       <a href="{% url 'restaurar_categoria' categoria.id %}"
@@ -142,6 +159,27 @@
                 <label class="form-label">Selecciona imagen</label>
                 {{ formC.categoria_url_img }}
               </div>
+              {# Campo para la marca asociada (ForeignKey) #}
+              <div class="mb-3">
+                <label class="form-label">{{ formC.marca.label }}</label>
+                {{ formC.marca }} {# Esto renderizará el dropdown de selección #}
+                {% if formC.marca.help_text %}
+                    <div class="form-text">{{ formC.marca.help_text }}</div>
+                {% endif %}
+                {% for error in formC.marca.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+              </div>
+              {# Campo para el estado (statusCategoria) #}
+              <div class="mb-3 form-check">
+                {{ formC.statusCategoria }}
+                <label class="form-check-label" for="{{ formC.statusCategoria.id_for_label }}">
+                  {{ formC.statusCategoria.label }}
+                </label>
+                {% for error in formC.statusCategoria.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+              </div>
             </div>
             <div class="modal-footer">
               <button
@@ -172,7 +210,7 @@
         <div class="modal-content border-0 rounded-4 shadow-lg">
           <!-- Header -->
           <div class="modal-header bg-secondary bg-opacity-10 border-bottom-0">
-            <h5 class="modal-title fw-bold" id="modalViewCategoriaLabel"></h5>
+            <h5 class="modal-title fw-bold" id="modalViewCategoriaTitle"></h5>
             <button
               type="button"
               class="btn-close"
@@ -205,6 +243,13 @@
                     id="modalViewCategoriaLabel"
                   ></h4>
                   <p id="viewCategoriaDesc" class="fs-6 lh-base"></p>
+                  {# Nueva sección para mostrar la marca asociada #}
+                  <div class="mt-3">
+                    <h6 class="fw-semibold">Marca Asociada:</h6>
+                    <div id="viewCategoriaMarca" class="d-flex flex-wrap gap-2">
+                      {# La marca se insertará aquí con JavaScript #}
+                    </div>
+                  </div>
                 </div>
 
                 <!-- Botones de acción -->
@@ -258,6 +303,10 @@
           },
           responsive: true,
           autoWidth: false,
+          columnDefs: [
+            { targets: [0, 1, 2, 3], orderable: true }, // Habilita ordenamiento para las primeras 4 columnas
+            { targets: [4], orderable: false } // Deshabilita ordenamiento para la columna de acciones
+          ],
         });
 
         // Delegación de eventos para filas que muestran el modal de visualización
@@ -267,13 +316,25 @@
           const imgUrl = $(this).data("img-url");
           const editUrl = $(this).data("edit-url");
           const deleteUrl = $(this).data("delete-url");
+          const marcaName = $(this).data("marca-name"); // Obtener el nombre de la marca
 
+          $("#modalViewCategoriaTitle").text(name);
           $("#modalViewCategoriaLabel").text(name);
           $("#viewCategoriaDesc").text(desc);
           $("#viewCategoriaImg").attr({ src: imgUrl, alt: name });
           $("#viewEditBtn").attr("href", editUrl);
           $("#viewDeleteBtn").attr("href", deleteUrl);
           $("#viewCategoriaImg").siblings("figcaption").text("Vista previa de " + name);
+
+          // Mostrar la marca en el modal
+          const marcaContainer = $("#viewCategoriaMarca");
+          marcaContainer.empty(); // Limpiar marcas anteriores
+          if (marcaName && marcaName !== 'Ninguna') {
+            marcaContainer.append('<span class="badge bg-primary me-1">' + marcaName + '</span>');
+          } else {
+            marcaContainer.append('<span class="text-muted">Ninguna</span>');
+          }
+
 
           new bootstrap.Modal($("#modalViewCategoria")).show();
         });

@@ -31,7 +31,7 @@
             type="button"
             class="btn btn-success fw-bold"
             data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop"
+            data-bs-target="#modalAddCategoria" {# Cambiado a modalAddCategoria para consistencia #}
           >
             <i class="fas fa-plus me-1"></i> Agregar
           </button>
@@ -44,6 +44,8 @@
             <tr>
               <th>Categoría</th>
               <th>Descripción</th>
+              <th>Imagen</th> {# Añadido para consistencia #}
+              <th>Marca Asociada</th> {# Cambiado a singular #}
               <th class="text-center">Acciones</th>
             </tr>
           </thead>
@@ -52,6 +54,20 @@
             <tr>
               <td>{{ cat.categoria_name }}</td>
               <td>{{ cat.categoria_descripcion }}</td>
+              <td>
+                {% if cat.categoria_url_img %}
+                  <img src="/media/{{ cat.categoria_url_img.name }}" alt="{{ cat.categoria_name }}" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
+                {% else %}
+                  No imagen
+                {% endif %}
+              </td>
+              <td>
+                {% if cat.marca %} {# Accede directamente a la marca #}
+                  <span class="badge bg-primary me-1">{{ cat.marca.marca_name }}</span>
+                {% else %}
+                  Ninguna
+                {% endif %}
+              </td>
               <td class="text-center">
                 <a href="{% url 'editar_categoria' cat.id %}" class="btn btn-sm btn-warning me-1">
                   Editar <i class="bi bi-pencil-fill"></i>
@@ -69,7 +85,7 @@
           </div>
         </div>
 
-       <!-- Modal de Editar Categoría -->
+        <!-- Modal de Editar Categoría -->
 <div class="modal fade show d-block" id="editCategoriaModal" tabindex="-1" aria-labelledby="editCategoriaModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content border-0 shadow-lg rounded-4">
@@ -79,29 +95,63 @@
       </div>
       <form action="{% url 'editar_categoria' categoria.id %}" method="POST" enctype="multipart/form-data" class="p-3">
         {% csrf_token %}
+        {# Renderiza los campos del formulario usando Django forms #}
         <div class="mb-3">
-          <label class="form-label fw-semibold">Nombre de la Categoría</label>
-          <input type="text" name="categoria_name" value="{{ categoria.categoria_name }}" class="form-control rounded-3 shadow-sm" required>
+          <label class="form-label fw-semibold">{{ formC.categoria_name.label }}</label>
+          {{ formC.categoria_name }}
+          {% for error in formC.categoria_name.errors %}
+            <div class="text-danger small">{{ error }}</div>
+          {% endfor %}
         </div>
         <div class="mb-3">
-          <label class="form-label fw-semibold">Descripción</label>
-          <textarea name="categoria_descripcion" class="form-control rounded-3 shadow-sm" required>{{ categoria.categoria_descripcion }}</textarea>
+          <label class="form-label fw-semibold">{{ formC.categoria_descripcion.label }}</label>
+          {{ formC.categoria_descripcion }}
+          {% for error in formC.categoria_descripcion.errors %}
+            <div class="text-danger small">{{ error }}</div>
+          {% endfor %}
         </div>
         <div class="mb-3">
-          <label class="form-label fw-semibold">Selecciona imagen</label>
+          <label class="form-label fw-semibold">{{ formC.categoria_url_img.label }}</label>
           <div class="form-control p-2 rounded-3 shadow-sm">
             {{ formC.categoria_url_img }}
           </div>
+          {% if formC.categoria_url_img.help_text %}
+            <div class="form-text">{{ formC.categoria_url_img.help_text }}</div>
+          {% endif %}
+          {% for error in formC.categoria_url_img.errors %}
+            <div class="text-danger small">{{ error }}</div>
+          {% endfor %}
         </div>
+        {# Campo para la marca asociada (ForeignKey) #}
+        <div class="mb-3">
+          <label class="form-label fw-semibold">{{ formC.marca.label }}</label>
+          {{ formC.marca }} {# Esto renderizará el dropdown de selección #}
+          {% if formC.marca.help_text %}
+              <div class="form-text">{{ formC.marca.help_text }}</div>
+          {% endif %}
+          {% for error in formC.marca.errors %}
+              <div class="text-danger small">{{ error }}</div>
+          {% endfor %}
+        </div>
+        {# Campo para el estado (statusCategoria) #}
+        <div class="mb-3 form-check">
+          {{ formC.statusCategoria }}
+          <label class="form-check-label" for="{{ formC.statusCategoria.id_for_label }}">
+            {{ formC.statusCategoria.label }}
+          </label>
+          {% for error in formC.statusCategoria.errors %}
+              <div class="text-danger small">{{ error }}</div>
+          {% endfor %}
+        </div>
+
         <div class="modal-footer border-0">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" onclick="window.location.href='{% url 'categorias' %}'">Cancelar</button>
           <button type="submit" class="btn btn-primary fw-bold">Guardar cambios</button>
         </div>
       </form>
     </div>
   </div>
 </div>
-
 
         <script>
           $(document).ready(function() {
@@ -126,6 +176,11 @@
             // Mostrar modal de edición automáticamente
             var editModal = new bootstrap.Modal(document.getElementById('editCategoriaModal'));
             editModal.show();
+
+            // Redirigir a la lista de categorías cuando el modal se cierra
+            $('#editCategoriaModal').on('hidden.bs.modal', function (e) {
+                window.location.href = '{% url "categorias" %}';
+            });
           });
         </script>
       {% endblock %}
