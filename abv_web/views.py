@@ -834,7 +834,6 @@ def eliminar_proyecto_destacado(request, destacado_id):
 #---------------------------------------------VISTAS PUBLICO-------------------------------------------------------#
 
 def home(request):
-    qs = Producto.objects.all().order_by('id')
     posts = CarrouselBanner.objects.filter(statusBanner=True)
     categorias = Categoria.objects.all()
     marcas = Marca.objects.filter(status=True)
@@ -855,11 +854,6 @@ def home(request):
     indicators_range_carrusel3 = range(1 + len(marcas))
     # --- Fin del cálculo de rangos ---
 
-    if categorias:
-        qs = qs.filter(categoria__id__in=categorias)
-    paginator = Paginator(qs, 12)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
 
     context = {
         'productos': page_obj,
@@ -872,14 +866,6 @@ def home(request):
         'indicators_range_carrusel2': indicators_range_carrusel2, # Nuevo
         'indicators_range_carrusel3': indicators_range_carrusel3,
     }
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        html_products = render(request, 'publico/partials/_store_products.html', context).content.decode('utf-8')
-        html_paginator = render(request, 'publico/partials/_store_paginator.html', context).content.decode('utf-8')
-        return JsonResponse({
-            'products_html': html_products,
-            'paginator_html': html_paginator
-        })
-
     return render(request, 'publico/home/home.html', context)
 
 def about(request):
