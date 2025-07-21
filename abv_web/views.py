@@ -856,7 +856,6 @@ def home(request):
 
 
     context = {
-        'productos': page_obj,
         'posts': posts,
         'marcas': marcas,
         'servicios': servicios,
