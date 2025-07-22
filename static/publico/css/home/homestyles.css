@@ -336,7 +336,7 @@
 .imgcateg img {
     width: 100%;
     height: 100%; /* La imagen ocupará todo el espacio de imgcateg */
-    object-fit: cover; /* Recorta la imagen para que cubra el espacio sin distorsionarse */
+    object-fit: contain; /* Recorta la imagen para que cubra el espacio sin distorsionarse */
     border-radius: 8px; /* Redondea la imagen dentro de la caja */
 }
 
@@ -371,8 +371,11 @@
 
 /* Responsive para tabletas (3 columnas) */
 @media (max-width: 992px) {
-    .galeria img {
+    .galeria a {
         width: calc(33.33% - 16px);
+    }
+    .galeria img {
+        width: calc(100%);
     }
 
     .cateenlace{
@@ -391,8 +394,11 @@
 
 /* Responsive para móviles (2 columnas) */
 @media (max-width: 768px) {
-    .galeria img {
+    .galeria a {
         width: calc(50% - 16px);
+    }
+    .galeria img {
+        width: calc(100%);
     }
     .cateenlace{
         text-decoration: none;
@@ -410,6 +416,9 @@
 
 /* Responsive para extra pequeños (1 columna) */
 @media (max-width: 480px) {
+    .galeria a {
+        width: 100%;
+    }
     .galeria img {
         width: 100%;
     }

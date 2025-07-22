@@ -120,11 +120,10 @@
             </div>
 
               <div class="store-layout">
-               roductos -->
-              
+                <!-- Productos -->
               </div>
 
-        
+              
             
             <!--</div>-->
           </div>
@@ -167,6 +166,50 @@
                     </div>
                 </div>
             </div>
+
+            <div class="mivi">
+            <h1>Proyectos de Integración</h1>
+            <div id="carruS">
+                    <div id="carouselExampleCaptions2I" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            {% for i in indicators_range_carrusel4 %}
+                                <button type="button" 
+                                        data-bs-target="#carouselExampleCaptions2I" 
+                                        data-bs-slide-to="{{ i }}" 
+                                        class="{% if forloop.first %}active{% endif %}"
+                                        aria-label="Slide {{ forloop.counter }}">
+                                </button>
+                            {% endfor %}
+                        </div>
+                        <div class="carousel-inner">
+                            
+
+                            {% for destacado in indicators_range_carrusel4 %}
+                                
+
+                                {% if destacado > 0 %}
+                                    <div class="carousel-item {% if destacado == 1 %}active{% endif %}" data-bs-interval="3000">
+                                            <img class="carousel-imgc2" src="/media-files//Imagenes_Carrusel_Integracion/carruselintegracion ({{ destacado }}).jpg" class="d-block w-100" alt="...">
+                                            <div class="carousel-caption caption-left INF"> 
+                                                <h1>{{ destacado.producto.producto_extendido }}</h1>
+                                            <!-- <p>{{ destacado.producto.producto_descripcion }}</p> -->
+                                            </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions2I" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions2I" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
         <div class="mivi">
             <h1>Acerca de Nosostros</h1>
             <div id="cards">
