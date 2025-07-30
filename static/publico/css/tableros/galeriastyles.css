@@ -1,42 +1,179 @@
-
-
-
 /* --- SECCIÓN: ESTILOS GENERALES DE TARJETAS (SOBRE NOSOTROS, SERVICIOS) --- */
 
 #cards2 {
     width: 100%;
+    background-color: #e2e3e5;
+    padding-top: 30px; /* Un poco más de padding arriba para el título y el contenido */
+    padding-bottom: 50px; /* Padding en la parte inferior del contenedor principal */
+    text-align: center; /* Centra el título H1 y cualquier otro texto directo */
+}
+
+#cards2 h1 {
+    font-size: 2.5em; /* Tamaño de fuente más grande para el título */
+    color: #333; /* Color oscuro para el título */
+    margin-bottom: 30px; /* Espacio debajo del título y el inicio del grid */
+}
+
+.card2 {
+    /* Este contenedor .card2 ahora actúa como un wrapper para centrar el grid */
+    display: flex; /* Lo mantenemos como flex para centrar su contenido si no usa grid */
+    justify-content: center; /* Centra horizontalmente el grid */
+    height: auto;
+    width: 100%;
+    max-width: 1200px; /* Limita el ancho máximo para pantallas grandes */
+    margin-left: auto; /* Centra el bloque .card2 */
+    margin-right: auto; /* Centra el bloque .card2 */
+    /* El padding que tenías aquí (padding: 3%) podría empujar el grid.
+       Es mejor manejar el espaciado interno con el padding del .grid y el gap. */
+    background-color: #e2e3e5; /* Mantén el color de fondo si lo deseas */
+}
+
+/* El contenedor .cards original que no se usa en este HTML, pero lo mantengo por si acaso. */
+/* #cards {
+    width: 90%;
     justify-content: center;
     display: flex;
     flex-wrap: wrap;
-    background-color: #e2e3e5;
-    padding-top: 1%;
-}
-.card2 {
-    margin-top: 1%;
-    margin-bottom: 1%;
-    padding: 3%;
-    display: flex;
-    height: auto;
-    flex-direction: row; /* Las tarjetas se muestran en fila */
-    justify-content: center;
-    background-color: #e2e3e5;
-    width:  100%;
-}
+} */
 
 .grid {
-  display: grid;
-  grid-template-columns: auto auto auto auto;
-  padding: 10px;
-  width:  100%;
-  height: auto;
+    display: grid;
+    /* grid-template-columns: auto auto auto auto;  Cambiaremos esto para mayor responsividad */
+    /* Utiliza repeat y minmax para un grid responsivo */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 280px es un buen tamaño mínimo para las tarjetas */
+    gap: 30px; /* Espacio entre las tarjetas (filas y columnas) */
+    padding: 20px; /* Padding alrededor de todo el grid */
+    width: 100%; /* Asegura que el grid ocupe el 100% del ancho disponible en .card2 */
+    height: auto;
+    box-sizing: border-box; /* Asegura que el padding no añada ancho extra */
 }
+
 .grid > div {
-  padding: 10px;
-  font-size: 30px;
-  text-align: center;
-  justify-content: center;
-  align-content: center;
-  height: 50vh;
+    /* Este div es el wrapper de cada enlace <a> que contiene la tarjeta */
+    display: flex; /* Usa flexbox para centrar la tarjeta dentro de su celda de grid */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: stretch; /* Permite que las tarjetas se estiren si hay diferencias de altura */
+    height: auto; /* La altura será determinada por el contenido de la tarjeta */
+    text-align: center; /* Centra el texto dentro de este div si hubiera, aunque la tarjeta lo maneja */
+}
+
+.grid > div > a {
+    text-decoration: none; /* Quita el subrayado de los enlaces */
+    color: inherit; /* Hereda el color del texto para el enlace */
+    display: flex; /* Asegura que el enlace se comporte como un contenedor flex */
+    width: 100%; /* El enlace ocupa el 100% del espacio de su celda */
+    height: 100%; /* El enlace ocupa el 100% de la altura de su celda */
+    justify-content: center; /* Centra la tarjeta si el enlace tiene ancho fijo */
+    align-items: center; /* Centra la tarjeta si el enlace tiene altura fija */
+}
+
+.card {
+    /* Estilos para cada tarjeta individual */
+    background-color: #fff;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
+    border-radius: 18px; /* Bordes un poco más redondeados */
+    padding: 25px; /* Padding interno de la tarjeta */
+    display: flex;
+    flex-direction: column; /* Coloca imagen y texto en columna */
+    justify-content: center; /* Centra verticalmente el contenido dentro de la tarjeta */
+    align-items: center; /* Centra horizontalmente el contenido (imagen y texto) */
+    text-align: center; /* Centra el texto dentro de la tarjeta */
+    width: 100%; /* La tarjeta ocupa el 100% del espacio disponible en su celda */
+    max-width: 300px; /* Limita el ancho máximo de la tarjeta individual */
+    height: 100%; /* La tarjeta ocupa el 100% de la altura del contenedor padre .grid > div */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Transición para efectos hover */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Pequeño levantamiento al pasar el mouse */
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25); /* Sombra más intensa al pasar el mouse */
+}
+
+.card > img {
+    width: 75%; /* Ajusta el tamaño de la imagen */
+    max-width: 160px; /* Limita el tamaño máximo de la imagen */
+    height: auto;
+    margin-bottom: 20px; /* Espacio entre la imagen y el texto */
+    display: block; /* Asegura que la imagen sea un bloque para margin-bottom */
+}
+
+.card p {
+    font-size: 1.1em; /* Tamaño de fuente ligeramente más grande para el texto */
+    color: #444; /* Color del texto */
+    font-weight: 500; /* Un poco más de grosor para el texto */
+    line-height: 1.4; /* Espaciado entre líneas para mejor lectura */
+    word-break: break-word; /* Rompe palabras largas si es necesario */
+    padding: 0 5px; /* Pequeño padding horizontal para el texto */
 }
 
 /* --- FIN SECCIÓN: ESTILOS GENERALES DE TARJETAS --- */
+
+/* --- MEDIA QUERIES PARA RESPONSIVIDAD (OPCIONAL PERO RECOMENDADO) --- */
+
+@media (max-width: 1200px) {
+    .card2 {
+        max-width: 960px; /* Ajuste para pantallas medianas */
+    }
+}
+
+@media (max-width: 992px) {
+    .card2 {
+        max-width: 720px; /* Ajuste para tablets */
+    }
+    .grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Reducir el tamaño mínimo de la tarjeta */
+        gap: 25px;
+    }
+    #cards2 h1 {
+        font-size: 2em;
+    }
+}
+
+@media (max-width: 768px) {
+    .card2 {
+        max-width: 540px; /* Ajuste para tablets pequeñas */
+    }
+    .grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Más reducción para móviles */
+        gap: 20px;
+    }
+    .card {
+        padding: 20px;
+        max-width: 250px; /* Ajuste para tarjetas en pantallas más pequeñas */
+    }
+    .card > img {
+        width: 80%;
+        max-width: 130px;
+        margin-bottom: 15px;
+    }
+    .card p {
+        font-size: 1em;
+    }
+    #cards2 h1 {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+    }
+}
+
+@media (max-width: 576px) {
+    .card2 {
+        max-width: 90%; /* Ocupa casi todo el ancho en móviles */
+    }
+    .grid {
+        grid-template-columns: 1fr; /* Una columna en pantallas muy pequeñas */
+        gap: 20px;
+        padding: 15px;
+    }
+    .card {
+        max-width: 300px; /* Asegura un tamaño legible para la tarjeta única */
+        margin: auto; /* Centra la tarjeta cuando es una sola columna */
+    }
+    #cards2 {
+        padding-top: 20px;
+        padding-bottom: 40px;
+    }
+    #cards2 h1 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+}
