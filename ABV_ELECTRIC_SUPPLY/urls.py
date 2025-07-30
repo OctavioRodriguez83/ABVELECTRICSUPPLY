@@ -121,6 +121,7 @@ urlpatterns = [
     #path('products/', views.store, name='products'),
     #path('store/', views.products, name='store'),
     path('search/', views.search_products, name='navbar_search'),
+    path('tableros/', views.tableros_diag, name='tableros'),
 
     ]
 

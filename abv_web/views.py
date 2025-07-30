@@ -1032,3 +1032,6 @@ def search_products(request):
     return JsonResponse({'results_html': results_html})
 
 
+def tableros_diag(request):
+
+    return render(request, 'publico/tableros/galeria.html')
