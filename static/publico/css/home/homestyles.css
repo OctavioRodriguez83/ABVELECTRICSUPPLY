@@ -55,7 +55,7 @@
   padding-top: 15px;
   padding-bottom: 15px;
 }
-.announcements-wrapper img {
+.filtro-especifico {
   filter: grayscale(100%) brightness(1.2) sepia(100%);
 }
 
