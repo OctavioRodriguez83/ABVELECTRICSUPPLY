@@ -1,3 +1,101 @@
+/* Estilos para el contenedor del carrusel de Swiper */
+.mySwiper-productos {
+  width: 100%; /* O el ancho que desees para el carrusel completo */
+  height: 40vh; /* O un alto fijo, por ejemplo, 400px */
+  padding-top: 50px; /* Espacio para que el carrusel no esté pegado al borde */
+  padding-bottom: 50px;
+}
+
+/* Estilos para cada diapositiva (swiper-slide) */
+.mySwiper-productos .swiper-slide {
+  background-position: center;
+  background-size: cover;
+  width: 33.33%; /* Ancho fijo para cada diapositiva */
+  height: 100%; /* Alto fijo para cada diapositiva */
+  -webkit-box-reflect: below 1px linear-gradient(transparent, transparent, #000000);
+}
+
+/* Estilos para las imágenes dentro de las diapositivas */
+.mySwiper-productos .swiper-slide img {
+  display: block;
+  width: 100%; /* La imagen ocupa todo el ancho de la diapositiva */
+  height: 100%; /* La imagen ocupa todo el alto de la diapositiva */
+  object-fit: cover; /* Para que la imagen cubra el contenedor sin distorsionarse */
+}
+
+/* Ajustes para el efecto de portada (coverflow) */
+.mySwiper-productos .swiper-slide-shadow-left,
+.mySwiper-productos .swiper-slide-shadow-right {
+  background-image: none;
+}
+
+/* Estilos para las diapositivas del carrusel de productos */
+.mySwiper-productos .swiper-slide:not(.swiper-slide-active) {
+  opacity: 0.2; /* Ajusta este valor (entre 0 y 1) para controlar el difuminado */
+  transition: opacity 1s ease; /* Transición suave para el efecto de difuminado */
+}
+
+
+
+
+.announcement-bar {
+  display: flex;
+  background-color: red;
+  padding: 0; /* Asegura que no haya padding en la barra principal 
+  position: fixed;*/
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 70px; /* Ajusta según tu necesidad */
+  line-height: 0; /* Colapsa espacio vertical de texto si lo hubiera */
+  font-size: 0; /* ELIMINA ESPACIOS ENTRE INLINE-BLOCKS */
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.announcements-wrapper img {
+  filter: grayscale(100%) brightness(1.2) sepia(100%);
+}
+
+.announcements-wrapper {
+  display: inline-block;
+  white-space: nowrap;
+  animation: scrollAnunciosCiclico 35s linear infinite;
+  font-size: 0; /* ELIMINA ESPACIOS ENTRE INLINE-BLOCKS (para los 'a' hijos) */
+  margin: 0; /* Asegura que no haya márgenes en el wrapper */
+  padding: 0; /* Asegura que no haya rellenos en el wrapper */
+}
+
+.announcements-wrapper a {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0; /* **CRÍTICO**: Cero margen en los enlaces */
+  padding: 0 15px; /* Usa padding para el espaciado horizontal */
+  text-decoration: none;
+  font-size: 1rem; /* Restablece el tamaño de la fuente para accesibilidad */
+  line-height: normal; /* Restablece la altura de línea */
+}
+
+.announcements-wrapper img {
+  display: block; /* Elimina espacio extra */
+  max-height: 40px; /* Controla la altura de las imágenes */
+  width: auto; /* Mantiene la proporción */
+  object-fit: contain;
+  border: none;
+}
+
+@keyframes scrollAnunciosCiclico {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* Mantiene -50%. Si con HTML limpio y los paddings sigue fallando,
+       el problema es más complejo y podría requerir JS. */
+    transform: translateX(-50%);
+  }
+}
 
 /* --- SECCIÓN: ESTRUCTURA PRINCIPAL DEL HEADER Y CARRUSELES --- */
 
@@ -8,7 +106,7 @@
     width: 100%;
     height: calc(70vh - 5.5rem);
     /* Añade padding a elemcarrusel si quieres que todos los carruseles tengan un margen alrededor */
-    padding: 10px; /* Ajusta este valor si quieres un espacio alrededor de todo el grupo de carruseles */
+ /* Ajusta este valor si quieres un espacio alrededor de todo el grupo de carruseles */
     box-sizing: border-box; /* Asegura que el padding se incluya en el tamaño de elemcarrusel */
 }
 
@@ -17,11 +115,10 @@
     width: 100%;
     height: 100%;
     /* Estilos para que parezca una card */
-    border: 1px solid #e0e0e0; /* Borde sutil */
-    border-radius: 10px; /* Esquinas redondeadas */
+    
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para profundidad */
     box-sizing: border-box; /* Fundamental para que el borde y padding no desborden */
-    margin-right: 10px; /* Margen para separarlo de la columna de carruseles secundarios */
+     /* Margen para separarlo de la columna de carruseles secundarios */
     overflow: hidden; /* Asegura que el contenido (imágenes) respete el border-radius */
 }
 
@@ -39,15 +136,17 @@
 }
 
 #carruS {
-    background-color: white; /* Color temporal para depuración, puedes eliminarlo */
-    width: 75%;
+    /*background-color: white;  Color temporal para depuración, puedes eliminarlo */
+    width: 90%;
     height: 50%;
     /* Estilos para que parezca una card */
-    border: 1px solid #e0e0e0; /* Borde más sutil */
-    border-radius: 10px; /* Esquinas redondeadas */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para profundidad */
+    /* border: 1px solid #e0e0e0; /* Borde más sutil */
+    /* border-radius: 10px; Esquinas redondeadas */
+    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para profundidad */
     box-sizing: border-box; /* Fundamental para que el borde y padding no desborden */
-    margin-bottom: 10px; /* Margen para separarlo del carrusel inferior */
+    margin-bottom: 10px;
+    margin-top: 10px; /* Margen para separarlo del carrusel inferior */
+    padding: 1%;
     overflow: hidden; /* Asegura que el contenido (imágenes) respete el border-radius */
 }
 
@@ -458,6 +557,24 @@
     flex-wrap: wrap;
 }
 
+#cards2 {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #fff;
+}
+.card2 {
+    margin-top: 1%;
+    margin-bottom: 1%;
+    padding: 3%;
+    display: flex;
+    height: auto;
+    flex-direction: row; /* Las tarjetas se muestran en fila */
+    justify-content: center;
+    background-color: #fff;
+    width:  100%;
+}
 .card {
     margin-top: 1%;
     margin-bottom: 1%;

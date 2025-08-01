@@ -3,6 +3,7 @@
 
       {% block link_styles %}
       <link href="{% static 'publico/css/home/homestyles.css' %}" rel="stylesheet" />
+      <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
       {% endblock %}
 
       {% block cuerpo %}
@@ -63,11 +64,75 @@
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
-            </div>
-
-            
+            </div>            
         </div>
 
+        <div class="announcement-bar">
+          <div class="announcements-wrapper">
+            {% for marca in marcas %}
+                <a href="{% url 'products' %}marca/{{ marca.marca_name }}"><img src="/media-files/{{ marca.marca_url_img.name }}" alt="ABB Logo"></a>
+            {% endfor %}
+            {% for marca in marcas %}
+                <a href="{% url 'products' %}marca/{{ marca.marca_name }}"><img src="/media-files/{{ marca.marca_url_img.name }}" alt="ABB Logo"></a>
+            {% endfor %}
+            {% for marca in marcas %}
+                <a href="{% url 'products' %}marca/{{ marca.marca_name }}"><img src="/media-files/{{ marca.marca_url_img.name }}" alt="ABB Logo"></a>
+            {% endfor %}
+            {% for marca in marcas %}
+                <a href="{% url 'products' %}marca/{{ marca.marca_name }}"><img src="/media-files/{{ marca.marca_url_img.name }}" alt="ABB Logo"></a>
+            {% endfor %}
+            {% for marca in marcas %}
+                <a href="{% url 'products' %}marca/{{ marca.marca_name }}"><img src="/media-files/{{ marca.marca_url_img.name }}" alt="ABB Logo"></a>
+            {% endfor %}
+            {% for marca in marcas %}
+                <a href="{% url 'products' %}marca/{{ marca.marca_name }}"><img src="/media-files/{{ marca.marca_url_img.name }}" alt="ABB Logo"></a>
+            {% endfor %}
+            {% for marca in marcas %}
+                <a href="{% url 'products' %}marca/{{ marca.marca_name }}"><img src="/media-files/{{ marca.marca_url_img.name }}" alt="ABB Logo"></a>
+            {% endfor %}
+            {% for marca in marcas %}
+                <a href="{% url 'products' %}marca/{{ marca.marca_name }}"><img src="/media-files/{{ marca.marca_url_img.name }}" alt="ABB Logo"></a>
+            {% endfor %}
+            {% for marca in marcas %}
+                <a href="{% url 'products' %}marca/{{ marca.marca_name }}"><img src="/media-files/{{ marca.marca_url_img.name }}" alt="ABB Logo"></a>
+            {% endfor %}
+            {% for marca in marcas %}
+                <a href="{% url 'products' %}marca/{{ marca.marca_name }}"><img src="/media-files/{{ marca.marca_url_img.name }}" alt="ABB Logo"></a>
+            {% endfor %}
+          </div>
+        </div>
+        <!--
+        <div class="mivi">
+            <h1>Nuestros Servicios</h1>
+            <div id="cards">
+                <div class="card">
+                    <div class="imagencont">
+                        <img src="/media-files/Imagenes_Marca/abb_Ifcu480.png" class="imgcards" alt="Imagen de {{ servicio.servicio_nombre }}">
+                    </div>
+                    <div class="textcardcont">
+                      <h3>{{ servicio.servicio_nombre }}</h3>
+                      <p>{{ servicio.servicio_descripcion|truncatewords:30 }}</p>
+                    </div>
+                    <div class="textcardcont">
+                      <h3>{{ servicio.servicio_nombre }}</h3>
+                      <p>{{ servicio.servicio_descripcion|truncatewords:30 }}</p>
+                    </div>
+                    <div class="imagencont">
+                        <img src="{{ servicio.servicio_imagen.url }}" class="imgcards" alt="Imagen de {{ servicio.servicio_nombre }}">
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="textcardcont">
+                      <h3>{{ servicio.servicio_nombre }}</h3>
+                      <p>{{ servicio.servicio_descripcion|truncatewords:30 }}</p>
+                    </div>
+                    <div class="imagencont">
+                        <img src="/media-files/Imagenes_Marca/abb_Ifcu480.png" class="imgcards" alt="Imagen de {{ servicio.servicio_nombre }}">
+                    </div>
+                </div>
+            </div>
+          </div>
+        -->
         <div class="mivi">
             {# Iterar sobre marcas y luego sobre las categorías asociadas a CADA marca #}
              {% for marca_obj in marcas %}
@@ -127,94 +192,42 @@
             
             <!--</div>-->
           </div>
-          <div class="mivi">
-            <h1>Productos Destacados</h1>
-            <div id="carruS"> {# Carrusel Superior Secundario #}
-                    <div id="carouselExampleCaptions2" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-indicators">
-                            {% for i in indicators_range_carrusel2 %}
-                                <button type="button" 
-                                        data-bs-target="#carouselExampleCaptions2" 
-                                        data-bs-slide-to="{{ i }}" 
-                                        class="{% if forloop.first %}active{% endif %}" {# <-- forloop.first asegura que el primer indicador (i=0) sea activo #}
-                                        aria-label="Slide {{ forloop.counter }}"> {# Usar forloop.counter para el label, ya que empieza en 1 #}
-                                </button>
-                            {% endfor %}
-                        </div>
-                        <div class="carousel-inner">
-                            
-
-                            {% for destacado in destacados %}
-                            <div class="carousel-item {% if forloop.first %}active{% endif %}" data-bs-interval="3000">
-                                <img class="carousel-imgc2" src="/media-files/{{ destacado.producto.producto_url_img }}" class="d-block w-100" alt="...">
-                                <div class="carousel-caption caption-left INF"> 
-                                    <h1>{{ destacado.producto.producto_extendido }}</h1>
-                                    <a href="{% url 'product' destacado.producto.producto_sku %}" class="btn btn-dark">Ver detalle</a>
-                                    <!-- <p>{{ destacado.producto.producto_descripcion }}</p> -->
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
+            
 
             <div class="mivi">
-            <h1>Proyectos de Integración</h1>
-            <div id="carruS">
-                    <div id="carouselExampleCaptions2I" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-indicators">
-                            {% for i in indicators_range_carrusel4 %}
-                                <button type="button" 
-                                        data-bs-target="#carouselExampleCaptions2I" 
-                                        data-bs-slide-to="{{ i }}" 
-                                        class="{% if forloop.first %}active{% endif %}"
-                                        aria-label="Slide {{ forloop.counter }}">
-                                </button>
-                            {% endfor %}
-                        </div>
-                        <div class="carousel-inner">
-                            
+                <h1>Proyectos Destacados</h1>
+                <div id="carruS">
+                    <div class="swiper mySwiper-productos">
+                      <div class="swiper-wrapper">
+                        
+                        {% for destacado in indicators_range_carrusel4 %}
+                          {% if destacado > 0 %}
+                            <div class="swiper-slide">
+                              <img class="carousel-imgc2" src="/media-files//Imagenes_Carrusel_Integracion/carruselintegracion ({{ destacado }}).jpg" alt="...">
+                              <div class="carousel-caption caption-left INF">
+                                <h1>{{ destacado.producto.producto_extendido }}</h1>
+                                </div>
+                            </div>
+                          {% endif %}
+                        {% endfor %}
+                        
+                      </div>
 
-                            {% for destacado in indicators_range_carrusel4 %}
-                                
+                      <div class="swiper-button-next"></div>
+                      <div class="swiper-button-prev"></div>
 
-                                {% if destacado > 0 %}
-                                    <div class="carousel-item {% if destacado == 1 %}active{% endif %}" data-bs-interval="3000">
-                                            <img class="carousel-imgc2" src="/media-files//Imagenes_Carrusel_Integracion/carruselintegracion ({{ destacado }}).jpg" class="d-block w-100" alt="...">
-                                            <div class="carousel-caption caption-left INF"> 
-                                                <h1>{{ destacado.producto.producto_extendido }}</h1>
-                                            <!-- <p>{{ destacado.producto.producto_descripcion }}</p> -->
-                                            </div>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions2I" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions2I" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
+                      <div class="swiper-pagination"></div>
+
                     </div>
                 </div>
             </div>
 
         <div class="mivi">
-            <h1>Acerca de Nosostros</h1>
-            <div id="cards">
+            
+            <div id="cards2">
+                <h1>Acerca de Nosostros</h1>
+                <div class="card2">
 
-                <div class="card">
                     <div class="imagencont">
                       <video controls autoplay muted loop playsinline class="video-responsive">
                         <source src="/media-files/publico/abv.mp4" type="video/mp4">
@@ -232,23 +245,6 @@
                 </div>
             </div>
           </div>
-
-
-        <div class="mivi">
-          <h1>Socios Comerciales</h1>
-          <div id="cards">
-
-              <div class="card">
-                  <div class="galeria">
-                    {% for marca in marcas %}
-                    <a href="{% url 'products' %}marca/{{ marca.marca_name }}">
-                        <img src="/media-files/{{ marca.marca_url_img.name }}" alt="1">
-                    </a>
-                    {% endfor %}
-                  </div>
-              </div>
-          </div>
-        </div>
 
           <div class="mivi">
             <h1>Nuestros Servicios</h1>
@@ -284,4 +280,37 @@
         
 
           <script src="{% static 'publico/js/home/home_scripts.js' %}"></script>
+          <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+          
+          <script>
+          var swiperProductos = new Swiper('.mySwiper-productos', {
+            // Agrega el módulo Autoplay
+            autoplay: {
+              delay: 2500, // Tiempo en milisegundos entre cada slide (2.5 segundos)
+              disableOnInteraction: false, // El carrusel no se detiene si el usuario interactúa con él
+            },
+            // Configuración para el efecto de carrusel tipo 'portada'
+            effect: 'coverflow',
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: 3, // Muestra 3 diapositivas a la vez
+            loop: true, // Carrusel infinito
+            spaceBetween: 30,
+            coverflowEffect: {
+              rotate: 50,
+              stretch: 0,
+              depth: 100,
+              modifier: 1,
+              slideShadows: true,
+            },
+            pagination: {
+              el: '.swiper-pagination',
+              clickable: true,
+            },
+            navigation: {
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            },
+          });
+        </script>
       {% endblock %}
