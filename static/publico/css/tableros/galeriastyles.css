@@ -1,109 +1,131 @@
+/* --- NUEVA SECCIÓN: ESTILOS PARA EL MENÚ INTERACTIVO --- */
+.menu-container {
+    display: flex;
+    justify-content: center; /* Centra los botones del menú */
+    gap: 10px;
+    margin-bottom: 2.8%;
+    margin-top: 2.8%; /* Espacio entre el menú y el contenido */
+}
+
+.menu-button {
+    padding: 12px 25px; /* Ajusta el padding para un mejor aspecto */
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    border-radius: 8px; /* Bordes redondeados para los botones */
+    font-size: 1em;
+    font-weight: 600;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.menu-button:hover {
+    background-color: #e9e9e9;
+}
+
+.menu-button.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.hidden {
+    display: none !important; /* El !important asegura que esta regla tenga prioridad */
+}
+
+/* --- FIN SECCIÓN: ESTILOS PARA EL MENÚ INTERACTIVO --- */
+
+
 /* --- SECCIÓN: ESTILOS GENERALES DE TARJETAS (SOBRE NOSOTROS, SERVICIOS) --- */
 
 #cards2 {
     width: 100%;
     background-color: #e2e3e5;
-    padding-top: 30px; /* Un poco más de padding arriba para el título y el contenido */
-    padding-bottom: 50px; /* Padding en la parte inferior del contenedor principal */
-    text-align: center; /* Centra el título H1 y cualquier otro texto directo */
+    padding-top: 30px;
+    padding-bottom: 50px;
+    text-align: center;
 }
 
 #cards2 h1 {
-    font-size: 2.5em; /* Tamaño de fuente más grande para el título */
-    color: #333; /* Color oscuro para el título */
-    margin-bottom: 30px; /* Espacio debajo del título y el inicio del grid */
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 30px;
 }
 
 .card2 {
-    /* Este contenedor .card2 ahora actúa como un wrapper para centrar el grid */
-    display: flex; /* Lo mantenemos como flex para centrar su contenido si no usa grid */
-    justify-content: center; /* Centra horizontalmente el grid */
+    display: flex;
+    justify-content: center;
     height: auto;
     width: 100%;
-    max-width: 1200px; /* Limita el ancho máximo para pantallas grandes */
-    margin-left: auto; /* Centra el bloque .card2 */
-    margin-right: auto; /* Centra el bloque .card2 */
-    /* El padding que tenías aquí (padding: 3%) podría empujar el grid.
-       Es mejor manejar el espaciado interno con el padding del .grid y el gap. */
-    background-color: #e2e3e5; /* Mantén el color de fondo si lo deseas */
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #e2e3e5;
 }
-
-/* El contenedor .cards original que no se usa en este HTML, pero lo mantengo por si acaso. */
-/* #cards {
-    width: 90%;
-    justify-content: center;
-    display: flex;
-    flex-wrap: wrap;
-} */
 
 .grid {
     display: grid;
-    /* grid-template-columns: auto auto auto auto;  Cambiaremos esto para mayor responsividad */
-    /* Utiliza repeat y minmax para un grid responsivo */
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 280px es un buen tamaño mínimo para las tarjetas */
-    gap: 30px; /* Espacio entre las tarjetas (filas y columnas) */
-    padding: 20px; /* Padding alrededor de todo el grid */
-    width: 100%; /* Asegura que el grid ocupe el 100% del ancho disponible en .card2 */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 20px;
+    width: 100%;
     height: auto;
-    box-sizing: border-box; /* Asegura que el padding no añada ancho extra */
+    box-sizing: border-box;
 }
 
 .grid > div {
-    /* Este div es el wrapper de cada enlace <a> que contiene la tarjeta */
-    display: flex; /* Usa flexbox para centrar la tarjeta dentro de su celda de grid */
-    justify-content: center; /* Centra horizontalmente */
-    align-items: stretch; /* Permite que las tarjetas se estiren si hay diferencias de altura */
-    height: auto; /* La altura será determinada por el contenido de la tarjeta */
-    text-align: center; /* Centra el texto dentro de este div si hubiera, aunque la tarjeta lo maneja */
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    height: auto;
+    text-align: center;
 }
 
 .grid > div > a {
-    text-decoration: none; /* Quita el subrayado de los enlaces */
-    color: inherit; /* Hereda el color del texto para el enlace */
-    display: flex; /* Asegura que el enlace se comporte como un contenedor flex */
-    width: 100%; /* El enlace ocupa el 100% del espacio de su celda */
-    height: 100%; /* El enlace ocupa el 100% de la altura de su celda */
-    justify-content: center; /* Centra la tarjeta si el enlace tiene ancho fijo */
-    align-items: center; /* Centra la tarjeta si el enlace tiene altura fija */
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
 .card {
-    /* Estilos para cada tarjeta individual */
     background-color: #fff;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
-    border-radius: 18px; /* Bordes un poco más redondeados */
-    padding: 25px; /* Padding interno de la tarjeta */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-radius: 18px;
+    padding: 25px;
     display: flex;
-    flex-direction: column; /* Coloca imagen y texto en columna */
-    justify-content: center; /* Centra verticalmente el contenido dentro de la tarjeta */
-    align-items: center; /* Centra horizontalmente el contenido (imagen y texto) */
-    text-align: center; /* Centra el texto dentro de la tarjeta */
-    width: 100%; /* La tarjeta ocupa el 100% del espacio disponible en su celda */
-    max-width: 300px; /* Limita el ancho máximo de la tarjeta individual */
-    height: 100%; /* La tarjeta ocupa el 100% de la altura del contenedor padre .grid > div */
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Transición para efectos hover */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 300px;
+    height: 100%;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .card:hover {
-    transform: translateY(-5px); /* Pequeño levantamiento al pasar el mouse */
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25); /* Sombra más intensa al pasar el mouse */
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
 }
 
 .card > img {
-    width: 75%; /* Ajusta el tamaño de la imagen */
-    max-width: 160px; /* Limita el tamaño máximo de la imagen */
+    width: 75%;
+    max-width: 160px;
     height: auto;
-    margin-bottom: 20px; /* Espacio entre la imagen y el texto */
-    display: block; /* Asegura que la imagen sea un bloque para margin-bottom */
+    margin-bottom: 20px;
+    display: block;
 }
 
 .card p {
-    font-size: 1.1em; /* Tamaño de fuente ligeramente más grande para el texto */
-    color: #444; /* Color del texto */
-    font-weight: 500; /* Un poco más de grosor para el texto */
-    line-height: 1.4; /* Espaciado entre líneas para mejor lectura */
-    word-break: break-word; /* Rompe palabras largas si es necesario */
-    padding: 0 5px; /* Pequeño padding horizontal para el texto */
+    font-size: 1.1em;
+    color: #444;
+    font-weight: 500;
+    line-height: 1.4;
+    word-break: break-word;
+    padding: 0 5px;
 }
 
 /* --- FIN SECCIÓN: ESTILOS GENERALES DE TARJETAS --- */
@@ -112,16 +134,16 @@
 
 @media (max-width: 1200px) {
     .card2 {
-        max-width: 960px; /* Ajuste para pantallas medianas */
+        max-width: 960px;
     }
 }
 
 @media (max-width: 992px) {
     .card2 {
-        max-width: 720px; /* Ajuste para tablets */
+        max-width: 720px;
     }
     .grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Reducir el tamaño mínimo de la tarjeta */
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 25px;
     }
     #cards2 h1 {
@@ -131,15 +153,15 @@
 
 @media (max-width: 768px) {
     .card2 {
-        max-width: 540px; /* Ajuste para tablets pequeñas */
+        max-width: 540px;
     }
     .grid {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Más reducción para móviles */
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 20px;
     }
     .card {
         padding: 20px;
-        max-width: 250px; /* Ajuste para tarjetas en pantallas más pequeñas */
+        max-width: 250px;
     }
     .card > img {
         width: 80%;
@@ -153,20 +175,24 @@
         font-size: 1.8em;
         margin-bottom: 25px;
     }
+    .menu-container {
+        flex-direction: column; /* Apila los botones en móviles */
+        align-items: center;
+    }
 }
 
 @media (max-width: 576px) {
     .card2 {
-        max-width: 90%; /* Ocupa casi todo el ancho en móviles */
+        max-width: 90%;
     }
     .grid {
-        grid-template-columns: 1fr; /* Una columna en pantallas muy pequeñas */
+        grid-template-columns: 1fr;
         gap: 20px;
         padding: 15px;
     }
     .card {
-        max-width: 300px; /* Asegura un tamaño legible para la tarjeta única */
-        margin: auto; /* Centra la tarjeta cuando es una sola columna */
+        max-width: 300px;
+        margin: auto;
     }
     #cards2 {
         padding-top: 20px;

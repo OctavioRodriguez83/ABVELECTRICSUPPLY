@@ -1,17 +1,23 @@
+
+
+
 {% extends "../nav/index.html" %}
 {% load static %}
 
-      {% block link_styles %}
-      <link href="{% static 'publico/css/tableros/galeriastyles.css' %}" rel="stylesheet" />
-      {% endblock %}
+{% block link_styles %}
+<link href="{% static 'publico/css/tableros/galeriastyles.css' %}" rel="stylesheet" />
+{% endblock %}
 
-      {% block cuerpo %}
+{% block cuerpo %}
 
-            
-            <div id="cards2">
-                <h1>Tableros</h1>
-                <div class="card2">
-                    <div class="grid">
+<div class="menu-container">
+    <button class="menu-button active" data-target="tableros-section">Tableros</button>
+    <button class="menu-button" data-target="diagramas-section">Dossier Proyecto</button>
+</div>
+
+<div id="tableros-section">
+    <div class="card2">
+        <div class="grid">
                         <div>
                             <a href="https://hgb-imagenes.s3.us-east-2.amazonaws.com/pdf/FS-2025-06-05-01.+TDF-CRAC-B3.pdf" target="_blank">
                                 <div class="card">
@@ -221,8 +227,69 @@
                             </a>
                         </div>
                     </div>
-                    
-                </div>
-            </div>
+    </div>
+</div>
 
-      {% endblock %}
+<div id="diagramas-section" class="hidden">
+    <div class="card2">
+        <div class="grid">
+                        <div>
+                            <a href="https://hgb-imagenes.s3.us-east-2.amazonaws.com/pdf/Dossier+de+Calidad.+TDF-FL-B3.pdf" target="_blank">
+                                <div class="card">
+                                    <img src="/media-files/publico/Logo.png">
+                                    <p>Dossier de Calidad TDF-FL-B3</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="https://hgb-imagenes.s3.us-east-2.amazonaws.com/pdf/Dossier+de+Calidad.+TDF-FL-C3.pdf" target="_blank">
+                                <div class="card">
+                                    <img src="/media-files/publico/Logo.png">
+                                    <p>Dossier de Calidad TDF-FL-C3</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="https://hgb-imagenes.s3.us-east-2.amazonaws.com/pdf/Dossier+de+Calidad.+TDF-FL-R3.pdf" target="_blank">
+                                <div class="card">
+                                    <img src="/media-files/publico/Logo.png">
+                                    <p>Dossier de Calidad TDF-FL-R3</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="https://hgb-imagenes.s3.us-east-2.amazonaws.com/pdf/Dossier+de+Calidad.+TDF-HVAC-B3.pdf" target="_blank">
+                                <div class="card">
+                                    <img src="/media-files/publico/Logo.png">
+                                    <p>Dossier de Calidad TDF-HVAC-B3</p>
+                                </div>
+                            </a>
+                        </div>
+            </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const buttons = document.querySelectorAll('.menu-button');
+        const sections = document.querySelectorAll('#tableros-section, #diagramas-section');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Elimina la clase 'active' de todos los botones
+                buttons.forEach(btn => btn.classList.remove('active'));
+                
+                // Oculta todas las secciones de contenido
+                sections.forEach(section => section.classList.add('hidden'));
+
+                // Agrega la clase 'active' al botón clickeado
+                button.classList.add('active');
+
+                // Muestra la sección que corresponde al botón
+                const targetId = button.getAttribute('data-target');
+                document.getElementById(targetId).classList.remove('hidden');
+            });
+        });
+    });
+</script>
+{% endblock %}
