@@ -40,7 +40,17 @@ urlpatterns = [
     path('categorias/editar/<int:categoria_id>/', views.editar_categoria, name='editar_categoria'),
     path('categorias/restaurar/<int:categoria_id>/', views.restaurar_categoria, name='restaurar_categoria'),
 
+    # ------------------ NUEVAS URLs para gestión de familias ------------------
+    path('familias/', views.familias, name='familias'),
+    path('familias/eliminar/<int:familia_id>/', views.eliminar_familia, name='eliminar_familia'),
+    path('familias/editar/<int:familia_id>/', views.editar_familia, name='editar_familia'),
+    path('familias/restaurar/<int:familia_id>/', views.restaurar_familia, name='restaurar_familia'),
 
+    # ------------------ NUEVAS URLs para gestión de imágenes secundarias ------------------
+    path('imagenes_secundarias/', views.imagenes_secundarias, name='imagenes_secundarias'),
+    path('imagenes_secundarias/eliminar/<int:imagen_id>/', views.eliminar_imagen_secundaria, name='eliminar_imagen_secundaria'),
+    path('imagenes_secundarias/editar/<int:imagen_id>/', views.editar_imagen_secundaria, name='editar_imagen_secundaria'),
+    
     # URLs para gestión de carrouselBanner
     path('carrouselBanner/', views.carrouselBanner, name='carrouselBanner'),
     path('carrouselBanner/eliminar/<int:carrouselBanner_id>/', views.eliminar_carrouselBanner, name='eliminar_carrouselBanner'),
@@ -56,22 +66,14 @@ urlpatterns = [
     path('tiendas/editar/<int:tienda_id>/', views.editar_tienda, name='editar_tienda'),
     path('tiendas/eliminar/<int:tienda_id>/', views.eliminar_tienda, name='eliminar_tienda'),
 
-    # URLs para gestión de empresas
-    path('empresas/', views.empresas, name='empresas'),
-    path('empresas/editar/<int:empresa_id>/', views.editar_empresa, name='editar_empresa'),
-    path('empresas/eliminar/<int:empresa_id>/', views.eliminar_empresa, name='eliminar_empresa'),
-
-    # URLS para CRUD de Almacenes
-    path('almacenes/', views.almacenes, name='almacenes'),
-    path('almacenes/editar/<int:almacen_id>/', views.editar_almacen, name='editar_almacen'),
-    path('almacenes/eliminar/<int:almacen_id>/', views.eliminar_almacen, name='eliminar_almacen'),
-
     # URLS para CRUD de Productos
     path('productos/', views.productos, name='productos'),
     path('producto/ver/<int:producto_id>/', views.ver_producto, name='ver_producto'),
     path('productos/crear/', views.crear_producto, name='crear_producto'),
     path('producto/editar/<int:producto_id>/', views.editar_producto, name='editar_producto'),
     path('producto/eliminar/<int:producto_id>/', views.eliminar_producto, name='eliminar_producto'),
+    path('ajax/get_categorias_por_marca/', views.get_categorias_por_marca, name='get_categorias_por_marca'),
+    path('ajax/get_familias_por_categoria/', views.get_familias_por_categoria, name='get_familias_por_categoria'),
 
     # URLs para Productos Destacados
     path('productos/destacados/', views.productos_destacados, name='productos_destacados'),
@@ -87,7 +89,7 @@ urlpatterns = [
     path('proyectos/', views.proyectos, name='proyectos'),
     path('proyectos/editar/<int:proyecto_id>/', views.editar_proyecto, name='editar_proyecto'),
     path('proyectos/eliminar/<int:proyecto_id>/', views.eliminar_proyecto, name='eliminar_proyecto'),
-
+    
     # URLs para Proyectos Destacados
     path('proyectos_destacados/', views.proyectos_destacados, name='proyectos_destacados'),
     path('proyectos_destacados/agregar/', views.agregar_proyecto_destacado, name='agregar_proyecto_destacado'),
@@ -123,9 +125,4 @@ urlpatterns = [
     path('search/', views.search_products, name='navbar_search'),
     path('tableros/', views.tableros_diag, name='tableros'),
 
-    ]
-
-if settings.DEBUG:
- urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
- urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
+    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

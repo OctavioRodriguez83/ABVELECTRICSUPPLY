@@ -92,8 +92,6 @@ def restaurar_marca(request, marca_id):
 #------------------------------------------------------------------------------------------------------------------#
 
 #------------------------------------------CRUD CATEGORIAS---------------------------------------------------------#
-
-
 @login_required
 def categorias(request):
     filtro = request.GET.get('status', 'active')
@@ -114,7 +112,6 @@ def categorias(request):
         formC = CategoriaForm()
 
     return render(request, 'adm/categorias/categorias.html', {'categorias': categorias, 'formC': formC, 'filtro': filtro})
-
 
 @login_required
 def editar_categoria(request, categoria_id):
@@ -151,8 +148,65 @@ def restaurar_categoria(request, categoria_id):
     categoria.statusCategoria = True
     categoria.save()
     return HttpResponseRedirect(reverse('categorias'))
-
 #------------------------------------------------------------------------------------------------------------------#
+
+# --------------------------------------------- CRUD FAMILIAS --------------------------------------------------------#
+@login_required
+def familias(request):
+    filtro = request.GET.get('status', 'active')
+    if filtro == 'inactive':
+        familias_list = Familia.objects.filter(statusFamilia=False).select_related('categoria')
+    else:
+        familias_list = Familia.objects.filter(statusFamilia=True).select_related('categoria')
+
+    if request.method == "POST":
+        formF = FamiliaForm(request.POST, request.FILES)
+        if formF.is_valid():
+            formF.save()
+            return redirect(reverse('familias'))
+        else:
+            print(formF.errors)
+    else:
+        formF = FamiliaForm()
+
+    return render(request, 'adm/familias/familias.html', {
+        'familias': familias_list,
+        'formF': formF,
+        'filtro': filtro
+    })
+
+@login_required
+def editar_familia(request, familia_id):
+    familia = get_object_or_404(Familia, id=familia_id)
+    if request.method == "POST":
+        formF = FamiliaForm(request.POST, request.FILES, instance=familia)
+        if formF.is_valid():
+            formF.save()
+            return redirect(reverse('familias'))
+        else:
+            print(formF.errors)
+    else:
+        formF = FamiliaForm(instance=familia)
+
+    return render(request, 'adm/familias/editar_familias.html', {
+        'familia': familia,
+        'formF': formF
+    })
+
+@login_required
+def eliminar_familia(request, familia_id):
+    familia = get_object_or_404(Familia, id=familia_id)
+    familia.statusFamilia = False
+    familia.save()
+    return redirect(reverse('familias'))
+
+@login_required
+def restaurar_familia(request, familia_id):
+    familia = get_object_or_404(Familia, id=familia_id)
+    familia.statusFamilia = True
+    familia.save()
+    return redirect(reverse('familias'))
+# ------------------------------------------------------------------------------------------------------------------#
 
 #---------------------------------------------CRUD CARROUSEL BANNER-----------------------------------------------#
 
@@ -335,97 +389,6 @@ def eliminar_tienda(request, tienda_id):
     return redirect(reverse('tiendas'))
 #------------------------------------------------------------------------------------------------------------------#
 
-#---------------------------------------------CRUD DE EMPRESAS-----------------------------------------------------#
-@login_required
-def empresas(request):
-    empresas = Empresa.objects.all()
-    if request.method == "POST":
-        formE = EmpresaForm(request.POST, request.FILES)
-        if formE.is_valid():
-            formE.save()
-            return redirect(reverse('empresas'))
-        else:
-            print(formE.errors)
-    else:
-        formE = EmpresaForm()
-
-    return render(request, 'adm/empresas/empresas.html', {
-        'empresas': empresas,
-        'formE': formE
-    })
-
-@login_required
-def editar_empresa(request, empresa_id):
-    empresa = get_object_or_404(Empresa, id=empresa_id)
-    empresas = Empresa.objects.all() # Se mantiene si es necesario para la plantilla
-
-    if request.method == "POST":
-        # Usar el formulario para manejar la actualización
-        formE = EmpresaForm(request.POST, request.FILES, instance=empresa)
-        if formE.is_valid():
-            formE.save()
-            return redirect(reverse("empresas"))
-        else:
-            print(formE.errors) # Para depuración
-    else:
-        # Inicializar el formulario con los datos existentes de la empresa
-        formE = EmpresaForm(instance=empresa)
-
-    return render(request, "adm/empresas/editar_empresa.html", {"empresas": empresas, "empresa": empresa, "formE": formE})
-
-@login_required
-def eliminar_empresa(request, empresa_id):
-    empresa = get_object_or_404(Empresa, id=empresa_id)
-    empresa.delete()
-    return redirect(reverse("empresas"))
-
-#------------------------------------------------------------------------------------------------------------------#
-
-#---------------------------------------------VISTAS ALMACEN-------------------------------------------------------#
-
-@login_required
-def almacenes(request):
-    almacenes_list = Almacen.objects.all()
-    if request.method == "POST":
-        formA = AlmacenForm(request.POST)
-        if formA.is_valid():
-            formA.save()
-            return redirect(reverse('almacenes'))
-        else:
-            print(formA.errors)
-    else:
-        formA = AlmacenForm()
-    return render(request, 'adm/almacenes/almacenes.html', {'almacenes': almacenes_list, 'formA': formA})
-
-def editar_almacen(request, almacen_id):
-    almacen = get_object_or_404(Almacen, id=almacen_id)
-    almacenes_list = Almacen.objects.all() # Se mantiene si es necesario para la plantilla
-    empresas_list = Empresa.objects.all() # Se mantiene si es necesario para la plantilla
-
-    if request.method == "POST":
-        formA = AlmacenForm(request.POST, instance=almacen)
-        if formA.is_valid():
-            formA.save()
-            return redirect(reverse("almacenes"))
-        else:
-            print(formA.errors) # Para depuración
-    else:
-        formA = AlmacenForm(instance=almacen)
-    return render(request, 'adm/almacenes/editar_almacen.html', {
-        'almacenes': almacenes_list,
-        'almacen': almacen,
-        'formA': formA,
-        'empresas': empresas_list
-    })
-
-@login_required
-def eliminar_almacen(request, almacen_id):
-    almacen = get_object_or_404(Almacen, id=almacen_id)
-    almacen.delete()
-    return redirect(reverse("almacenes"))
-
-#------------------------------------------------------------------------------------------------------------------#
-
 #---------------------------------------------VISTAS PRODUCTOS-----------------------------------------------------#
 
 @login_required
@@ -442,7 +405,8 @@ def productos(request):
 def ver_producto(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id)
     inventarios = Inventario.objects.filter(producto=producto)
-    imagenes_secundarias = ImagenSecundariaProducto.objects.filter(producto=producto)
+    # MODIFICACIÓN: Se filtra por la familia asociada al producto, no por el producto
+    imagenes_secundarias = ImagenSecundariaProducto.objects.filter(familia=producto.familia)
     form = InventarioForm()
     # Calcula la suma total de stock
     total_stock = inventarios.aggregate(total=Sum('stock')).get('total') or 0
@@ -494,7 +458,63 @@ def eliminar_producto(request, producto_id):
     producto.delete()
     return redirect(reverse("productos"))
 
+def get_categorias_por_marca(request):
+    marca_id = request.GET.get('marca')
+    categorias = Categoria.objects.filter(marca_id=marca_id).order_by('categoria_name')
+    data = [{'id': categoria.id, 'name': categoria.categoria_name} for categoria in categorias]
+    return JsonResponse(data, safe=False)
+
+def get_familias_por_categoria(request):
+    categoria_id = request.GET.get('categoria')
+    familias = Familia.objects.filter(categoria_id=categoria_id).order_by('familia_name')
+    data = [{'id': familia.id, 'name': familia.familia_name} for familia in familias]
+    return JsonResponse(data, safe=False)
+
 #------------------------------------------------------------------------------------------------------------------#
+
+# ---------------------------------- CRUD IMAGENES SECUNDARIAS ----------------------------------------------------#
+@login_required
+def imagenes_secundarias(request):
+    imagenes = ImagenSecundariaProducto.objects.select_related('familia').all()
+    if request.method == "POST":
+        form = ImagenSecundariaProductoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('imagenes_secundarias'))
+        else:
+            print(form.errors)
+    else:
+        form = ImagenSecundariaProductoForm()
+    return render(request, 'adm/imagenes_secundarias/imagenes_secundarias.html', {
+        'imagenes': imagenes,
+        'form': form
+    })
+
+@login_required
+def editar_imagen_secundaria(request, imagen_id):
+    imagen = get_object_or_404(ImagenSecundariaProducto, id=imagen_id)
+    if request.method == "POST":
+        form = ImagenSecundariaProductoForm(request.POST, request.FILES, instance=imagen)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('imagenes_secundarias'))
+        else:
+            print(form.errors)
+    else:
+        form = ImagenSecundariaProductoForm(instance=imagen)
+
+    return render(request, 'adm/imagenes_secundarias/editar_imagen_secundaria.html', {
+        'imagen': imagen,
+        'form': form
+    })
+
+@login_required
+def eliminar_imagen_secundaria(request, imagen_id):
+    imagen = get_object_or_404(ImagenSecundariaProducto, id=imagen_id)
+    imagen.delete()
+    return redirect(reverse('imagenes_secundarias'))
+# ------------------------------------------------------------------------------------------------------------------#
+
 
 #---------------------------------------------VISTAS SERVICIOS-----------------------------------------------------#
 
@@ -535,7 +555,6 @@ def eliminar_servicio(request, servicio_id):
 #------------------------------------------------------------------------------------------------------------------#
 
 #---------------------------------------------VISTAS PROYECTOS-----------------------------------------------------#
-
 @login_required
 def proyectos(request):
     proyectos_list = Proyecto.objects.all()
@@ -574,8 +593,6 @@ def eliminar_proyecto(request, proyecto_id):
 #------------------------------------------------------------------------------------------------------------------#
 
 #--------------------------------------------VISTAS PRODUCTOS DESTACADOS-------------------------------------------#
-
-
 @login_required
 def productos_destacados(request):
     destacados = ProductoDestacado.objects.select_related(
@@ -621,7 +638,6 @@ def eliminar_destacado(request, destacado_id):
 #------------------------------------------------------------------------------------------------------------------#
 
 #-------------------------------------------------VISTAS INVENTARIO------------------------------------------------#
-
 @login_required
 def agregar_inventario(request, producto_id):
     producto = get_object_or_404(Producto, id=producto_id)
@@ -640,7 +656,8 @@ def agregar_inventario(request, producto_id):
 
     # Se recolectan datos adicionales para el render en caso de error o GET
     inventarios = Inventario.objects.filter(producto=producto)
-    imagenes_secundarias = ImagenSecundariaProducto.objects.filter(producto=producto)
+    # MODIFICACIÓN: Se filtra por la familia asociada al producto, no por el producto
+    imagenes_secundarias = ImagenSecundariaProducto.objects.filter(familia=producto.familia)
 
     return render(
         request,
@@ -672,7 +689,8 @@ def modificar_stock(request, inventario_id):
         # form.fields.pop("almacen", None) # No es necesario si el campo 'almacen' no se va a actualizar
 
     inventarios = Inventario.objects.filter(producto=producto)
-    imagenes_secundarias = ImagenSecundariaProducto.objects.filter(producto=producto)
+    # MODIFICACIÓN: Se filtra por la familia asociada al producto
+    imagenes_secundarias = ImagenSecundariaProducto.objects.filter(familia=producto.familia)
 
     return render(
         request,
@@ -686,11 +704,9 @@ def modificar_stock(request, inventario_id):
             "inventario_modificar": inventario, # Instancia del inventario que se está modificando
         }
     )
-
-
 #------------------------------------------------------------------------------------------------------------------#
-#---------------------------------------------VISTAS PLANTILLAS----------------------------------------------------#
 
+#---------------------------------------------VISTAS PLANTILLAS----------------------------------------------------#
 @login_required
 def plantillas(request):
     # Ruta donde se almacenan las plantillas
@@ -865,8 +881,9 @@ def home(request):
         'indicators_range_carrusel1': indicators_range_carrusel1, # Nuevo
         'indicators_range_carrusel2': indicators_range_carrusel2, # Nuevo
         'indicators_range_carrusel3': indicators_range_carrusel3,
-        'indicators_range_carrusel4': indicators_range_carrusel4,
+        'indicators_range_carrusel4': indicators_range_carrusel4
     }
+
     return render(request, 'publico/home/home.html', context)
 
 def about(request):

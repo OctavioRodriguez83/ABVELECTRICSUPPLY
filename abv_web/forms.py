@@ -1,14 +1,21 @@
 from django import forms
 from django.forms import ModelForm
+from .models import (
+    Marca,
+    Categoria,
+    Familia,
+    ImagenSecundariaProducto,
+    Producto,
+    Inventario,
+    CarrouselBanner,
+    Usuario,
+    Tienda,
+    Servicio,
+    Proyecto
+)
 
-from abv_web.models import * # Asegúrate de que Marca y Categoria estén importadas aquí
-
-#---------------------------------------------CRUD MARCAS----------------------------------------------------------#
+# --------------------------------------------- CRUD MARCAS ----------------------------------------------------------#
 class MarcaForm(forms.ModelForm):
-    class Meta:
-        model = Marca
-        fields = ['marca_name', 'marca_url_img', 'marca_descripcion']
-
     marca_name = forms.CharField(
         label="Nombre de la Marca",
         widget=forms.TextInput(attrs={"class": "form-control"}),
@@ -27,22 +34,19 @@ class MarcaForm(forms.ModelForm):
         max_length=300
     )
 
-#------------------------------------------CRUD CATEGORIAS---------------------------------------------------------#
-
-class CategoriaForm(forms.ModelForm):
-    # --- CAMBIO IMPORTANTE: ModelChoiceField para seleccionar UNA Marca ---
-    marca = forms.ModelChoiceField(
-        queryset=Marca.objects.all().order_by('marca_name'), # Ordena las marcas alfabéticamente
-        widget=forms.Select(attrs={"class": "form-control"}), # Muestra como un dropdown de selección
-        label="Marca Asociada",
-        required=False # Permite que una categoría no tenga una marca asignada
-    )
-
     class Meta:
-        model = Categoria
-        # Asegúrate de incluir 'marca' (singular) en los campos del formulario
-        fields = ['categoria_name', 'categoria_url_img', 'categoria_descripcion', 'statusCategoria', 'marca'] # Añadido statusCategoria y marca
+        model = Marca
+        fields = ['marca_name', 'marca_url_img', 'marca_descripcion']
 
+
+# ------------------------------------------ CRUD CATEGORIAS ---------------------------------------------------------#
+class CategoriaForm(forms.ModelForm):
+    marca = forms.ModelChoiceField(
+        queryset=Marca.objects.all().order_by('marca_name'),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        label="Marca Asociada",
+        required=False
+    )
     categoria_name = forms.CharField(
         label="Nombre de la Categoría",
         widget=forms.TextInput(attrs={"class": "form-control"}),
@@ -60,20 +64,198 @@ class CategoriaForm(forms.ModelForm):
         widget=forms.Textarea(attrs={"class": "form-control", "rows": 3}),
         max_length=300
     )
-    statusCategoria = forms.BooleanField( # Asegúrate de que este campo también esté definido en el form
+    statusCategoria = forms.BooleanField(
         label='Activa',
         required=False,
         widget=forms.CheckboxInput(attrs={"class": "form-check-input"})
     )
 
-
-#------------------------------------------CRUD CARROUSELBANNER-----------------------------------------------------#
-
-class CarrouselBannerForm(forms.ModelForm):
     class Meta:
-        model = CarrouselBanner
-        fields = ['carrouselBanner_name', 'carrouselBanner_url_img', 'carrouselBanner_descripcion']
+        model = Categoria
+        fields = ['categoria_name', 'categoria_url_img', 'categoria_descripcion', 'statusCategoria', 'marca']
 
+
+# ------------------------------------------ CRUD FAMILIAS ---------------------------------------------------------#
+class FamiliaForm(forms.ModelForm):
+    categoria = forms.ModelChoiceField(
+        queryset=Categoria.objects.all().order_by('categoria_name'),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        label="Categoría Asociada",
+        required=False
+    )
+    familia_name = forms.CharField(
+        label="Nombre de la Familia",
+        widget=forms.TextInput(attrs={"class": "form-control"}),
+        max_length=30
+    )
+    familia_descripcion = forms.CharField(
+        label="Descripción de la familia",
+        required=False,
+        widget=forms.Textarea(attrs={"class": "form-control", "rows": 3}),
+        max_length=300
+    )
+    familia_url_img = forms.ImageField(
+        label="Imagen",
+        required=False,
+        widget=forms.FileInput(attrs={"class": "form-control"}),
+        help_text='Formato permitido: JPG, PNG. Tamaño máximo: 5MB.'
+    )
+    statusFamilia = forms.BooleanField(
+        label='Activa',
+        required=False,
+        widget=forms.CheckboxInput(attrs={"class": "form-check-input"})
+    )
+
+    class Meta:
+        model = Familia
+        fields = ['familia_name', 'familia_descripcion', 'familia_url_img', 'statusFamilia', 'categoria']
+
+
+# ---------------------------------- CRUD IMAGENES SECUNDARIAS ---------------------------------- #
+class ImagenSecundariaProductoForm(forms.ModelForm):
+    familia = forms.ModelChoiceField(
+        queryset=Familia.objects.all().order_by('familia_name'),
+        label="Familia Asociada",
+        widget=forms.Select(attrs={"class": "form-control"})
+    )
+    imagen_secundaria = forms.ImageField(
+        label="Imagen Secundaria",
+        required=False,
+        widget=forms.FileInput(attrs={"class": "form-control"}),
+        help_text='Formato permitido: JPG, PNG. Tamaño máximo: 5MB.'
+    )
+    
+    class Meta:
+        model = ImagenSecundariaProducto
+        fields = ['familia', 'imagen_secundaria']
+
+
+# --------------------------------------------- CRUD PRODUCTOS --------------------------------------------------------#
+class ProductoForm(forms.ModelForm):
+    # Añadido ModelChoiceField para Familia
+    familia = forms.ModelChoiceField(
+        queryset=Familia.objects.all(),
+        label='Familia',
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    marca = forms.ModelChoiceField(
+        queryset=Marca.objects.all(),
+        label='Marca',
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    categoria = forms.ModelChoiceField(
+        queryset=Categoria.objects.all(),
+        label='Categoría',
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+    class Meta:
+        model = Producto
+        fields = [
+            'producto_extendido', 'producto_sku', 'producto_skunetsuite', 'producto_ean',
+            'producto_nombre', 'producto_descripcion', 'producto_modelo',
+            'producto_precio_base', 'producto_precio_amazon', 'producto_precio_mercadolibre',
+            'producto_precio_ebay', 'producto_url_img', 'familia', 'marca', 'categoria'
+        ]
+        widgets = {
+            'producto_extendido': forms.TextInput(attrs={'class': 'form-control'}),
+            'producto_sku': forms.TextInput(attrs={'class': 'form-control'}),
+            'producto_skunetsuite': forms.TextInput(attrs={'class': 'form-control'}),
+            'producto_ean': forms.TextInput(attrs={'class': 'form-control'}),
+            'producto_nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'producto_descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'producto_modelo': forms.TextInput(attrs={'class': 'form-control'}),
+            'producto_precio_base': forms.NumberInput(attrs={'class': 'form-control'}),
+            'producto_precio_amazon': forms.NumberInput(attrs={'class': 'form-control'}),
+            'producto_precio_mercadolibre': forms.NumberInput(attrs={'class': 'form-control'}),
+            'producto_precio_ebay': forms.NumberInput(attrs={'class': 'form-control'}),
+            'producto_url_img': forms.FileInput(attrs={'class': 'form-control'}),
+        }
+
+
+# ------------------------------------------ CRUD INVENTARIO --------------------------------------------------------#
+class InventarioForm(forms.ModelForm):
+    # Asegura que se pueda seleccionar un producto
+    producto = forms.ModelChoiceField(
+        queryset=Producto.objects.all().order_by('producto_nombre'),
+        label="Producto",
+        widget=forms.Select(attrs={"class": "form-control"})
+    )
+    stock = forms.IntegerField(
+        label="Stock",
+        min_value=0,
+        widget=forms.NumberInput(attrs={"class": "form-control"})
+    )
+
+    class Meta:
+        model = Inventario
+        fields = ['producto', 'stock']
+
+
+# ------------------------------------------ CRUD SERVICIOS ----------------------------------------------------------#
+class ServicioForm(forms.ModelForm):
+    servicio_nombre = forms.CharField(
+        label="Titulo del Servicio",
+        widget=forms.TextInput(attrs={"class": "form-control"}),
+        max_length=50
+    )
+    servicio_descripcion = forms.CharField(
+        label="Descripción del Servicio",
+        required=False,
+        widget=forms.Textarea(attrs={"class": "form-control", "rows": 3}),
+        max_length=300
+    )
+    servicio_imagen = forms.ImageField(
+        label="Imagen descriptiva",
+        required=False,
+        widget=forms.FileInput(attrs={"class": "form-control"}),
+        help_text='Formato permitido: JPG, PNG. Tamaño máximo: 5MB.'
+    )
+
+    class Meta:
+        model = Servicio
+        fields = ['servicio_nombre', 'servicio_descripcion', 'servicio_imagen']
+
+
+# ------------------------------------------ CRUD PROYECTOS ----------------------------------------------------------#
+class ProyectoForm(forms.ModelForm):
+    proyecto_nombre = forms.CharField(
+        label="Título del Proyecto",
+        widget=forms.TextInput(attrs={"class": "form-control"}),
+        max_length=50
+    )
+    proyecto_descripcion_corta = forms.CharField(
+        label="Descripción Corta",
+        widget=forms.Textarea(attrs={"class": "form-control", "rows": 3}),
+        max_length=500
+    )
+    proyecto_descripcion_larga = forms.CharField(
+        label="Descripción Larga",
+        widget=forms.Textarea(attrs={"class": "form-control", "rows": 6}),
+        max_length=2000
+    )
+    proyecto_imagen = forms.ImageField(
+        label="Imagen del Proyecto",
+        required=False,
+        widget=forms.FileInput(attrs={"class": "form-control"}),
+        help_text='Formato permitido: JPG, PNG. Tamaño máximo: 5MB.'
+    )
+
+    class Meta:
+        model = Proyecto
+        fields = [
+            "proyecto_nombre",
+            "proyecto_descripcion_corta",
+            "proyecto_descripcion_larga",
+            "proyecto_imagen"
+        ]
+
+
+# ------------------------------------------ CRUD CARROUSELBANNER -----------------------------------------------------#
+class CarrouselBannerForm(forms.ModelForm):
     carrouselBanner_name = forms.CharField(
         label="Nombre del Banner",
         widget=forms.TextInput(attrs={"class": "form-control"}),
@@ -92,9 +274,12 @@ class CarrouselBannerForm(forms.ModelForm):
         max_length=300
     )
 
+    class Meta:
+        model = CarrouselBanner
+        fields = ['carrouselBanner_name', 'carrouselBanner_url_img', 'carrouselBanner_descripcion']
 
-#------------------------------------------CRUD USUARIOS-----------------------------------------------------------#
 
+# ------------------------------------------ CRUD USUARIOS -----------------------------------------------------------#
 class UsuarioForm(forms.ModelForm):
     username = forms.CharField(
         label='Nombre de usuario',
@@ -132,22 +317,17 @@ class UsuarioForm(forms.ModelForm):
     class Meta:
         model = Usuario
         fields = ['username', 'email', 'first_name', 'last_name', 'password', 'is_active', 'is_superuser']
-        widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
-        }
 
     def clean_password(self):
         password = self.cleaned_data.get('password', '')
-        if password and len(password) <= 8:
+        if password and len(password) < 8:
             raise forms.ValidationError(
                 'Para mantener la seguridad, la contraseña debe tener al menos 8 caracteres. Ingrese una contraseña válida o repita la existente para mantenerla sin cambios.'
             )
         return password
-#------------------------------------------CRUD TIENDA------------------------------------------------------------#
 
+
+# ------------------------------------------ CRUD TIENDA ------------------------------------------------------------#
 class TiendaForm(forms.ModelForm):
     tienda_enlace = forms.URLField(
         label='Enlace de la tienda',
@@ -195,264 +375,15 @@ class TiendaForm(forms.ModelForm):
 
     def clean_tienda_enlace(self):
         enlace = self.cleaned_data.get('tienda_enlace', '')
-        # Si el usuario no escribe http:// o https://, lo anteponemos
         if enlace and not enlace.startswith(('http://', 'https://')):
             enlace = 'http://' + enlace
         return enlace
 
 
-#------------------------------------------CRUD EMPRESA-----------------------------------------------------------#
-
-class EmpresaForm(forms.ModelForm):
-    empresa_nombre = forms.CharField(
-        label="Nombre de la Empresa",
-        widget=forms.TextInput(attrs={"class": "form-control"}),
-        max_length=30
-    )
-    empresa_descripcion = forms.CharField(
-        label="Descripción de la Empresa",
-        required=False,
-        widget=forms.Textarea(attrs={"class": "form-control", "rows": 3}),
-        max_length=300
-    )
-    empresa_logo = forms.ImageField(
-        label="Logo",
-        required=False,
-        widget=forms.FileInput(attrs={"class": "form-control"}),
-        help_text='Formato permitido: JPG, PNG. Tamaño máximo: 5MB.'
-    )
-
-    class Meta:
-        model = Empresa
-        fields = ['empresa_nombre', 'empresa_descripcion', 'empresa_logo']
-
-#------------------------------------------CRUD ALMACEN-----------------------------------------------------------#
-
-class AlmacenForm(forms.ModelForm):
-    empresa = forms.ModelChoiceField(
-        queryset=Empresa.objects.all(),
-        label="Empresa encargada del Almacén",
-        widget=forms.Select(attrs={"class": "form-control"})
-    )
-    almacen_nombre = forms.CharField(
-        label="Nombre del Almacén",
-        widget=forms.TextInput(attrs={"class": "form-control"}),
-        max_length=30
-    )
-    almacen_direccion_calle = forms.CharField(
-        label="Calle",
-        widget=forms.TextInput(attrs={"class": "form-control"}),
-        max_length=300
-    )
-    almacen_direccion_numero = forms.CharField(
-        label="Número",
-        widget=forms.TextInput(attrs={"class": "form-control"}),
-        max_length=30
-    )
-    almacen_direccion_colonia = forms.CharField(
-        label="Colonia",
-        widget=forms.TextInput(attrs={"class": "form-control"}),
-        max_length=30
-    )
-    almacen_direccion_cp = forms.CharField(
-        label="Código Postal",
-        widget=forms.TextInput(attrs={"class": "form-control"}),
-        max_length=30
-    )
-    almacen_direccion_ciudad = forms.CharField(
-        label="Ciudad",
-        widget=forms.TextInput(attrs={"class": "form-control"}),
-        max_length=30
-    )
-    almacen_direccion_estado = forms.CharField(
-        label="Estado",
-        widget=forms.TextInput(attrs={"class": "form-control"}),
-        max_length=30
-    )
-
-    class Meta:
-        model = Almacen
-        fields = [
-            'empresa',
-            'almacen_nombre',
-            'almacen_direccion_calle',
-            'almacen_direccion_numero',
-            'almacen_direccion_colonia',
-            'almacen_direccion_cp',
-            'almacen_direccion_ciudad',
-            'almacen_direccion_estado',
-        ]
-
-#------------------------------------------CRUD ALMACEN-----------------------------------------------------------#
-
-class ProductoForm(forms.ModelForm):
-    producto_extendido = forms.CharField(
-        label='Producto Extendido',
-        widget=forms.TextInput(attrs={'class': 'form-control'}),
-        max_length=30
-    )
-    producto_sku = forms.CharField(
-        label='SKU',
-        widget=forms.TextInput(attrs={'class': 'form-control'}),
-        max_length=30
-    )
-    producto_skunetsuite = forms.CharField(
-        label='SKU Netsuite',
-        widget=forms.TextInput(attrs={'class': 'form-control'}),
-        max_length=300
-    )
-    producto_ean = forms.CharField(
-        label='EAN',
-        widget=forms.TextInput(attrs={'class': 'form-control'}),
-        max_length=30
-    )
-    producto_nombre = forms.CharField(
-        label='Nombre del Producto',
-        widget=forms.TextInput(attrs={'class': 'form-control'}),
-        max_length=30
-    )
-    producto_descripcion = forms.CharField(
-        label='Descripción',
-        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
-        max_length=300
-    )
-    producto_modelo = forms.CharField(
-        label='Modelo',
-        widget=forms.TextInput(attrs={'class': 'form-control'}),
-        max_length=30
-    )
-    producto_precio_base = forms.DecimalField(
-        label='Precio Base',
-        widget=forms.NumberInput(attrs={'class': 'form-control'}),
-        max_digits=10,
-        decimal_places=2
-    )
-    producto_precio_amazon = forms.DecimalField(
-        label='Precio Amazon',
-        widget=forms.NumberInput(attrs={'class': 'form-control'}),
-        max_digits=10,
-        decimal_places=2
-    )
-    producto_precio_mercadolibre = forms.DecimalField(
-        label='Precio MercadoLibre',
-        widget=forms.NumberInput(attrs={'class': 'form-control'}),
-        max_digits=10,
-        decimal_places=2
-    )
-    producto_precio_ebay = forms.DecimalField(
-        label='Precio eBay',
-        widget=forms.NumberInput(attrs={'class': 'form-control'}),
-        max_digits=10,
-        decimal_places=2
-    )
-    producto_url_img = forms.ImageField(
-        label='Imagen del Producto',
-        required=False,
-        widget=forms.FileInput(attrs={'class': 'form-control'}),
-        help_text='Formato permitido: JPG, PNG. Tamaño máximo: 5MB.'
-    )
-    marca = forms.ModelChoiceField(
-        queryset=Marca.objects.all(),
-        label='Marca',
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
-    categoria = forms.ModelChoiceField(
-        queryset=Categoria.objects.all(),
-        label='Categoría',
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
-
-    class Meta:
-        model = Producto
-        fields = [
-            'producto_extendido', 'producto_sku', 'producto_skunetsuite', 'producto_ean', 'producto_nombre',
-            'producto_descripcion', 'producto_modelo', 'producto_precio_base', 'producto_precio_amazon',
-            'producto_precio_mercadolibre', 'producto_precio_ebay',
-            'producto_url_img', 'marca', 'categoria'
-        ]
-
-#------------------------------------------CRUD SERVICIOS----------------------------------------------------------#
-
-class ServicioForm(forms.ModelForm):
-    servicio_nombre = forms.CharField(
-        label="Titulo del Servicio",
-        widget=forms.TextInput(attrs={"class": "form-control"}),
-        max_length=50
-    )
-    servicio_descripcion = forms.CharField(
-        label="Descripción del Servicio",
-        required=False,
-        widget=forms.Textarea(attrs={"class": "form-control", "rows": 3}),
-        max_length=300
-    )
-    servicio_imagen = forms.ImageField(
-        label="Imagen descriptiva",
-        required=False,
-        widget=forms.FileInput(attrs={"class": "form-control"}),
-        help_text='Formato permitido: JPG, PNG. Tamaño máximo: 5MB.'
-    )
-
-    class Meta:
-        model = Servicio
-        fields = ['servicio_nombre', 'servicio_descripcion', 'servicio_imagen']
-
-#------------------------------------------CRUD PROYECTOS----------------------------------------------------------#
-
-class ProyectoForm(forms.ModelForm):
-    proyecto_nombre = forms.CharField(
-        label="Título del Proyecto",
-        widget=forms.TextInput(attrs={"class": "form-control"}),
-        max_length=50
-    )
-    proyecto_descripcion_corta = forms.CharField(
-        label="Descripción Corta",
-        widget=forms.Textarea(attrs={"class": "form-control", "rows": 3}),
-        max_length=300
-    )
-    proyecto_descripcion_larga = forms.CharField(
-        label="Descripción Larga",
-        widget=forms.Textarea(attrs={"class": "form-control", "rows": 6}),
-        max_length=1000
-    )
-    proyecto_imagen = forms.ImageField(
-        label="Imagen del Proyecto",
-        required=False,
-        widget=forms.FileInput(attrs={"class": "form-control"}),
-        help_text='Formato permitido: JPG, PNG. Tamaño máximo: 5MB.'
-    )
-
-    class Meta:
-        model = Proyecto
-        fields = [
-            "proyecto_nombre",
-            "proyecto_descripcion_corta",
-            "proyecto_descripcion_larga",
-            "proyecto_imagen"
-        ]
-
-#------------------------------------------CRUD DESTACADOS----------------------------------------------------------#
-
+# ------------------------------------------ CRUD DESTACADOS ----------------------------------------------------------#
 class DestacadoForm(forms.Form):
     productos = forms.ModelMultipleChoiceField(
         queryset=Producto.objects.all(),
         widget=forms.SelectMultiple(attrs={'class': 'form-control'}),
         label='Selecciona productos destacados'
     )
-
-#------------------------------------------CRUD DESTACADOS----------------------------------------------------------#
-
-class InventarioForm(forms.ModelForm):
-    almacen = forms.ModelChoiceField(
-        queryset=Almacen.objects.all(),
-        label="Almacén",
-        widget=forms.Select(attrs={"class": "form-control"})
-    )
-    stock = forms.IntegerField(
-        label="Stock",
-        min_value=0,
-        widget=forms.NumberInput(attrs={"class": "form-control"})
-    )
-
-    class Meta:
-        model = Inventario
-        fields = ['almacen', 'stock']
