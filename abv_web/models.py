@@ -67,7 +67,8 @@ class Producto(models.Model):
     producto_precio_ebay = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     producto_url_img = models.ImageField(upload_to="Imagenes_Producto", null=True)
     familia = models.ForeignKey(Familia, on_delete=models.CASCADE, null=True, blank=True)
-
+    def __str__(self):
+        return str(self.producto_nombre)
 
 
 class Inventario(models.Model):
