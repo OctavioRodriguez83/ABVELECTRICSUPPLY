@@ -1,7 +1,7 @@
 /* Estilos para el contenedor del carrusel de Swiper */
 .mySwiper-productos {
   width: 100%; /* O el ancho que desees para el carrusel completo */
-  height: 40vh; /* O un alto fijo, por ejemplo, 400px */
+  height: 50vh; /* O un alto fijo, por ejemplo, 400px */
   padding-top: 50px; /* Espacio para que el carrusel no esté pegado al borde */
   padding-bottom: 50px;
 }
@@ -11,7 +11,7 @@
   background-position: center;
   background-size: cover;
   width: 33.33%; /* Ancho fijo para cada diapositiva */
-  height: 100%; /* Alto fijo para cada diapositiva */
+  height: auto%; /* Alto fijo para cada diapositiva */
   -webkit-box-reflect: below 1px linear-gradient(transparent, transparent, #000000);
 }
 
@@ -56,7 +56,7 @@
   padding-bottom: 15px;
 }
 .filtro-especifico {
-  filter: grayscale(100%) brightness(1.2) sepia(100%);
+  filter: grayscale(100%) brightness(2) sepia(100%);
 }
 
 .announcements-wrapper {
@@ -164,6 +164,7 @@
 }
 
 @media (max-width: 900px) {
+
     #elemcarrusel {
         display: flex;
         flex-direction: column;
@@ -199,18 +200,7 @@
         /* padding: 10px; */
         /* box-sizing: border-box; */
     }
-    #carruS {
-        background-color: white; /* Color temporal para depuración, puedes eliminarlo */
-        width: 50%;
-        height: 100%;
-        /* Estilos para que parezca una card */
-        border: 1px solid #e0e0e0; /* Borde más sutil */
-        border-radius: 10px; /* Esquinas redondeadas */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para profundidad */
-        box-sizing: border-box; /* Fundamental para que el borde y padding no desborden */
-        margin-top: 10px; /* Margen para separarlo del carrusel inferior */
-        overflow: hidden; /* Asegura que el contenido (imágenes) respete el border-radius */
-    }
+    
 
     #carruI {
         background-color: white; /* Color temporal para depuración, puedes eliminarlo */
@@ -533,6 +523,12 @@
         display: block;
         text-align: center;
     }
+    .mySwiper-productos {
+      width: 100%; /* O el ancho que desees para el carrusel completo */
+      height: 30vh; /* O un alto fijo, por ejemplo, 400px */
+      padding-top: 50px; /* Espacio para que el carrusel no esté pegado al borde */
+      padding-bottom: 50px;
+    }
 }
 
 
@@ -665,6 +661,35 @@
         flex-direction: column;
     }
 
+}
+
+@media (max-width: 768px) {
+    .card2 {
+        margin-top: 1%;
+        margin-bottom: 1%;
+        padding: 3%;
+        display: flex;
+        height: auto;
+        flex-direction: column; /* Las tarjetas se muestran en fila */
+        justify-content: center;
+        background-color: #fff;
+        width:  100%;
+    }
+}
+
+/* Responsive para extra pequeños (1 columna) */
+@media (max-width: 480px) {
+    .card2 {
+        margin-top: 1%;
+        margin-bottom: 1%;
+        padding: 3%;
+        display: flex;
+        height: auto;
+        flex-direction: column; /* Las tarjetas se muestran en fila */
+        justify-content: center;
+        background-color: #fff;
+        width:  100%;
+    }
 }
 
 /* --- FIN SECCIÓN: ESTILOS GENERALES DE TARJETAS --- */
