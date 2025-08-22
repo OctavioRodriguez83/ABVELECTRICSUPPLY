@@ -72,6 +72,7 @@ main {
 /* Altura del logo */
 #logo {
   height: 4rem;
+  width: auto;
 }
 
 .mivi{
