@@ -93,7 +93,9 @@
                                     <div class="contcate">
                                         <a class="cateenlace" href="{% url 'products' %}categoria/{{ categoria_asociada.categoria_name }}">
                                             <div class="imgcateg">
-                                                <img src="/media-files/{{ categoria_asociada.categoria_url_img }}" class="d-block w-100" loading="lazy" width="250" height="250">
+                                                <img
+                                                alt="{{ categoria_asociada.categoria_name }} Logo"
+                                                 src="/media-files/{{ categoria_asociada.categoria_url_img }}" class="d-block w-100" loading="lazy" width="250" height="250">
                                             </div>
                                             <span>{{ categoria_asociada.categoria_name }}</span>
                                         </a>
