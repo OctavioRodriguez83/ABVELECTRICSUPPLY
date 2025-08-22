@@ -40,6 +40,8 @@
 }
 
 .whatsapp-float img {
+    min-width: 30px;
+    min-height: 30px;
     width: 30px; /* Tamaño de la imagen dentro del botón */
     height: 30px;
 }

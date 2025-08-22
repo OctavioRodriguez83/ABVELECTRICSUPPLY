@@ -540,7 +540,9 @@
 /* --- SECCIÓN: ESTILOS GENERALES DE TARJETAS (SOBRE NOSOTROS, SERVICIOS) --- */
 
 #aboutimg {
+    min-width: 15vw;
     width: 15vw;
+    min-height: 15vw;
     height: 15vw;
     border-radius: 50%; /* Hace la imagen circular */
     object-fit: cover;
