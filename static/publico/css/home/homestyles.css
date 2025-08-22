@@ -544,7 +544,7 @@
     border-radius: 50%; /* Hace la imagen circular */
     object-fit: cover;
     margin-bottom: 15px;
-    border-radius: 10px;
+    
 }
 
 #cards {
@@ -614,6 +614,12 @@
     flex-direction: column;
 }
 
+.imgcards {
+    height: 25vh;
+    width: auto;
+    object-fit: cover;
+    border-radius: 10px;
+}
 
 
 @media (max-width: 900px) {
