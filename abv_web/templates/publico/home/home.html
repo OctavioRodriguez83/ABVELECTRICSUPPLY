@@ -25,9 +25,9 @@
                     </div>
                     <div class="carousel-inner">
                         <div class="carousel-item active" data-bs-interval="3000">
-                            <img class="carousel-imgc1-2" src="/media-files/publico/banner principal.webp" class="d-block w-100" alt="..." fetchpriority="high" loading="lazy">
+                            <img class="carousel-imgc1-2" src="/media-files/publico/banner principal.webp" class="d-block w-100" alt="..." fetchpriority="high">
                             <div class="carousel-caption caption-left"> {# <-- AGREGADO: caption-left #}
-                                <img class="imgpost" src="/media-files/publico/Logo.png" loading="lazy">
+                                <img class="imgpost" src="/media-files/publico/Logo.png" >
                                 <h1>ABV ELECTRIC SUPPLY</h1>
                                 <p>DISTRIBUIDORES ABB <br>"illuminating innovation"</p>
                             </div>
@@ -219,7 +219,7 @@
                                      <div class="contcate">
                                          <a class="cateenlace" href="{% url 'products' %}categoria/{{ categoria_asociada.categoria_name }}">
                                              <div class="imgcateg">
-                                                 <img  src="/media-files/{{ categoria_asociada.categoria_url_img }}" class="d-block w-100">
+                                                 <img  src="/media-files/{{ categoria_asociada.categoria_url_img }}" class="d-block w-100" loading="lazy">
                                              </div>
                                              <span>{{ categoria_asociada.categoria_name }}</span>
                                          </a>
