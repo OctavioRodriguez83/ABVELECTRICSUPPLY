@@ -80,6 +80,7 @@
 
 .announcements-wrapper img {
   display: block; /* Elimina espacio extra */
+  min-height: 40px;
   max-height: 40px; /* Controla la altura de las imágenes */
   width: auto; /* Mantiene la proporción */
   object-fit: contain;
@@ -544,7 +545,7 @@
     border-radius: 50%; /* Hace la imagen circular */
     object-fit: cover;
     margin-bottom: 15px;
-    
+
 }
 
 #cards {
