@@ -220,7 +220,7 @@
                                      <div class="contcate">
                                                      <a class="cateenlace" href="{% url 'products' %}marca/{{ marca_obj.marca_name }}">
                                                          <div class="imgcateg">
-                                                             <img src="/media-files/publico/mas.png">
+                                                             <img src="/media-files/publico/mas.png" loading="lazy">
                                                          </div>
                                                          <span>Ver más categorías de {{ marca_obj.marca_name }}</span>
                                                      </a>
@@ -265,7 +265,7 @@
                         {% for destacado in indicators_range_carrusel4 %}
                           {% if destacado > 0 %}
                             <div class="swiper-slide">
-                              <img class="carousel-imgc2" src="/media-files//Imagenes_Carrusel_Integracion/carruselintegracion ({{ destacado }}).jpg" alt="...">
+                              <img class="carousel-imgc2" src="/media-files//Imagenes_Carrusel_Integracion/carruselintegracion ({{ destacado }}).jpg" alt="..." loading="lazy">
                               <div class="carousel-caption caption-left INF">
                                 <h1>{{ destacado.producto.producto_extendido }}</h1>
                                 </div>
@@ -297,7 +297,7 @@
                       </video>
                     </div>
                     <div class="textcardcont">
-                      <img id="aboutimg" src="/media-files/publico/Logo.png"  alt="..."width="XXX" height="YYY">
+                      <img id="aboutimg" src="/media-files/publico/Logo.png"  alt="..." loading="lazy">
                         <h3 id="aboutT" class="card-title">ABV Electric Supply</h3>
                       <div class="card-body">
 
@@ -316,7 +316,7 @@
                   {% if forloop.counter0|divisibleby:"2" %}
                     <div class="imagencont">
                       {% if servicio.servicio_imagen %}
-                        <img src="{{ servicio.servicio_imagen.url }}" class="imgcards" alt="Imagen de {{ servicio.servicio_nombre }}">
+                        <img src="{{ servicio.servicio_imagen.url }}" class="imgcards" alt="Imagen de {{ servicio.servicio_nombre }}" loading="lazy">
                       {% endif %}
                     </div>
                     <div class="textcardcont">
@@ -330,7 +330,7 @@
                     </div>
                     <div class="imagencont">
                       {% if servicio.servicio_imagen %}
-                        <img src="{{ servicio.servicio_imagen.url }}" class="imgcards" alt="Imagen de {{ servicio.servicio_nombre }}">
+                        <img src="{{ servicio.servicio_imagen.url }}" class="imgcards" alt="Imagen de {{ servicio.servicio_nombre }}" loading="lazy">
                       {% endif %}
                     </div>
                   {% endif %}
