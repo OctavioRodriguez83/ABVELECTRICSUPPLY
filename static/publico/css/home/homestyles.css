@@ -11,7 +11,7 @@
   background-position: center;
   background-size: cover;
   width: 33.33%; /* Ancho fijo para cada diapositiva */
-  height: auto%; /* Alto fijo para cada diapositiva */
+  height: auto; /* Alto fijo para cada diapositiva */
   -webkit-box-reflect: below 1px linear-gradient(transparent, transparent, #000000);
 }
 
