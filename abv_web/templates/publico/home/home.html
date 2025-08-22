@@ -2,8 +2,8 @@
 {% load static %}
 
       {% block link_styles %}
-      <link rel="preload" href="{% static 'publico/css/home/homestyles.css' %}" as="style" />
-      <link rel="stylesheet" href="{% static 'publico/css/home/homestyles.css' %}" media="print" onload="this.media='all'" />
+      <link rel="preload" href="{% static 'publico/css/home/homestyles.min.css' %}" as="style" />
+      <link rel="stylesheet" href="{% static 'publico/css/home/homestyles.min.css' %}" media="print" onload="this.media='all'" />
       <link rel="preload" href="https://unpkg.com/swiper/swiper-bundle.min.css" as="style" />
       <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" media="print" onload="this.media='all'" />
       {% endblock %}
