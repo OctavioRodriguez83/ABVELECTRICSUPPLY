@@ -868,7 +868,7 @@ def home(request):
     # Carrusel Inferior Secundario (#carouselExampleCaptions3 - en #carruI)
     # Incluye el slide estático inicial + marcas
     indicators_range_carrusel3 = range(1 + len(marcas))
-    indicators_range_carrusel4 = range(1 + 2)
+    indicators_range_carrusel4 = range(1 + 30)
     # --- Fin del cálculo de rangos ---
 
 
