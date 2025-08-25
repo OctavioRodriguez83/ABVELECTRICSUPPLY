@@ -4,9 +4,6 @@
 {% block link_styles %}
     <link rel="preload" href="{% static 'publico/css/home/homestyles.min.css' %}" as="style" />
     <link rel="stylesheet" href="{% static 'publico/css/home/homestyles.min.css' %}" media="print" onload="this.media='all'" />
-    
-    <link rel="preload" href="https://unpkg.com/swiper@11.2.10/swiper-bundle.min.css" as="style" />
-    <link rel="stylesheet" href="https://unpkg.com/swiper@11.2.10/swiper-bundle.min.css" media="print" onload="this.media='all'" />
 {% endblock %}
 
 {% block cuerpo %}
@@ -193,7 +190,6 @@
             </div>
         </div>
 
-        <script src="https://unpkg.com/swiper/swiper-bundle.min.js" defer></script>
         
         <script>
             // El código de inicialización de Swiper debe ir después de la etiqueta del script de la librería.
