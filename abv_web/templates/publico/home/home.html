@@ -185,6 +185,44 @@
             </div>
         </div>
         -->
+
+        <div id="elemcarrusel">
+            <div id="carrprincipal">
+                <div id="carouselExampleCaptions1" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        {% for i in indicators_range_carrusel1 %}
+                            <button type="button" 
+                                data-bs-target="#carouselExampleCaptions1" 
+                                data-bs-slide-to="{{ i }}" 
+                                class="{% if forloop.first %}active{% endif %}" 
+                                aria-label="Slide {{ forloop.counter }}">
+                            </button>
+                        {% endfor %}
+                    </div>
+                    <div class="carousel-inner">
+                        {% for post in posts %}
+                        <div class="carousel-item" data-bs-interval="3000">
+                            <img class="carousel-imgc1-2 d-block w-100" src="/media-files/{{ post.carrouselBanner_url_img }}" alt="..." loading="lazy" width="1920" height="1080">
+                            <div class="carousel-caption caption-left">
+                                <img class="imgpost" src="/media-files/publico/Logo.png" loading="lazy" width="200" height="200">
+                                <h1>{{ post.carrouselBanner_name }}</h1>
+                                <p>{{ post.carrouselBanner_descripcion }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions1" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions1" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <div class="mivi">
             <h1>Acerca de Nosostros</h1>
             <div id="cards2">
