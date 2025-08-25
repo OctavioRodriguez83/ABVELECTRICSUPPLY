@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
+        {# Loads the static template tag to handle static files (CSS, JS, images) #}
         {% load static %}
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -18,12 +19,13 @@
       <link rel="stylesheet" href="{% static 'publico/css/nav/styles.css' %}" />
 
       <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" crossorigin="anonymous">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" media="print" onload="this.media='all'" integrity="sha512-+1QbKQ6QwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" media="print" onload="this.media='all'" integrity="sha512-+wQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
       <noscript>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
       </noscript>
       
       <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" as="style" />
+      <!-- Non-blocking CSS loading: 'media="print" onload="this.media=\'all\'"' is used to prevent render-blocking. See https://web.dev/preload-critical-css/ for details. -->
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" media="print" onload="this.media='all'" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 
         
@@ -38,17 +40,16 @@
                 </a>
                 <div class="input-group" style="max-width: 600px;">
                     <input type="text" id="navbar-search" class="form-control" placeholder="Buscar producto..." aria-label="Buscar producto...">
-                    <button class="btn btn-outline-light" type="button" id="navbar-search-btn" onclick="window.location.href = `/products/?search=${encodeURIComponent(document.getElementById('navbar-search').value)}`;">
+                    <button class="btn btn-outline-light" type="button" id="navbar-search-btn">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
-                <div id="navbar-search-results" class="position-absolute bg-white border rounded w-100 mt-1"></div>
+                <div id="navbar-search-results" class="position-absolute bg-white border rounded w-100 mt-1" style="display: none;"></div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item active">
+                        <li class="nav-item {% if request.path == '/' %}active{% endif %}">
                             <a class="nav-link" href="/"><i class="fas fa-home"></i> INICIO</a>
                         </li>
                         <li class="nav-item">
@@ -123,7 +124,7 @@
                 <div class="footer-bottom pt-3">
                     <hr class="border-secondary">
                     <p class="text-center small mb-0">
-                        <span class="font-bold">© 2025 ABV ELECTRIC SUPPLY.</span>
+                        <span class="font-bold">© {{ current_year }} ABV ELECTRIC SUPPLY.</span>
                         Todos los derechos reservados.
                     </p>
                 </div>
@@ -134,6 +135,6 @@
         </a>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous" defer></script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous" defer></script>
-        <script src={% static 'publico/js/nav/navbarSearch.js' %} defer></script>
+        <script src="{% static 'publico/js/nav/navbarSearch.js' %}" defer></script>
     </body>
 </html>
