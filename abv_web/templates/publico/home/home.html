@@ -189,28 +189,32 @@
         <div class="mivi">
             <h1>Proyectos Destacados</h1>
             <div id="carruS">
-              <div id="carouselExample2" class="carousel slide">
+
+              <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                   <div class="carousel-item active">
-                      <img class="carousel-imgc1 d-block w-100" src="/media-files/Imagenes_Carrusel_Integracion/carruselintegracion (1).jpg" alt="..." loading="lazy" width="1920" height="1080">
-                    </div>
-                  {% for destacado in indicators_range_carrusel4 %}
-                    {% if destacado > 1 %}
-                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                      <img class="carousel-imgc1 d-block w-100" src="/media-files/Imagenes_Carrusel_Integracion/carruselintegracion ({{ destacado }}).jpg" alt="..." loading="lazy" width="1920" height="1080">
-                    </div>
-                    {% endif %}
-                  {% endfor %}
+                        <img class="carousel-imgc1 d-block w-100" src="/media-files/Imagenes_Carrusel_Integracion/carruselintegracion (1).jpg" alt="..." loading="lazy" width="1920" height="1080">
+                      </div>
+                    {% for destacado in indicators_range_carrusel4 %}
+                      {% if destacado > 1 %}
+                      <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        <img class="carousel-imgc1 d-block w-100" src="/media-files/Imagenes_Carrusel_Integracion/carruselintegracion ({{ destacado }}).jpg" alt="..." loading="lazy" width="1920" height="1080">
+                      </div>
+                      {% endif %}
+                    {% endfor %}
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample2" data-bs-slide="prev">
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                   <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample2" data-bs-slide="next">
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
                   <span class="visually-hidden">Next</span>
                 </button>
               </div>
+
+
+               
         </div>
 
         <div class="mivi">
