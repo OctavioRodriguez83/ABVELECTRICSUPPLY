@@ -1,0 +1,47 @@
+{% extends "../nav/index.html" %}
+{% load static %}
+
+{% block link_styles %}
+  <link href="{% static 'publico/css/familias/familiasespecificostyles.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block cuerpo %}
+  <div class="mivi">
+                    
+                    <div id="cards">
+                        <h1>Familia {{ familia.0.familia_name }} </h1>
+                        <div class="card-perso">
+                            <div class="familiaDetalles">
+                                <div class="familiaImagen">
+                                    {% if familia.0.familia_url_img %}
+                                        <img src="/media-files/{{ familia.0.familia_url_img }}" alt="{{ familia.0.familia_name }}">
+                                    {% else %}
+                                        <img src="{% static 'publico/img/default-category.jpg' %}" alt="Sin imagen">
+                                    {% endif %}
+                                    </div>
+                                <div class="familiaInfo">
+                                    <h2>Descripción de la Familia</h2>
+                                    <p>{{ familia.0.familia_descripcion }}</p>
+                                </div>
+                            </div>
+
+                            <h1>Productos </h1>
+                            <div class="store-products">    
+                            {%for p in productos%}
+                                <div class="card-item">
+                                    {% if p.producto_url_img %}
+                                        <img src="/media-files/{{ p.producto_url_img }}" alt="{{ p.producto_nombre }}">
+                                    {% else %}
+                                        <img src="{% static 'publico/img/default-product.jpg' %}" alt="Sin imagen">
+                                    {% endif %}
+                                    <h3>{{ p.producto_name }}</h3>
+                                    <p>SKU: {{ p.producto_sku }}</p>
+                                    <p>Precio: ${{ p.producto_precio_base }}</p>
+                                    <a href="{% url 'product' p.producto_sku %}" class="btn">Ver Detalles</a>
+                                </div>
+                            {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+  </div>  
+{% endblock %}

@@ -916,7 +916,6 @@ def store(request):
         'destacados': destacados,
     })
 
-
 def products(request):
     marcas_qs = Marca.objects.filter(status=True)
     categorias_qs = Categoria.objects.filter(statusCategoria=True)
@@ -963,7 +962,7 @@ def products(request):
 
     return render(request, 'publico/store/store.html', context)
 
-def products2(request, Nmarca):
+def categorias_marca(request, Nmarca):
     marca=Nmarca
     categorias_qs = Categoria.objects.filter(statusCategoria=True).filter(marca__marca_name=Nmarca)
     context = {
@@ -974,56 +973,41 @@ def products2(request, Nmarca):
 
     return render(request, 'publico/categorias/categorias.html', context)
 
-def products3(request, Ncate):
-    catese = Categoria.objects.filter(categoria_name=Ncate)
+def familias_categoria(request, Ncate):
+    namecategoria=Ncate
+    categoria=Categoria.objects.filter(categoria_name=namecategoria)
+    for c in categoria:
+        print(c.marca.marca_name)
+    idcate=0    
+    for c in categoria:
+        idcate=c.id
+    catese = Familia.objects.filter(categoria_id=idcate)
     idc=0
     for n in catese:
         idc=n.id
         print(idc)
-    marcas_qs = Marca.objects.filter(status=True)
-    categorias_qs = Categoria.objects.filter(statusCategoria=True)
-
-    qs = Producto.objects.filter(categoria=idc).order_by('id')
-
-    search = request.GET.get('search', '').strip()
-    if search:
-        qs = qs.filter(producto_nombre__icontains=search)
-
-    marcas = request.GET.getlist('marca')
-    if marcas:
-        qs = qs.filter(marca__id__in=marcas)
-
-    categorias = request.GET.getlist('categoria')
-    if categorias:
-        qs = qs.filter(categoria__id__in=categorias)
-
-    # --- Filtro de precio ---
-    precio_min = request.GET.get('precio_min')
-    precio_max = request.GET.get('precio_max')
-    if precio_min:
-        qs = qs.filter(producto_precio_base__gte=precio_min)
-    if precio_max:
-        qs = qs.filter(producto_precio_base__lte=precio_max)
-
-    paginator = Paginator(qs, 12)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
+    
     context = {
-        'productos': page_obj,
-        'marcas': marcas_qs,
-        'categorias': categorias_qs,
+        'namecategoria': namecategoria,
+        'categoria':categoria,
+        'catese': catese,
     }
 
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        html_products = render(request, 'publico/partials/_store_products.html', context).content.decode('utf-8')
-        html_paginator = render(request, 'publico/partials/_store_paginator.html', context).content.decode('utf-8')
-        return JsonResponse({
-            'products_html': html_products,
-            'paginator_html': html_paginator
-        })
+    return render(request, 'publico/familias/familiasgeneral.html', context)
 
-    return render(request, 'publico/store/store.html', context)
+def familia(request, Nfamilia):
+    namefamilia=Nfamilia
+    familia=Familia.objects.filter(familia_name=namefamilia)
+    idf=0    
+    for f in familia:
+        idf=f.id
+    productos = Producto.objects.filter(familia_id=idf)
+    context = {
+        'familia': familia,
+        'productos': productos,
+    }
+
+    return render(request, 'publico/familias/familiaespecifico.html', context)
 
 def product(request, sku):
     producto = get_object_or_404(Producto, producto_sku=sku)
