@@ -61,7 +61,7 @@
     width:  calc(25% - 2%); /* Cada tarjeta ocupa el 25% del contenedor menos los márgenes */
     min-width: 200px; /* Ancho mínimo para que las tarjetas no se hagan demasiado pequeñas */
     max-width: 300px; /* Ancho máximo para las tarjetas */
-    height: auto;
+    height: 45vh;
     display: flex;
     flex-direction: column; /* Los elementos dentro de la tarjeta se muestran en columna */
     align-items: center;
