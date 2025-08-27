@@ -26,21 +26,27 @@
 }
 .familiaImagen{
     width:  30%;
-    height: auto;
-    background-color: red;
+    height: 40vh;
     object-fit: contain; /* La imagen se ajusta dentro del contenedor sin distorsionarse */
     margin-right: 20px;
 }
 
-.familiaImagen img {
-    width:  100%;
-    height: auto;
-    object-fit: contain; /* La imagen se ajusta dentro del contenedor sin distorsionarse */
+.carousel-item {
+    width: 100%;
+    height: 40vh; /* Altura del item para el carrusel principal */
+}
+
+.carousel-imgc2 {
+    width: 100%;
+    height: 100%; /* La imagen ocupará el 100% de la altura de su contenedor (.carousel-item) */
+    object-fit: contain; /* ¡Clave! La imagen se ajustará al contenedor sin cortarse ni distorsionarse */
+    display: block; /* Asegura que la imagen se comporte como un bloque */
+    margin: 0 auto; /* Centra la imagen horizontalmente si hay espacio extra */
 }
 
 .familiaInfo{
     width:  70%;
-    height: auto;
+    height: 40vh;
     text-align: justify;
     font-size: 18px;    
 }
@@ -93,5 +99,19 @@
 @media (max-width: 500px) {
   .store-products {
     grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 600px) {
+  .familiaDetalles{
+    flex-direction: column;
+    align-items: center;
+  }
+  .familiaImagen{
+    width:  100%;
+    height: 40vh;
+    object-fit: contain; /* La imagen se ajusta dentro del contenedor sin distorsionarse */
+    margin-right: 0px;
+    margin-bottom: 3.8%;
+    
   }
 }

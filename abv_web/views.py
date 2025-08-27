@@ -991,6 +991,7 @@ def familias_categoria(request, Ncate):
         'namecategoria': namecategoria,
         'categoria':categoria,
         'catese': catese,
+        
     }
 
     return render(request, 'publico/familias/familiasgeneral.html', context)
@@ -1002,9 +1003,11 @@ def familia(request, Nfamilia):
     for f in familia:
         idf=f.id
     productos = Producto.objects.filter(familia_id=idf)
+    imgsS=ImagenSecundariaProducto.objects.filter(familia__id=idf)
     context = {
         'familia': familia,
         'productos': productos,
+        'imgsS': imgsS,
     }
 
     return render(request, 'publico/familias/familiaespecifico.html', context)
