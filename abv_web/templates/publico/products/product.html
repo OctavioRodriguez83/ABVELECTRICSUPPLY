@@ -48,9 +48,9 @@
       <div class="details-grid">
         <div><strong>SKU:</strong> {{ producto.producto_sku }}</div>
         <div><strong>EAN:</strong> {{ producto.producto_ean }}</div>
-        <div><strong>Modelo:</strong> {{ producto.producto_modelo }}</div>
-        <div><strong>Categoría:</strong> {{ producto.categoria.categoria_name }}</div>
-        <div><strong>Marca:</strong> {{ producto.marca.marca_name }}</div>
+        <div><strong>Modelo:</strong> {{ producto.familia.familia_name }}</div>
+        <div><strong>Categoría:</strong> {{ producto.familia.categoria.categoria_name }}</div>
+        <div><strong>Marca:</strong> {{ producto.familia.categoria.marca.marca_name }}</div>
       </div>
 
       <p class="product-description">
