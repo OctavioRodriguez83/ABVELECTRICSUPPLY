@@ -1,0 +1,30 @@
+{% extends "../nav/index.html" %}
+{% load static %}
+
+{% block link_styles %}
+  <link href="{% static 'publico/css/familias/familiasgeneralstyles.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block cuerpo %}
+  <div class="mivi">
+                    {% for cate in categoria %}
+                    <h1>Familias de {{ cate.categoria_name }} {{cate.marca.marca_name}}</h1>
+                    {% endfor %}
+                    <div id="cards">
+                        <div class="card">
+                            <div class="galeria2">
+                                {% for familia in catese %}
+                                    <div class="contcate">
+                                        <a class="cateenlace" href="{% url 'products' %}categoria/familia/{{ familia.familia_name }}">
+                                            <div class="imgcateg">
+                                                <img src="/media-files/{{ familia.familia_url_img }}" class="d-block w-100" loading="lazy" width="250" height="250">
+                                            </div>
+                                            <span>{{ familia.familia_name }}</span>
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+  </div>  
+{% endblock %}
