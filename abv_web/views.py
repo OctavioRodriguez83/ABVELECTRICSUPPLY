@@ -928,11 +928,11 @@ def products(request):
 
     marcas = request.GET.getlist('marca')
     if marcas:
-        qs = qs.filter(marca__id__in=marcas)
+        qs = qs.filter(familia__categoria__marca__id__in=marcas)
 
     categorias = request.GET.getlist('categoria')
     if categorias:
-        qs = qs.filter(categoria__id__in=categorias)
+        qs = qs.filter(familia__categoria__id__in=categorias)
 
     # --- Filtro de precio ---
     precio_min = request.GET.get('precio_min')
@@ -976,8 +976,6 @@ def categorias_marca(request, Nmarca):
 def familias_categoria(request, Ncate):
     namecategoria=Ncate
     categoria=Categoria.objects.filter(categoria_name=namecategoria)
-    for c in categoria:
-        print(c.marca.marca_name)
     idcate=0    
     for c in categoria:
         idcate=c.id
@@ -985,13 +983,21 @@ def familias_categoria(request, Ncate):
     idc=0
     for n in catese:
         idc=n.id
-        print(idc)
     
+    famseleccionada = Familia.objects.all()
+    productos = Producto.objects.filter(familia_id=1)
+    familia=request.GET.getlist('familia') 
+    if familia:
+        famseleccionada = famseleccionada.filter(id__in=familia)
+        productos = Producto.objects.filter(familia_id=familia)
+        
+
     context = {
         'namecategoria': namecategoria,
         'categoria':categoria,
         'catese': catese,
-        
+        'famseleccionada': famseleccionada,
+        'productos': productos,
     }
 
     return render(request, 'publico/familias/familiasgeneral.html', context)
