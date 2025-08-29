@@ -33,7 +33,7 @@ class Categoria(models.Model):
 
 class Familia(models.Model):
 	familia_name = models.CharField(max_length=30)
-	familia_descripcion = models.CharField(max_length=300)
+	familia_descripcion = models.CharField(max_length=2000)
 	familia_url_img = models.ImageField(upload_to="Imagenes_Familia", null=True)
 	statusFamilia = models.BooleanField(default=True)
 	# --- CAMBIO IMPORTANTE: ForeignKey para relación Uno-a-Muchos ---

@@ -31,7 +31,7 @@ class MarcaForm(forms.ModelForm):
         label="Descripción de la marca",
         required=False,
         widget=forms.Textarea(attrs={"class": "form-control", "rows": 3}),
-        max_length=300
+        max_length=2000
     )
 
     class Meta:
@@ -62,7 +62,7 @@ class CategoriaForm(forms.ModelForm):
         label="Descripción de la categoría",
         required=False,
         widget=forms.Textarea(attrs={"class": "form-control", "rows": 3}),
-        max_length=300
+        max_length=2000
     )
     statusCategoria = forms.BooleanField(
         label='Activa',
@@ -92,7 +92,7 @@ class FamiliaForm(forms.ModelForm):
         label="Descripción de la familia",
         required=False,
         widget=forms.Textarea(attrs={"class": "form-control", "rows": 3}),
-        max_length=300
+        max_length=2000
     )
     familia_url_img = forms.ImageField(
         label="Imagen",
@@ -206,7 +206,7 @@ class ServicioForm(forms.ModelForm):
         label="Descripción del Servicio",
         required=False,
         widget=forms.Textarea(attrs={"class": "form-control", "rows": 3}),
-        max_length=300
+        max_length=2000
     )
     servicio_imagen = forms.ImageField(
         label="Imagen descriptiva",
@@ -271,7 +271,7 @@ class CarrouselBannerForm(forms.ModelForm):
         label="Descripción del Banner",
         required=False,
         widget=forms.Textarea(attrs={"class": "form-control", "rows": 3}),
-        max_length=300
+        max_length=2000
     )
 
     class Meta:

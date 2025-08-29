@@ -85,3 +85,172 @@
     display: block; /* Para que text-align funcione correctamente en algunos navegadores */
     margin-top: auto; /* Empuja el span hacia abajo si hay espacio extra */
 }
+
+#cards {
+    width: 90%;
+    /*justify-content: center;*/
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card-perso {
+    margin-top: 1%;
+    margin-bottom: 1%;
+    display: flex;
+    height: auto;
+    flex-direction: column; /* Las tarjetas se muestran en fila */
+    justify-content: start;
+    width:  100%;
+}
+.familiaDetalles{
+    text-align: justify;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;  
+    color: #000000;    
+    display: flex;
+    flex-direction: row;
+
+}
+.familiaImagen{
+    width:  30%;
+    height: 40vh;
+    object-fit: contain; /* La imagen se ajusta dentro del contenedor sin distorsionarse */
+    margin-right: 20px;
+}
+
+.carousel-item {
+    width: 100%;
+    height: 40vh; /* Altura del item para el carrusel principal */
+}
+
+.carousel-imgc2 {
+    width: 100%;
+    height: 100%; /* La imagen ocupará el 100% de la altura de su contenedor (.carousel-item) */
+    object-fit: contain; /* ¡Clave! La imagen se ajustará al contenedor sin cortarse ni distorsionarse */
+    display: block; /* Asegura que la imagen se comporte como un bloque */
+    margin: 0 auto; /* Centra la imagen horizontalmente si hay espacio extra */
+}
+
+.familiaInfo{
+    width:  70%;
+    height: 40vh;
+    text-align: justify;
+    font-size: 18px;    
+}
+.familiaInfo p {
+    margin-bottom: 10px;
+    line-height: 1.6; /* Espaciado entre líneas para mejorar la legibilidad */
+}
+
+.card-item {
+    margin: 1%;
+    padding: 1%;
+    width:  calc(25% - 2%); /* Cada tarjeta ocupa el 25% del contenedor menos los márgenes */
+    min-width: 200px; /* Ancho mínimo para que las tarjetas no se hagan demasiado pequeñas */
+    max-width: 300px; /* Ancho máximo para las tarjetas */
+    height: 45vh;
+    display: flex;
+    flex-direction: column; /* Los elementos dentro de la tarjeta se muestran en columna */
+    align-items: center;
+    text-align: center;
+    background-color: #f9f9f9; /* Color de fondo para las tarjetas */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra para las tarjetas */
+    border-radius: 16px;
+}
+.card-item img {
+    width:  100%;
+    height: auto;
+    max-height: 150px; /* Altura máxima para las imágenes */
+    object-fit: contain; /* La imagen se ajusta dentro del contenedor sin distorsionarse */
+    margin-bottom: 10px;
+}
+.store-products {
+  min-height: 600px; /* Mantiene altura consistente */
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.5rem 2rem;
+  /*padding: 1.5rem 0;*/
+  justify-items: center;
+}
+@media (max-width: 1200px) {
+  .store-products {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 800px) {
+  .store-products {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 500px) {
+  .store-products {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 600px) {
+  .familiaDetalles{
+    flex-direction: column;
+    align-items: center;
+  }
+  .familiaImagen{
+    width:  100%;
+    height: 40vh;
+    object-fit: contain; /* La imagen se ajusta dentro del contenedor sin distorsionarse */
+    margin-right: 0px;
+    margin-bottom: 3.8%;
+    
+  }
+}
+
+/* Sección de filtros de categorías mejorada */
+.category-row {
+    width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #f0f4f8;
+  border: 1px solid #c8d0d8;
+  border-radius: 0.5rem;
+  align-items: center; /* Centra la imagen y el texto horizontalmente */
+  justify-content: center; /* Centra verticalmente si hay espacio */
+}
+
+.category-row label {
+  width: 25%;
+  color: black;
+  font-size: 1.5vw;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center; /* Centra la imagen y el texto horizontalmente */
+  justify-content: center; /* Centra verticalmente si hay espacio */
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #fff;
+  border: 2px solid transparent;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s, border 0.3s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.category-row label:hover {
+  background: #e9f0f7;
+  transform: translateY(-2px);
+  border: 2px solid #007bff;
+}
+
+.category-row input[type="checkbox"] {
+  display: none;
+}
+
+.category-row input[type="checkbox"]:checked + span {
+  background-color: #007bff;
+  color: #fff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s;
+}
