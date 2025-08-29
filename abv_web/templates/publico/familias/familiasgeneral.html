@@ -11,7 +11,7 @@
       <h1>Familias de {{ cate.categoria_name }} {{cate.marca.marca_name}}</h1>
     {% endfor %}
     <div id="cards">
-      <div class="galeria2">
+      <div class="galeria2"> 
         <div class="category-row">
           {% for familia in catese %}
             <label>
@@ -23,6 +23,7 @@
           {% endfor %}
         </div>
       </div>
+      
         {% for familia in catese %}
           <div class="card-perso familia-detalle" data-familia-id="{{ familia.id }}" {% if not forloop.first %}style="display:none"{% endif %}>
             <div class="familiaDetalles">
