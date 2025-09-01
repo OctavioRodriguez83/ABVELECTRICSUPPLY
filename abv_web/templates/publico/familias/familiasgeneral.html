@@ -34,7 +34,7 @@
                       {% if familia.familia_url_img %}
                         <img class="carousel-imgc2 d-block w-100" src="/media-files/{{ familia.familia_url_img }}" alt="{{ familia.familia_name }}">
                       {% else %}
-                        <img class="carousel-imgc2 d-block w-100" src="{% static 'publico/img/default-category.jpg' %}" alt="Sin imagen">
+                        <img class="carousel-imgc2 d-block w-100" src="/media-files/publico/Logo.png" alt="Sin imagen">
                       {% endif %}
                     </div>
                     {% for img in imgsS %}
@@ -68,7 +68,7 @@
                     {% if p.producto_url_img %}
                       <img src="/media-files/{{ p.producto_url_img }}" alt="{{ p.producto_nombre }}">
                     {% else %}
-                      <img src="{% static 'publico/img/default-product.jpg' %}" alt="Sin imagen">
+                      <img src="/media-files/publico/Logo.png" alt="Sin imagen">
                     {% endif %}
                     <h3>{{ p.producto_name }}</h3>
                     <p>SKU: {{ p.producto_sku }}</p>
