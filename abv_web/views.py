@@ -985,12 +985,13 @@ def familias_categoria(request, Ncate):
         idc=n.id
     
     famseleccionada = Familia.objects.all()
-    productos = Producto.objects.filter(familia_id=1)
+    productos = Producto.objects.all()
     familia=request.GET.getlist('familia') 
     if familia:
         famseleccionada = famseleccionada.filter(id__in=familia)
         productos = Producto.objects.filter(familia_id=familia)
-        
+        for p in productos:
+           print(p.producto_modelo)
 
     context = {
         'namecategoria': namecategoria,
