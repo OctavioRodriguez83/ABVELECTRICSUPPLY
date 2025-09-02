@@ -136,14 +136,16 @@
                         <div class="card">
                             <div class="galeria2">
                                 {% for categoria_asociada in marca_obj.categorias_asociadas.all|slice:":7" %}
-                                    <div class="contcate">
-                                        <a class="cateenlace" href="{% url 'products' %}categoria/{{ categoria_asociada.categoria_name }}">
-                                            <div class="imgcateg">
-                                                <img src="/media-files/{{ categoria_asociada.categoria_url_img }}" class="d-block w-100" loading="lazy" width="250" height="250">
-                                            </div>
-                                            <span>{{ categoria_asociada.categoria_name }}</span>
-                                        </a>
-                                    </div>
+                                    {% if categoria_asociada.statusCategoria == True %}
+                                        <div class="contcate">
+                                            <a class="cateenlace" href="{% url 'products' %}categoria/{{ categoria_asociada.categoria_name }}">
+                                                <div class="imgcateg">
+                                                    <img src="/media-files/{{ categoria_asociada.categoria_url_img }}" class="d-block w-100" loading="lazy" width="250" height="250">
+                                                </div>
+                                                <span>{{ categoria_asociada.categoria_name }}</span>
+                                            </a>
+                                        </div>
+                                    {% endif %}
                                 {% endfor %}
                                 {% if marca_obj.categorias_asociadas.count > 7 %}
                                     <div class="contcate">
@@ -192,12 +194,12 @@
 
               <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                  <div class="carousel-item active">
+                  <div class="carousel-item active" data-bs-interval="3000">
                         <img class="carousel-imgc1 d-block w-100" src="/media-files/Imagenes_Carrusel_Integracion/carruselintegracion (1).jpg" alt="..." loading="lazy" width="1920" height="1080">
                       </div>
                     {% for destacado in indicators_range_carrusel4 %}
                       {% if destacado > 1 %}
-                      <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                      <div class="carousel-item {% if forloop.first %}active{% endif %}" data-bs-interval="3000">
                         <img class="carousel-imgc1 d-block w-100" src="/media-files/Imagenes_Carrusel_Integracion/carruselintegracion ({{ destacado }}).jpg" alt="..." loading="lazy" width="1920" height="1080">
                       </div>
                       {% endif %}
