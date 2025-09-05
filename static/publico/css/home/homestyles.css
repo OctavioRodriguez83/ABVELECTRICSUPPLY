@@ -1,3 +1,34 @@
+.categorias-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.btn-inventario {
+  background: #28a745; /* Cambia el color de fondo aquí */
+  color: #fff;         /* Cambia el color del texto aquí */
+  font-weight: 700;
+  padding: 0.6em 1.5em;
+  border-radius: 0.7em;
+  border: none;
+  text-decoration: none;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px rgba(40,167,69,0.08);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  margin-top: 0.5rem;
+  margin-right: 1rem;
+}
+
+.btn-inventario:hover {
+  background: #218838;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(40,167,69,0.15);
+}
+
 /* Estilos para el contenedor del carrusel de Swiper */
 .mySwiper-productos {
   width: 100%; /* O el ancho que desees para el carrusel completo */

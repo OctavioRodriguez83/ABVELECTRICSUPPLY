@@ -131,6 +131,15 @@
         <div class="mivi">
             {% for marca_obj in marcas %}
                 {% if marca_obj.categorias_asociadas.all %}
+                    {% if forloop.first %}
+                        <div class="categorias-header">
+                            <a href="https://hgb-imagenes.s3.us-east-2.amazonaws.com/pdf/INVENTARIO+ABV.pdf"
+                            target="_blank"
+                            class="btn-inventario">
+                                Conoce nuestro inventario
+                            </a>
+                        </div>
+                    {% endif %}
                     <h1>Categorías de {{ marca_obj.marca_name }}</h1>
                     <div id="cards">
                         <div class="card">
