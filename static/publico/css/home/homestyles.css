@@ -16,11 +16,14 @@
   border-radius: 0.7em;
   border: none;
   text-decoration: none;
+  justify-content: center;
+  align-items: center;
   font-size: 1.1rem;
   box-shadow: 0 2px 8px rgba(40,167,69,0.08);
   transition: background 0.2s, color 0.2s, box-shadow 0.2s;
   margin-top: 0.5rem;
   margin-right: 1rem;
+  text-align: center;
 }
 
 .btn-inventario:hover {
