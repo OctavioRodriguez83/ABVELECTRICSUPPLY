@@ -272,6 +272,16 @@
     padding: 0.25rem 0.7rem;
     margin-top: 0.5rem;
   }
+  .category-row label span {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 0.4em 0.7em;
+    display: inline-block;
+  }
+  .category-row label {
+    margin-bottom: 0.5em;
+  }
 }
 
 /* Estilos para los botones Ver más y Ver menos */
@@ -298,6 +308,3 @@
   color: #fff;
 }
 
-@media (max-width: 600px) {
-  
-}
