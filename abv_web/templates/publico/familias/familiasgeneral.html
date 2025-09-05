@@ -57,7 +57,11 @@
               </div>
               <div class="familiaInfo">
                 <h2>Descripción de la Familia</h2>
-                <p>{{ familia.familia_descripcion }}</p>
+                <p class="familia-descripcion">
+                  <span class="descripcion-corta">{{ familia.familia_descripcion }}</span>
+                  <button class="ver-mas-btn" style="display:none;">Ver más</button>
+                  <button class="ver-menos-btn" style="display:none;">Ver menos</button>
+                </p>
               </div>
             </div>
             <h1>Productos</h1>
