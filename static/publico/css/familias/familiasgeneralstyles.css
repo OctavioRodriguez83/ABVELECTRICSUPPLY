@@ -255,3 +255,49 @@
   border-radius: 0.5rem;
   transition: background-color 0.3s;
 }
+@media (max-width: 600px) {
+  .familia-descripcion .descripcion-corta {
+    display: inline;
+    /* El JS se encargará de truncar el texto */
+  }
+  .familiaInfo{
+    width:  95%;
+    height: auto;
+    text-align: justify;
+    font-size: 18px;
+  }
+  .familia-descripcion .ver-mas-btn,
+  .familia-descripcion .ver-menos-btn {
+    font-size: 0.95rem;
+    padding: 0.25rem 0.7rem;
+    margin-top: 0.5rem;
+  }
+}
+
+/* Estilos para los botones Ver más y Ver menos */
+.familia-descripcion .ver-mas-btn,
+.familia-descripcion .ver-menos-btn {
+  background-color: #E6E8E5;
+  color: #000;
+  border: none;
+  outline: none;
+  border-radius: 0.5rem;
+  padding: 0.3rem 0.9rem;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: inline-block;
+}
+
+.familia-descripcion .ver-mas-btn:hover,
+.familia-descripcion .ver-menos-btn:hover {
+  background-color: #0056b3;
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  
+}
