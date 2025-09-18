@@ -16,6 +16,7 @@ class Categoria(models.Model):
 	categoria_descripcion = models.CharField(max_length=300)
 	categoria_url_img = models.ImageField(upload_to="Imagenes_Categoria", null=True)
 	statusCategoria = models.BooleanField(default=True)
+	categoria_prioridad = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 	# --- CAMBIO IMPORTANTE: ForeignKey para relación Uno-a-Muchos ---
 	# Cada Categoria tendrá UNA Marca. Una Marca puede tener MUCHAS Categorias.
 	marca = models.ForeignKey(
