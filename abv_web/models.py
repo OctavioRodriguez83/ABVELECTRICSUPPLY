@@ -3,7 +3,7 @@ from django.db import models
 
 # Create your models here.
 class Marca(models.Model):
-	marca_name = models.CharField(max_length=30)
+	marca_name = models.CharField(max_length=100)
 	marca_url_img = models.ImageField(upload_to="Imagenes_Marca", null=True)
 	status = models.BooleanField(default=True)
 	marca_descripcion = models.CharField(max_length=300)
@@ -12,7 +12,7 @@ class Marca(models.Model):
 		return self.marca_name
 
 class Categoria(models.Model):
-	categoria_name = models.CharField(max_length=30)
+	categoria_name = models.CharField(max_length=100)
 	categoria_descripcion = models.CharField(max_length=300)
 	categoria_url_img = models.ImageField(upload_to="Imagenes_Categoria", null=True)
 	statusCategoria = models.BooleanField(default=True)
@@ -32,7 +32,7 @@ class Categoria(models.Model):
 		return self.categoria_name
 
 class Familia(models.Model):
-	familia_name = models.CharField(max_length=30)
+	familia_name = models.CharField(max_length=100)
 	familia_descripcion = models.CharField(max_length=2000)
 	familia_url_img = models.ImageField(upload_to="Imagenes_Familia", null=True)
 	statusFamilia = models.BooleanField(default=True)
