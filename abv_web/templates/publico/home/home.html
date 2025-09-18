@@ -144,7 +144,7 @@
                     <div id="cards">
                         <div class="card">
                             <div class="galeria2">
-                                {% for categoria_asociada in marca_obj.categorias_asociadas.all|slice:":7" %}
+                                {% for categoria_asociada in marca_obj.categorias_asociadas.all|dictsort:"categoria_prioridad"|slice:":7" %}
                                     {% if categoria_asociada.statusCategoria == True %}
                                         <div class="contcate">
                                             <a class="cateenlace" href="{% url 'products' %}categoria/{{ categoria_asociada.categoria_name }}">

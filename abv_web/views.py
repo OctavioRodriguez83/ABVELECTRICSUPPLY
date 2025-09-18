@@ -851,7 +851,7 @@ def eliminar_proyecto_destacado(request, destacado_id):
 
 def home(request):
     posts = CarrouselBanner.objects.filter(statusBanner=True)
-    categorias = Categoria.objects.all()
+    categorias = Categoria.objects.all().order_by('categoria_prioridad')
     marcas = Marca.objects.filter(status=True)
     servicios = Servicio.objects.all()
     destacados = ProductoDestacado.objects.select_related('producto').all()
