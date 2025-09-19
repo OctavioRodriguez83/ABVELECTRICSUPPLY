@@ -76,7 +76,11 @@
                     {% endif %}
                     <h3>{{ p.producto_name }}</h3>
                     <p>SKU: {{ p.producto_sku }}</p>
+                    {% if p.producto_precio_base > 0 %}
                     <p>Precio: ${{ p.producto_precio_base }}</p>
+                    {% else %}
+                    <p>Precio: Consultar para cotización</p>
+                    {% endif %}
                     <a href="{% url 'product' p.producto_sku %}" class="btn">Ver Detalles</a>
                   </div>
                 {% endif %}
