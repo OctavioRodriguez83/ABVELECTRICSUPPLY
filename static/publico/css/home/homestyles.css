@@ -139,7 +139,7 @@
     flex-direction: row;
     /* background-color: red; /* Color temporal para depuración, puedes eliminarlo */
     width: 100%;
-    height: calc(70vh - 5.5rem);
+    height: calc(90vh - 5.5rem);
     /* Añade padding a elemcarrusel si quieres que todos los carruseles tengan un margen alrededor */
  /* Ajusta este valor si quieres un espacio alrededor de todo el grupo de carruseles */
     box-sizing: border-box; /* Asegura que el padding se incluya en el tamaño de elemcarrusel */
@@ -260,7 +260,7 @@
 
 .carousel-item {
     width: 100%;
-    height: calc(70vh - 5.5rem); /* Altura del item para el carrusel principal */
+    height: calc(90vh - 5.5rem); /* Altura del item para el carrusel principal */
 }
 
 /* Sobreescribimos la altura para los carruseles secundarios */
@@ -377,7 +377,7 @@
         /* justify-content: center; */
 
         /* La altura debe ser consistente para todos los items dentro del carrusel principal */
-        height: calc(70vh - 5.5rem); /* Altura del item para el carrusel principal */
+        height: calc(90vh - 5.5rem); /* Altura del item para el carrusel principal */
     }
 
     /* Sobreescribimos la altura para los carruseles secundarios */
