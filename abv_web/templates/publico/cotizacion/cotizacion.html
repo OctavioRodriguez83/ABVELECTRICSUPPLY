@@ -15,10 +15,10 @@
               <div class="card">
                   <div class="galeria">
                     <form method="post" action="https://formsubmit.co/soporte@hgbgroup.com.mx">{% csrf_token %}
-                      {{ formcot.nombre }}
-                      {{ formcot.email }}
-                      {{ formcot.telefono }}
-                      {{ formcot.mensaje }}
+                      <input type="text" name="name" class="form-control" placeholder="Full Name" required>
+                      <input type="email" name="email" class="form-control" placeholder="Email" required>
+                      <input type="tel" name="telefono" class="form-control" placeholder="Phone" required>
+                      <textarea name="mensaje" class="form-control" placeholder="Message" required></textarea>
                       <button type="submit" class="btn btn-primary">Enviar</button>
                     </form>
                   </div>
