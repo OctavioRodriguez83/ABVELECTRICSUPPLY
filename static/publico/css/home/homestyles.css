@@ -74,7 +74,7 @@
 
 .announcement-bar {
   display: flex;
-  background-color: red;
+  background-color: black;
   padding: 0; /* Asegura que no haya padding en la barra principal 
   position: fixed;*/
   bottom: 0;
@@ -89,10 +89,11 @@
   padding-top: 15px;
   padding-bottom: 15px;
 }
+/*
 .filtro-especifico {
   filter: grayscale(100%) brightness(2) sepia(100%);
 }
-
+*/
 .announcements-wrapper {
   display: inline-block;
   white-space: nowrap;
