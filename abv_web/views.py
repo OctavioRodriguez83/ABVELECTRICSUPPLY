@@ -886,6 +886,13 @@ def home(request):
 
     return render(request, 'publico/home/home.html', context)
 
+def cotizacion(request):
+    formcot=cotizacionForm()
+    context = {
+        'formcot': formcot,
+    }
+    return render(request, 'publico/cotizacion/cotizacion.html', context)    
+
 def about(request):
     posts = CarrouselBanner.objects.filter(statusBanner=True)
     marcas = Marca.objects.filter(status=True)
