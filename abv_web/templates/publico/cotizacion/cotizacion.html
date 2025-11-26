@@ -17,7 +17,17 @@
                     <form method="post" action="{% url 'cotizacion' %}">
                         {% csrf_token %} 
 
-                        {{ form.as_p }} 
+                        {{ form.nombre.label_tag }}<br>
+                        {{ form.nombre }}
+
+                        {{ form.email.label_tag }}<br>
+                        {{ form.email }}
+
+                        {{ form.telefono.label_tag }}<br>
+                        {{ form.telefono }}
+
+                        {{ form.mensaje.label_tag }}<br>
+                        {{ form.mensaje }}<br><br>
                         
                         <button type="submit">Enviar Cotización</button>
                     </form>
