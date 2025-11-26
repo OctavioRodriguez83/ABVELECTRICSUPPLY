@@ -16,6 +16,7 @@ from django.core.management import call_command
 from django.urls import reverse
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.core.mail import send_mail, BadHeaderError
 
 from .models import *
 from .forms import *
@@ -887,11 +888,45 @@ def home(request):
     return render(request, 'publico/home/home.html', context)
 
 def cotizacion(request):
-    formcot=cotizacionForm()
-    context = {
-        'formcot': formcot,
-    }
-    return render(request, 'publico/cotizacion/cotizacion.html', context)    
+    if request.method == 'POST':
+        form = cotizacionForm(request.POST)
+        
+        if form.is_valid():
+            # 1. Recupera los datos limpios y validados
+            nombre = form.cleaned_data['nombre']
+            email = form.cleaned_data['email']
+            telefono = form.cleaned_data['telefono']
+            mensaje = form.cleaned_data['mensaje']
+            
+            # 2. Crea el cuerpo completo del mensaje
+            email_body = f"De: {nombre} <{email}>\n\nTeléfono: {telefono}\n\nDetalles:\n{mensaje}"
+            try:
+                # 3. Envía el correo
+                send_mail(
+                    subject=f"NUEVA COTIZACIÓN: {nombre}",
+                    message=email_body,
+                    from_email=settings.EMAIL_HOST_USER,  # Remitente configurado en settings.py
+                    recipient_list=['soporte@hgbgroup.com.mx'], # ¡CAMBIA ESTO!
+                    fail_silently=False,
+                )
+                
+                # 4. Redirige a una página de éxito
+                return redirect('cotizacion_exitosa') 
+
+            except BadHeaderError:
+                return HttpResponse('Encabezado de correo inválido encontrado.')
+            except Exception as e:
+                # Manejo general de errores (ej. problemas de conexión SMTP)
+                print(f"Error al enviar correo: {e}") 
+                return HttpResponse('Error al enviar la cotización. Por favor, intente de nuevo más tarde.', status=500)
+    
+    else: # Método GET
+        form = cotizacionForm()
+
+    return render(request, 'publico/cotizacion/cotizacion.html', {'form': form})
+
+def cotizacion_exitosa(request):
+    return render(request, 'publico/cotizacion/cotizacion.html')
 
 def about(request):
     posts = CarrouselBanner.objects.filter(statusBanner=True)

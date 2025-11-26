@@ -94,3 +94,11 @@ MEDIA_URL = '/media-files/'
 MEDIA_ROOT = BASE_DIR / "files"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+# Usa variables de entorno para estos datos sensibles
+EMAIL_HOST_USER = os.getenv('EMAIL_USER')  # Tu correo de Gmail
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD') # La App Password generada
