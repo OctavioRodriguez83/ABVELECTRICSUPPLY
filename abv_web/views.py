@@ -1,3 +1,4 @@
+from pyexpat.errors import messages
 from django.http import JsonResponse
 from django.core.files.storage import FileSystemStorage
 import os
@@ -16,6 +17,7 @@ from django.core.management import call_command
 from django.urls import reverse
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.core.mail import send_mail, BadHeaderError
 
 from .models import *
 from .forms import *
@@ -870,7 +872,7 @@ def home(request):
     indicators_range_carrusel3 = range(1 + len(marcas))
     indicators_range_carrusel4 = range(1 + 60)
     # --- Fin del cálculo de rangos ---
-
+    form = cotizacionForm()
 
     context = {
         'posts': posts,
@@ -881,19 +883,54 @@ def home(request):
         'indicators_range_carrusel1': indicators_range_carrusel1, # Nuevo
         'indicators_range_carrusel2': indicators_range_carrusel2, # Nuevo
         'indicators_range_carrusel3': indicators_range_carrusel3,
-        'indicators_range_carrusel4': indicators_range_carrusel4
+        'indicators_range_carrusel4': indicators_range_carrusel4,
+        'form': form
     }
 
     return render(request, 'publico/home/home.html', context)
 
 def cotizacion(request):
-    formcot=cotizacionForm()
-    context = {
-        'formcot': formcot,
-    }
-    return render(request, 'publico/cotizacion/cotizacion.html', context)    
+
+    if request.method == 'POST':
+        form = cotizacionForm(request.POST)
+        
+        if form.is_valid():
+            # 1. Recupera los datos limpios y validados
+            nombre = form.cleaned_data['nombre']
+            email = form.cleaned_data['email']
+            telefono = form.cleaned_data['telefono']
+            mensaje = form.cleaned_data['mensaje']
+            
+            # 2. Crea el cuerpo completo del mensaje
+            email_body = f"De: {nombre} <{email}>\n\nTeléfono: {telefono}\n\nDetalles:\n{mensaje}"
+            try:
+                # 3. Envía el correo
+                send_mail(
+                    subject=f"NUEVA COTIZACIÓN: {nombre}",
+                    message=email_body,
+                    from_email=settings.EMAIL_HOST_USER,  # Remitente configurado en settings.py
+                    recipient_list=['soporte@hgbgroup.com.mx'], # ¡CAMBIA ESTO!
+                    fail_silently=False,
+                )
+                
+                # 4. Redirige a una página de éxito
+                return redirect('home') 
+
+            except BadHeaderError:
+                return HttpResponse('Encabezado de correo inválido encontrado.')
+            except Exception as e:
+                # Manejo general de errores (ej. problemas de conexión SMTP)
+                print(f"Error al enviar correo: {e}") 
+                return HttpResponse('Error al enviar la cotización. Por favor, intente de nuevo más tarde.', status=500)
+    
+    else: # Método GET
+        form = cotizacionForm()
+
+    return render(request, 'publico/cotizacion/cotizacion.html', {'form': form})
+
 
 def about(request):
+    form = cotizacionForm()
     posts = CarrouselBanner.objects.filter(statusBanner=True)
     marcas = Marca.objects.filter(status=True)
     destacados = ProyectoDestacado.objects.select_related('proyecto').all()
@@ -901,29 +938,37 @@ def about(request):
         'posts': posts,
         'marcas': marcas,
         'destacados': destacados,
+        'form': form
     })
 
 def project(request, project_id):
+    form = cotizacionForm()
     proyecto = get_object_or_404(Proyecto, id=project_id)
     extra_projects = Proyecto.objects.exclude(id=project_id).order_by('?')[:3]
     return render(request, 'publico/about/proyecto.html', {
         'proyecto': proyecto,
         'extra_projects': extra_projects,
+        'form': form,
     })
 
 def services(request):
+    form = cotizacionForm()
     servicios = Servicio.objects.all()
     return render(request, 'publico/services/services.html', {
         'servicios': servicios,
+        'form': form,
     })
 
 def store(request):
+    form = cotizacionForm()
     destacados = ProductoDestacado.objects.select_related('producto').all()
     return render(request, 'publico/products/products.html', {
         'destacados': destacados,
+        'form': form,
     })
 
 def products(request):
+    form = cotizacionForm()
     marcas_qs = Marca.objects.filter(status=True)
     categorias_qs = Categoria.objects.filter(statusCategoria=True)
 
@@ -957,6 +1002,7 @@ def products(request):
         'productos': page_obj,
         'marcas': marcas_qs,
         'categorias': categorias_qs,
+        'form': form,
     }
 
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
@@ -970,17 +1016,20 @@ def products(request):
     return render(request, 'publico/store/store.html', context)
 
 def categorias_marca(request, Nmarca):
+    form = cotizacionForm()
     marca=Nmarca
     categorias_qs = Categoria.objects.filter(statusCategoria=True).filter(marca__marca_name=Nmarca)
     context = {
         'marca': marca,
         'categorias': categorias_qs,
+        'form': form,
     }
 
 
     return render(request, 'publico/categorias/categorias.html', context)
 
 def familias_categoria(request, Ncate):
+    form = cotizacionForm()
     namecategoria=Ncate
     categoria=Categoria.objects.filter(categoria_name=namecategoria)
     idcate=0    
@@ -1006,11 +1055,13 @@ def familias_categoria(request, Ncate):
         'catese': catese,
         'famseleccionada': famseleccionada,
         'productos': productos,
+        'form': form,
     }
 
     return render(request, 'publico/familias/familiasgeneral.html', context)
 
 def familia(request, Nfamilia):
+    form = cotizacionForm()
     namefamilia=Nfamilia
     familia=Familia.objects.filter(familia_name=namefamilia)
     idf=0    
@@ -1022,15 +1073,18 @@ def familia(request, Nfamilia):
         'familia': familia,
         'productos': productos,
         'imgsS': imgsS,
+        'form': form,
     }
 
     return render(request, 'publico/familias/familiaespecifico.html', context)
 
 def product(request, sku):
+    form = cotizacionForm()
     producto = get_object_or_404(Producto, producto_sku=sku)
-    return render(request, 'publico/products/product.html', {'producto': producto})
+    return render(request, 'publico/products/product.html', {'producto': producto, 'form': form})
 
 def contacts(request):
+    form = cotizacionForm()
     posts = CarrouselBanner.objects.filter(statusBanner=True)
     marcas = Marca.objects.filter(status=True)
     servicios = Servicio.objects.all()
@@ -1040,6 +1094,7 @@ def contacts(request):
         'marcas': marcas,
         'servicios': servicios,
         'destacados': destacados,  # <-- Y pásalo al template
+        'form': form,
     })
 
 # Python
